@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KI-Finder: Das beste KI-Tool für dich</title>
+    <title>KI-Berater: Das beste KI-Tool für dich</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -110,7 +110,7 @@
                         <i data-lucide="brain-circuit" class="w-12 h-12 animated-gradient-text"></i>
                     </div>
                     <h1 id="main-title" class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 animated-gradient-text">
-                        Der KI-Finder
+                        Der KI-Berater
                     </h1>
                     <p id="main-subtitle" class="text-lg text-gray-600 max-w-2xl mx-auto">
                         Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.
@@ -207,6 +207,61 @@
                         <span id="visit-website-button">Webseite besuchen</span>
                         <i data-lucide="external-link" class="w-5 h-5"></i>
                     </a>
+
+                    <!-- PROMPT GENERATOR SECTION -->
+                    <div id="prompt-generator-container" class="hidden mt-12 border-t pt-8">
+                        <h3 id="prompt-generator-title" class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                           <i data-lucide="lightbulb" class="w-6 h-6 text-yellow-500"></i>
+                           <span>Kreative Starthilfe</span>
+                        </h3>
+                        <p id="prompt-generator-subtitle" class="text-gray-600 mb-4">Geben Sie eine einfache Idee ein und erhalten Sie professionelle Prompts für dieses Tool.</p>
+                        <div class="flex flex-col gap-2">
+                            <input type="text" id="prompt-idea-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="z.B. Ein Logo für ein Café">
+                            <button id="generate-prompts-btn" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2">
+                                <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                <span id="generate-prompts-btn-text">Prompt-Ideen generieren</span>
+                            </button>
+                        </div>
+                        <div id="prompt-loader" class="hidden mt-4 flex items-center justify-center gap-2 text-gray-600">
+                            <div class="loader !w-5 !h-5 !border-2"></div>
+                            <span id="prompt-loader-text">Generiere kreative Ideen...</span>
+                        </div>
+                        <div id="prompt-results-container" class="mt-4 space-y-3">
+                            <!-- Generated prompts will be appended here -->
+                        </div>
+                    </div>
+
+                    <!-- CHAT SECTION -->
+                    <div id="detail-chat-container" class="mt-12 border-t pt-8">
+                        <h3 id="chat-title" class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <i data-lucide="bot" class="w-6 h-6"></i>
+                            <span>Fragen Sie einen Experten zu diesem Tool</span>
+                        </h3>
+                        <div id="chat-history" class="mb-4 space-y-4 max-h-64 overflow-y-auto bg-slate-50 p-4 rounded-lg border">
+                            <!-- Chat messages will be appended here -->
+                        </div>
+                        <!-- SUGGESTED QUESTIONS -->
+                        <div id="suggested-questions-container" class="mb-2">
+                            <h4 id="suggested-questions-title" class="text-sm font-semibold text-gray-600 mb-2">Vorschläge</h4>
+                            <div id="suggested-questions" class="flex flex-wrap gap-2">
+                                <!-- Suggested questions buttons will be injected here -->
+                            </div>
+                             <div id="suggested-questions-loader" class="hidden mt-2 flex items-center justify-center gap-2 text-gray-500 text-sm">
+                                <div class="loader !w-4 !h-4 !border-2"></div>
+                                <span id="suggested-questions-loader-text">Lade Vorschläge...</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="text" id="chat-input" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="z.B. Kann ich damit auch Logos erstellen?">
+                            <button id="chat-send-btn" class="bg-blue-600 text-white font-semibold p-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                         <div id="chat-loader" class="hidden mt-4 flex items-center justify-center gap-2 text-gray-600">
+                            <div class="loader !w-5 !h-5 !border-2"></div>
+                            <span id="chat-loader-text">Antwort wird generiert...</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -242,7 +297,7 @@
     <footer id="page-footer" class="text-center py-8 border-t border-gray-200 bg-white/50">
         <div class="container mx-auto px-4">
             <p class="text-sm text-gray-500">
-                &copy; <span id="copyright-year">2025</span> Der KI-Finder. <span id="footer-rights">Alle Rechte vorbehalten.</span>
+                &copy; <span id="copyright-year">2025</span> Der KI-Berater. <span id="footer-rights">Alle Rechte vorbehalten.</span>
             </p>
             <div class="mt-4 space-x-4">
                 <button id="footer-imprint-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">Impressum</button>
@@ -285,14 +340,20 @@
         // --- TRANSLATIONS ---
         const translations = {
             de: {
-                pageTitle: "KI-Finder: Das beste KI-Tool für dich", mainTitle: "Der KI-Finder", mainSubtitle: "Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.", categoryLabel: "Filtere nach Kategorie", searchLabel: "Was möchtest du tun?", searchInputPlaceholder: "z.B. Excel-Tabelle, Stimme klonen...", aiRecTitle: "Was möchtest du tun?", aiRecSubtitle: "Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.", aiPromptPlaceholder: "z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial...", geminiBtnText: "Empfehlung anfordern", aiLoaderText: "Analysiere Tools und finde die beste Übereinstimmung...", geminiError: "Entschuldigung, die Empfehlung konnte nicht geladen werden. Bitte versuchen Sie es später erneut.", noResultsTitle: "Keine passenden KI-Tools gefunden", noResultsSubtitle: "Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.", backButtonText: "Zurück zur Übersicht", pricingDetailsTitle: "Preisdetails", visitWebsiteButton: "Webseite besuchen", beginnerFriendly: "Anfängerfreundlich", newsletterTitle: "Bleiben Sie auf dem Laufenden", newsletterSubtitle: "Melden Sie sich für unseren Newsletter an und erhalten Sie die neuesten KI-Nachrichten direkt in Ihr Postfach.", newsletterPlaceholder: "Ihre E-Mail-Adresse", newsletterButton: "Anmelden", newsletterSuccessTitle: "Vielen Dank!", newsletterSuccessSubtitle: "Sie haben sich erfolgreich für den Newsletter angemeldet.", footerRights: "Alle Rechte vorbehalten.", footerImprint: "Impressum", footerPrivacy: "Datenschutz", imprintTitle: "Impressum", imprintContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihr eigenes, rechtsgültiges Impressum.</p><p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p><p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>`, privacyTitle: "Datenschutz", privacyContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihre eigene, rechtsgültige Datenschutzerklärung.</p><p>Wir legen grossen Wert auf den Schutz Ihrer Daten. In dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>`,
+                pageTitle: "KI-Berater: Das beste KI-Tool für dich", mainTitle: "Der KI-Berater", mainSubtitle: "Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.", categoryLabel: "Filtere nach Kategorie", searchLabel: "Was möchtest du tun?", searchInputPlaceholder: "z.B. Excel-Tabelle, Stimme klonen...", aiRecTitle: "Was möchtest du tun?", aiRecSubtitle: "Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.", aiPromptPlaceholder: "z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial...", geminiBtnText: "Empfehlung anfordern", aiLoaderText: "Analysiere Tools und finde die beste Übereinstimmung...", geminiError: "Entschuldigung, die Empfehlung konnte nicht geladen werden. Bitte versuchen Sie es später erneut.", noResultsTitle: "Keine passenden KI-Tools gefunden", noResultsSubtitle: "Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.", backButtonText: "Zurück zur Übersicht", pricingDetailsTitle: "Preisdetails", visitWebsiteButton: "Webseite besuchen", beginnerFriendly: "Anfängerfreundlich", newsletterTitle: "Bleiben Sie auf dem Laufenden", newsletterSubtitle: "Melden Sie sich für unseren Newsletter an und erhalten Sie die neuesten KI-Nachrichten direkt in Ihr Postfach.", newsletterPlaceholder: "Ihre E-Mail-Adresse", newsletterButton: "Anmelden", newsletterSuccessTitle: "Vielen Dank!", newsletterSuccessSubtitle: "Sie haben sich erfolgreich für den Newsletter angemeldet.", footerRights: "Alle Rechte vorbehalten.", footerImprint: "Impressum", footerPrivacy: "Datenschutz", imprintTitle: "Impressum", imprintContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihr eigenes, rechtsgültiges Impressum.</p><p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p><p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>`, privacyTitle: "Datenschutz", privacyContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihre eigene, rechtsgültige Datenschutzerklärung.</p><p>Wir legen grossen Wert auf den Schutz Ihrer Daten. In dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>`,
                 aiExplanationTitle: "Persönliche Empfehlung",
+                chatTitle: "Fragen Sie einen Experten zu diesem Tool", chatPlaceholder: "z.B. Kann ich damit auch Logos erstellen?", chatLoaderText: "Antwort wird generiert...", chatError: "Entschuldigung, die Antwort konnte nicht geladen werden.",
+                promptGeneratorTitle: "Kreative Starthilfe", promptGeneratorSubtitle: "Geben Sie eine einfache Idee ein und erhalten Sie professionelle Prompts für dieses Tool.", promptGeneratorPlaceholder: "z.B. Ein Logo für ein Café", generatePromptsBtnText: "Prompt-Ideen generieren", promptLoaderText: "Generiere kreative Ideen...", copyPrompt: "Kopieren", copied: "Kopiert!",
+                suggestedQuestionsTitle: "Vorschläge", suggestedQuestionsLoaderText: "Lade Vorschläge...",
                 pricing: { freemium: "Freemium", subscription: "Abo", addon: "Add-on", beta: "Beta", openSource: "Kostenlos (Open Source)" },
                 categories: { all: "Alle anzeigen", design: "Bild & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Produktivität & Office", code: "Code & Entwicklung" }
             },
             en: {
-                pageTitle: "AI Finder: The Best AI Tool for You", mainTitle: "The AI Finder", mainSubtitle: "Which artificial intelligence is the best for your task? Find the perfect tool here.", categoryLabel: "Filter by Category", searchLabel: "What do you want to do?", searchInputPlaceholder: "e.g., Excel spreadsheet, clone voice...", aiRecTitle: "What do you want to do?", aiRecSubtitle: "Describe your task for a personal recommendation or filter manually.", aiPromptPlaceholder: "e.g., I want to create a video for my startup, but I don't have any of my own footage...", geminiBtnText: "Request Recommendation", aiLoaderText: "Analyzing tools and finding the best match...", geminiError: "Sorry, the recommendation could not be loaded. Please try again later.", noResultsTitle: "No matching AI tools found", noResultsSubtitle: "Try adjusting your search or selecting a different category.", backButtonText: "Back to Overview", pricingDetailsTitle: "Pricing Details", visitWebsiteButton: "Visit Website", beginnerFriendly: "Beginner-Friendly", newsletterTitle: "Stay Up-to-Date", newsletterSubtitle: "Sign up for our newsletter and get the latest AI news directly in your inbox.", newsletterPlaceholder: "Your email address", newsletterButton: "Subscribe", newsletterSuccessTitle: "Thank you!", newsletterSuccessSubtitle: "You have successfully subscribed to the newsletter.", footerRights: "All rights reserved.", footerImprint: "Legal Notice", footerPrivacy: "Privacy Policy", imprintTitle: "Legal Notice", imprintContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid legal notice.</p><p>John Doe<br>Sample Street 1<br>12345 Sample City<br>Country</p><p><strong>Contact:</strong><br>Email: contact@example.com</p>`, privacyTitle: "Privacy Policy", privacyContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid privacy policy.</p><p>We place great importance on the protection of your data. In this privacy policy, we inform you about which personal data we collect, process, and use when you use our website...</p>`,
+                pageTitle: "AI Advisor: The Best AI Tool for You", mainTitle: "The AI Advisor", mainSubtitle: "Which artificial intelligence is the best for your task? Find the perfect tool here.", categoryLabel: "Filter by Category", searchLabel: "What do you want to do?", searchInputPlaceholder: "e.g., Excel spreadsheet, clone voice...", aiRecTitle: "What do you want to do?", aiRecSubtitle: "Describe your task for a personal recommendation or filter manually.", aiPromptPlaceholder: "e.g., I want to create a video for my startup, but I don't have any of my own footage...", geminiBtnText: "Request Recommendation", aiLoaderText: "Analyzing tools and finding the best match...", geminiError: "Sorry, the recommendation could not be loaded. Please try again later.", noResultsTitle: "No matching AI tools found", noResultsSubtitle: "Try adjusting your search or selecting a different category.", backButtonText: "Back to Overview", pricingDetailsTitle: "Pricing Details", visitWebsiteButton: "Visit Website", beginnerFriendly: "Beginner-Friendly", newsletterTitle: "Stay Up-to-Date", newsletterSubtitle: "Sign up for our newsletter and get the latest AI news directly in your inbox.", newsletterPlaceholder: "Your email address", newsletterButton: "Subscribe", newsletterSuccessTitle: "Thank you!", newsletterSuccessSubtitle: "You have successfully subscribed to the newsletter.", footerRights: "All rights reserved.", footerImprint: "Legal Notice", footerPrivacy: "Privacy Policy", imprintTitle: "Legal Notice", imprintContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid legal notice.</p><p>John Doe<br>Sample Street 1<br>12345 Sample City<br>Country</p><p><strong>Contact:</strong><br>Email: contact@example.com</p>`, privacyTitle: "Privacy Policy", privacyContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid privacy policy.</p><p>We place great importance on the protection of your data. In this privacy policy, we inform you about which personal data we collect, process, and use when you use our website...</p>`,
                 aiExplanationTitle: "Personal Recommendation",
+                chatTitle: "Ask an expert about this tool", chatPlaceholder: "e.g., Can I create logos with this?", chatLoaderText: "Generating answer...", chatError: "Sorry, the answer could not be loaded.",
+                promptGeneratorTitle: "Creative Kickstart", promptGeneratorSubtitle: "Enter a simple idea and get professional prompts for this tool.", promptGeneratorPlaceholder: "e.g., A logo for a coffee shop", generatePromptsBtnText: "Generate Prompt Ideas", promptLoaderText: "Generating creative ideas...", copyPrompt: "Copy", copied: "Copied!",
+                suggestedQuestionsTitle: "Suggestions", suggestedQuestionsLoaderText: "Loading suggestions...",
                 pricing: { freemium: "Freemium", subscription: "Subscription", addon: "Add-on", beta: "Beta", openSource: "Free (Open Source)" },
                 categories: { all: "Show All", design: "Image & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Productivity & Office", code: "Code & Development" }
             }
@@ -307,6 +368,7 @@
                 pricing: "freemium",
                 beginnerFriendly: true,
                 categoryIcon: "message-circle",
+                promptHelper: true,
                 de: {
                     category: "Text & Marketing",
                     description: "Das vielseitigste Sprachmodell. Ideal für Content, Marketing, E-Mails und komplexe Aufgaben wie Datenanalyse.",
@@ -329,6 +391,7 @@
                 pricing: "subscription",
                 beginnerFriendly: false,
                 categoryIcon: "image",
+                promptHelper: true,
                 de: {
                     category: "Bild & Design",
                     description: "Erzeugt extrem hochwertige und künstlerische Bilder. Führend in Fotorealismus und kreativen Stilen.",
@@ -350,6 +413,7 @@
                 pricing: "freemium",
                 beginnerFriendly: true,
                 categoryIcon: "search",
+                promptHelper: false,
                 de: {
                     category: "Text & Marketing",
                     description: "Multimodales Modell von Google. Stark in der Recherche und Zusammenfassung von Informationen aus dem Web.",
@@ -371,6 +435,7 @@
                 pricing: "freemium",
                 beginnerFriendly: true,
                 categoryIcon: "file-text",
+                promptHelper: false,
                 de: {
                     category: "Text & Marketing",
                     description: "Sehr stark in langen Texten, Analysen und als sicherer Chatbot. Besitzt ein grosses Kontextfenster.",
@@ -392,6 +457,7 @@
                 pricing: "freemium",
                 beginnerFriendly: true,
                 categoryIcon: "book-check",
+                promptHelper: false,
                 de: {
                     category: "Text & Marketing",
                     description: "Spezialisiert auf Recherche mit direkten Quellenangaben. Eine KI-gestützte Antwortmaschine.",
@@ -413,6 +479,7 @@
                 pricing: "freemium",
                 beginnerFriendly: true,
                 categoryIcon: "pen-tool",
+                promptHelper: true,
                 de: {
                     category: "Text & Marketing",
                     description: "Marketingfokussierte KI mit Vorlagen für Ads, Blogs und Social Media.",
@@ -434,6 +501,7 @@
                 pricing: "subscription",
                 beginnerFriendly: true,
                 categoryIcon: "message-square",
+                promptHelper: false,
                 de: {
                     category: "Text & Marketing",
                     description: "Konversations-KI mit Echtzeit-Zugriff auf Informationen von der Plattform X (ehemals Twitter).",
@@ -455,6 +523,7 @@
                 pricing: "freemium",
                 beginnerFriendly: false,
                 categoryIcon: "gamepad-2",
+                promptHelper: true,
                 de: {
                     category: "Bild & Design",
                     description: "Beliebt für Game Assets, Mockups und konsistente Charakterdesigns.",
@@ -476,6 +545,7 @@
                 pricing: "beta",
                 beginnerFriendly: true,
                 categoryIcon: "film",
+                promptHelper: false,
                 de: {
                     category: "Audio & Video",
                     description: "Ein aufstrebendes Text-zu-Video-Modell, das für seine hohe Realitätstreue und Videolänge bekannt ist.",
@@ -497,6 +567,7 @@
                 pricing: "freemium",
                 beginnerFriendly: true,
                 categoryIcon: "wand-2",
+                promptHelper: true,
                 de: {
                     category: "Audio & Video",
                     description: "Text-zu-Video-Generator mit einem starken künstlerischen Fokus für kreative und surreale Clips.",
@@ -518,6 +589,7 @@
                 pricing: "freemium",
                 beginnerFriendly: true,
                 categoryIcon: "scissors",
+                promptHelper: false,
                 de: {
                     category: "Audio & Video",
                     description: "KI für Audio-/Video-Bearbeitung, inkl. Transkription und Voice-Cloning.",
@@ -539,6 +611,7 @@
                 pricing: "freemium",
                 beginnerFriendly: false,
                 categoryIcon: "terminal-square",
+                promptHelper: true,
                 de: {
                     category: "Code & Entwicklung",
                     description: "Ein leistungsstarkes, auf Code spezialisiertes Sprachmodell, das für seine hohe Performance bekannt ist.",
@@ -560,6 +633,7 @@
                 pricing: "openSource",
                 beginnerFriendly: true,
                 categoryIcon: "code",
+                promptHelper: false,
                 de: {
                     category: "Code & Entwicklung",
                     description: "Eine sehr schnelle und kostenlose Alternative zu GitHub Copilot für Einzelentwickler.",
@@ -581,6 +655,7 @@
                 pricing: "freemium",
                 beginnerFriendly: false,
                 categoryIcon: "shield-check",
+                promptHelper: false,
                 de: {
                     category: "Code & Entwicklung",
                     description: "KI-Coding-Assistent mit starkem Fokus auf Datenschutz und der Möglichkeit, auf eigenem Code zu trainieren.",
@@ -602,6 +677,7 @@
                 pricing: "freemium",
                 beginnerFriendly: true,
                 categoryIcon: "mic",
+                promptHelper: false,
                 de: {
                     category: "Produktivität & Office",
                     description: "Führend bei Meeting-Transkriptionen und automatischen Zusammenfassungen in Echtzeit.",
@@ -623,6 +699,7 @@
                 pricing: "addon",
                 beginnerFriendly: true,
                 categoryIcon: "check-square",
+                promptHelper: false,
                 de: {
                     category: "Produktivität & Office",
                     description: "KI-Features direkt in die Projektmanagement-Plattform ClickUp integriert, um Aufgaben zu automatisieren.",
@@ -644,6 +721,7 @@
                 pricing: "subscription",
                 beginnerFriendly: true,
                 categoryIcon: "image-plus",
+                promptHelper: true,
                 de: {
                     category: "Bild & Design",
                     description: "Direkt in ChatGPT integriert, einfach zu bedienen. Setzt Textanweisungen präzise in Bilder um.",
@@ -665,6 +743,7 @@
                 pricing: "openSource",
                 beginnerFriendly: false,
                 categoryIcon: "cpu",
+                promptHelper: true,
                 de: {
                     category: "Bild & Design",
                     description: "Open-Source-Modell mit maximaler Kontrolle. Kann lokal ausgeführt werden für hohe Anpassbarkeit.",
@@ -686,6 +765,7 @@
                 pricing: "subscription",
                 beginnerFriendly: true,
                 categoryIcon: "gem",
+                promptHelper: true,
                 de: {
                     category: "Text & Marketing",
                     description: "Speziell auf Marketing und Werbetexte spezialisierte KI. Bietet viele Vorlagen für Ads, Social Media etc.",
@@ -707,6 +787,7 @@
                 pricing: "freemium",
                 beginnerFriendly: true,
                 categoryIcon: "music-2",
+                promptHelper: true,
                 de: {
                     category: "Audio & Video",
                     description: "Erzeugt komplette Songs (Musik und Gesang) basierend auf einer einfachen Texteingabe.",
@@ -728,6 +809,7 @@
                 pricing: "freemium",
                 beginnerFriendly: false,
                 categoryIcon: "video",
+                promptHelper: true,
                 de: {
                     category: "Audio & Video",
                     description: "Eine All-in-One-Plattform für Videoerstellung und -bearbeitung mit KI-Tools (Text-zu-Video, Inpainting etc.).",
@@ -749,6 +831,7 @@
                 pricing: "subscription",
                 beginnerFriendly: false,
                 categoryIcon: "github",
+                promptHelper: true,
                 de: {
                     category: "Code & Entwicklung",
                     description: "Ein KI-gestützter Programmierpartner, der Code direkt im Editor vorschlägt und vervollständigt.",
@@ -770,6 +853,7 @@
                 pricing: "addon",
                 beginnerFriendly: true,
                 categoryIcon: "notebook-text",
+                promptHelper: false,
                 de: {
                     category: "Produktivität & Office",
                     description: "Integriert in die Notion-Arbeitsumgebung. Hilft beim Schreiben, Zusammenfassen und Organisieren von Notizen.",
@@ -810,12 +894,18 @@
         const aiError = document.getElementById('ai-error');
         const aiExplanationContainer = document.getElementById('ai-explanation-container');
         const aiExplanationText = document.getElementById('ai-explanation-text');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+        const chatInput = document.getElementById('chat-input');
+        const promptGeneratorContainer = document.getElementById('prompt-generator-container');
+        const generatePromptsBtn = document.getElementById('generate-prompts-btn');
+        const suggestedQuestionsContainer = document.getElementById('suggested-questions-container');
 
 
         let currentPage = 1;
         const itemsPerPage = 9;
         let currentFilteredModels = [];
         let currentLang = localStorage.getItem('aiFinderLang') || 'de';
+        let currentDetailViewModel = null;
 
         // --- FUNCTIONS ---
 
@@ -871,6 +961,16 @@
             document.getElementById('privacy-title').textContent = translations[lang].privacyTitle;
             document.getElementById('privacy-content').innerHTML = translations[lang].privacyContent;
             document.querySelector('#ai-explanation-title span').textContent = translations[lang].aiExplanationTitle;
+            document.getElementById('chat-title').querySelector('span').textContent = translations[lang].chatTitle;
+            document.getElementById('chat-input').placeholder = translations[lang].chatPlaceholder;
+            document.getElementById('chat-loader-text').textContent = translations[lang].chatLoaderText;
+            document.getElementById('prompt-generator-title').querySelector('span').textContent = translations[lang].promptGeneratorTitle;
+            document.getElementById('prompt-generator-subtitle').textContent = translations[lang].promptGeneratorSubtitle;
+            document.getElementById('prompt-idea-input').placeholder = translations[lang].promptGeneratorPlaceholder;
+            document.getElementById('generate-prompts-btn-text').textContent = translations[lang].generatePromptsBtnText;
+            document.getElementById('prompt-loader-text').textContent = translations[lang].promptLoaderText;
+            document.getElementById('suggested-questions-title').textContent = translations[lang].suggestedQuestionsTitle;
+            document.getElementById('suggested-questions-loader-text').textContent = translations[lang].suggestedQuestionsLoaderText;
 
 
             // Update category dropdown
@@ -893,6 +993,14 @@
         }
 
         function showDetailView(model) {
+            currentDetailViewModel = model;
+            document.getElementById('chat-history').innerHTML = '';
+            document.getElementById('chat-input').value = '';
+            document.getElementById('prompt-results-container').innerHTML = '';
+            document.getElementById('prompt-idea-input').value = '';
+            document.getElementById('suggested-questions').innerHTML = '';
+
+
             document.getElementById('detail-name').textContent = model.name;
             
             const modelLang = model[currentLang];
@@ -917,10 +1025,17 @@
                 pricingContainer.appendChild(p);
             }
 
+            if (model.promptHelper) {
+                promptGeneratorContainer.classList.remove('hidden');
+            } else {
+                promptGeneratorContainer.classList.add('hidden');
+            }
+
             mainContent.classList.add('hidden');
             detailView.classList.remove('hidden');
             window.scrollTo(0, 0);
             lucide.createIcons();
+            handleGenerateSuggestedQuestions(model);
         }
 
         function showMainView() {
@@ -1122,6 +1237,233 @@
             }
         }
 
+        async function handleAskAboutTool() {
+            const userQuestion = chatInput.value.trim();
+            if (!userQuestion || !currentDetailViewModel) return;
+
+            const chatHistory = document.getElementById('chat-history');
+            const chatLoader = document.getElementById('chat-loader');
+            const chatSendBtn = document.getElementById('chat-send-btn');
+
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'text-right';
+            userMessageDiv.innerHTML = `<div class="inline-block bg-blue-500 text-white p-3 rounded-lg rounded-br-none">${userQuestion}</div>`;
+            chatHistory.appendChild(userMessageDiv);
+
+            chatInput.value = '';
+            chatLoader.classList.remove('hidden');
+            chatSendBtn.disabled = true;
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+
+            const langForPrompt = currentLang === 'de' ? 'German' : 'English';
+            const toolData = currentDetailViewModel[currentLang];
+
+            const systemPrompt = `You are a helpful and friendly expert for the AI tool named "${currentDetailViewModel.name}".
+            Your knowledge is strictly limited to the information provided about this specific tool.
+            Answer the user's question based ONLY on the following tool data:
+            - Description: ${toolData.detailedDescription}
+            - Pricing: ${JSON.stringify(toolData.pricingDetails)}
+            - Use Cases: ${toolData.useCases.join(', ')}
+
+            Rules:
+            - Answer in ${langForPrompt}.
+            - Keep your answer concise, helpful, and very easy for a beginner to understand.
+            - If the answer is not in the provided information, you MUST say that you don't have that specific information. For example, in German: "Diese Information habe ich leider nicht." or in English: "Unfortunately, I don't have that information."
+            - Do not make up information.
+            - Do not mention that you are an AI or that your knowledge is limited. Just answer the question directly.
+            - Your response must be plain text, without any formatting.`;
+
+            const prompt = userQuestion;
+
+            try {
+                const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("API request failed");
+
+                const result = await response.json();
+                const aiAnswer = result.candidates[0].content.parts[0].text;
+
+                const aiMessageDiv = document.createElement('div');
+                aiMessageDiv.className = 'text-left';
+                aiMessageDiv.innerHTML = `<div class="inline-block bg-gray-200 text-gray-800 p-3 rounded-lg rounded-bl-none">${aiAnswer}</div>`;
+                chatHistory.appendChild(aiMessageDiv);
+
+            } catch (error) {
+                console.error("Error in detail chat:", error);
+                const errorMessageDiv = document.createElement('div');
+                errorMessageDiv.className = 'text-left';
+                errorMessageDiv.innerHTML = `<div class="inline-block bg-red-100 text-red-700 p-3 rounded-lg rounded-bl-none">${translations[currentLang].chatError}</div>`;
+                chatHistory.appendChild(errorMessageDiv);
+            } finally {
+                chatLoader.classList.add('hidden');
+                chatSendBtn.disabled = false;
+                chatHistory.scrollTop = chatHistory.scrollHeight;
+            }
+        }
+        
+        async function handleGeneratePrompts() {
+            const idea = document.getElementById('prompt-idea-input').value.trim();
+            if (!idea || !currentDetailViewModel) return;
+
+            const promptLoader = document.getElementById('prompt-loader');
+            const generateBtn = document.getElementById('generate-prompts-btn');
+            const resultsContainer = document.getElementById('prompt-results-container');
+
+            promptLoader.classList.remove('hidden');
+            generateBtn.disabled = true;
+            resultsContainer.innerHTML = '';
+
+            const langForPrompt = currentLang === 'de' ? 'German' : 'English';
+            const toolName = currentDetailViewModel.name;
+
+            const systemPrompt = `You are a world-class prompt engineer specializing in the AI tool "${toolName}". Based on the user's simple idea, generate 3 distinct, creative, and advanced prompts that are perfectly formatted for "${toolName}".
+            - For image tools like Midjourney or Stable Diffusion, include relevant parameters (e.g., --ar, --style, camera angles, lighting).
+            - For text tools like ChatGPT or Jasper, create detailed instructions with context and desired output format.
+            - For music tools like Suno, describe the genre, mood, instruments, and lyrical theme.
+            - For video tools like Pika, describe the scene, action, camera movement, and style.
+            - Your response must be in ${langForPrompt} and formatted as a valid JSON object with a single key "prompts", which is an array of 3 strings. Do not add any other text or formatting.`;
+            
+            const prompt = idea;
+
+            try {
+                const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: { responseMimeType: "application/json" }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("API request failed");
+
+                const result = await response.json();
+                const responseText = result.candidates[0].content.parts[0].text;
+                const responseObject = JSON.parse(responseText.replace(/```json/g, '').replace(/```/g, '').trim());
+                
+                const prompts = responseObject.prompts;
+
+                if (Array.isArray(prompts)) {
+                    prompts.forEach(p => {
+                        const promptDiv = document.createElement('div');
+                        promptDiv.className = 'bg-slate-100 p-4 rounded-lg border relative';
+                        promptDiv.innerHTML = `<p class="text-gray-700 whitespace-pre-wrap">${p}</p>`;
+                        
+                        const copyBtn = document.createElement('button');
+                        copyBtn.innerHTML = `<i data-lucide="copy" class="w-4 h-4"></i>`;
+                        copyBtn.className = 'absolute top-2 right-2 p-1.5 bg-white rounded-md text-gray-500 hover:text-blue-600 hover:bg-slate-200 transition';
+                        copyBtn.title = translations[currentLang].copyPrompt;
+                        copyBtn.onclick = () => {
+                            const textarea = document.createElement('textarea');
+                            textarea.value = p;
+                            document.body.appendChild(textarea);
+                            textarea.select();
+                            document.execCommand('copy');
+                            document.body.removeChild(textarea);
+                            
+                            copyBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-green-600"></i>`;
+                            copyBtn.title = translations[currentLang].copied;
+                            setTimeout(() => {
+                                copyBtn.innerHTML = `<i data-lucide="copy" class="w-4 h-4"></i>`;
+                                copyBtn.title = translations[currentLang].copyPrompt;
+                                lucide.createIcons();
+                            }, 2000);
+                            lucide.createIcons();
+                        };
+
+                        promptDiv.appendChild(copyBtn);
+                        resultsContainer.appendChild(promptDiv);
+                    });
+                    lucide.createIcons();
+                }
+
+            } catch (error) {
+                console.error("Error generating prompts:", error);
+                resultsContainer.innerHTML = `<div class="bg-red-100 text-red-700 p-3 rounded-lg">${translations[currentLang].chatError}</div>`;
+            } finally {
+                promptLoader.classList.add('hidden');
+                generateBtn.disabled = false;
+            }
+        }
+
+        async function handleGenerateSuggestedQuestions(model) {
+            const loader = document.getElementById('suggested-questions-loader');
+            const container = document.getElementById('suggested-questions');
+            loader.classList.remove('hidden');
+            container.innerHTML = '';
+
+            const langForPrompt = currentLang === 'de' ? 'German' : 'English';
+            const toolData = model[currentLang];
+
+            const systemPrompt = `You are a helpful assistant. Based on the provided information for the AI tool "${model.name}", generate exactly 3 interesting and relevant questions a beginner might ask about it.
+            Tool Information:
+            - Description: ${toolData.detailedDescription}
+            - Use Cases: ${toolData.useCases.join(', ')}
+            
+            Your response must be in ${langForPrompt} and formatted as a valid JSON object with a single key "questions", which is an array of 3 strings. Do not add any other text or formatting.`;
+
+            try {
+                const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: "Generate questions." }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    generationConfig: { responseMimeType: "application/json" }
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("API request failed");
+
+                const result = await response.json();
+                const responseText = result.candidates[0].content.parts[0].text;
+                const responseObject = JSON.parse(responseText.replace(/```json/g, '').replace(/```/g, '').trim());
+                
+                if (Array.isArray(responseObject.questions)) {
+                    responseObject.questions.forEach(q => {
+                        const button = document.createElement('button');
+                        button.textContent = q;
+                        button.className = "bg-slate-200 text-slate-700 text-sm px-3 py-1.5 rounded-lg hover:bg-slate-300 transition";
+                        button.onclick = () => {
+                            chatInput.value = q;
+                            chatInput.focus();
+                        };
+                        container.appendChild(button);
+                    });
+                }
+
+            } catch (error) {
+                console.error("Error generating suggested questions:", error);
+                container.innerHTML = ''; // Clear on error
+            } finally {
+                loader.classList.add('hidden');
+            }
+        }
+
+
         // --- EVENT LISTENERS ---
         categorySelect.addEventListener('change', filterAndRender);
         backToListBtn.addEventListener('click', showMainView);
@@ -1145,6 +1487,17 @@
             });
             modal.querySelector('.close-modal-btn').addEventListener('click', () => closeModal(modal));
         });
+
+        chatSendBtn.addEventListener('click', handleAskAboutTool);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                handleAskAboutTool();
+            }
+        });
+
+        generatePromptsBtn.addEventListener('click', handleGeneratePrompts);
+
 
         // --- INITIAL RENDER ---
         document.getElementById('copyright-year').textContent = new Date().getFullYear();

@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI-Finder: Das beste KI-Tool für dich</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #f8fafc;
+        }
+        .bg-main-gradient {
+            background: linear-gradient(120deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .featured-card {
+            position: relative;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            margin: -2px;
+            border-radius: inherit;
+            background: linear-gradient(45deg, #f87171, #fb923c, #8b5cf6);
+            background-size: 200% 200%;
+            animation: gradient-animation 5s ease infinite;
+        }
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .pagination-btn.active, .lang-btn.active {
+            background-color: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #page-container {
+            flex: 1;
+        }
+        .animated-gradient-text {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-animation 6s ease infinite;
+        }
+        .modal-overlay {
+            transition: opacity 0.3s ease;
+        }
+        .modal-content {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-main-gradient text-gray-800">
+
+    <div id="page-container">
+        <div id="main-content">
+            <div class="container mx-auto px-4 py-8 md:py-12">
+                <!-- Header -->
+                <header class="text-center mb-10 relative">
+                     <div class="absolute top-0 right-0 bg-white/60 backdrop-blur-sm p-1 rounded-lg shadow-md border">
+                        <button id="lang-de" class="lang-btn px-3 py-1 text-sm font-semibold rounded-md transition">DE</button>
+                        <button id="lang-en" class="lang-btn px-3 py-1 text-sm font-semibold rounded-md transition">EN</button>
+                    </div>
+                     <div class="inline-block bg-white p-4 rounded-2xl shadow-sm mb-4">
+                        <i data-lucide="brain-circuit" class="w-12 h-12 animated-gradient-text"></i>
+                    </div>
+                    <h1 id="main-title" class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 animated-gradient-text">
+                        Der KI-Finder
+                    </h1>
+                    <p id="main-subtitle" class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.
+                    </p>
+                </header>
+
+                <!-- Combined Search Section -->
+                <div class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-lg mb-12 max-w-3xl mx-auto border border-white/50">
+                    <div class="text-center mb-4">
+                        <h2 id="ai-rec-title" class="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">Was möchtest du tun?</h2>
+                        <p id="ai-rec-subtitle" class="text-gray-600 mt-1">Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.</p>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <textarea id="ai-prompt-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" rows="3" placeholder="z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial..."></textarea>
+                        <button id="gemini-search-btn" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition shadow-lg hover:shadow-indigo-300/50 flex items-center justify-center gap-2">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                            <span id="gemini-btn-text">Empfehlung anfordern</span>
+                        </button>
+                    </div>
+                    <div class="my-4 text-center text-gray-500 text-sm" id="or-divider">oder</div>
+                    <div>
+                        <label id="category-label" for="category-select" class="block text-sm font-medium text-gray-700 mb-1">Filtere nach Kategorie</label>
+                        <select id="category-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
+                            <!-- Options will be populated by JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <!-- AI Results Section -->
+                <div id="ai-results-wrapper" class="max-w-5xl mx-auto">
+                    <div id="ai-loader" class="hidden flex flex-col items-center justify-center text-center py-4">
+                        <div class="loader mb-2"></div>
+                        <p id="ai-loader-text" class="text-gray-600">Analysiere Tools und finde die beste Übereinstimmung...</p>
+                    </div>
+                    <div id="ai-error" class="hidden text-center py-4 text-red-600"></div>
+                    <div id="ai-results-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                        <!-- AI recommended cards will be injected here -->
+                    </div>
+                </div>
+                
+                <!-- Main Results Section -->
+                <main id="results-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[700px]">
+                    <!-- AI model cards will be injected here by JavaScript -->
+                </main>
+
+                <!-- Pagination Container -->
+                <div id="pagination-container" class="flex justify-center items-center mt-12 space-x-2">
+                    <!-- Pagination buttons will be injected here -->
+                </div>
+                
+                <!-- No Results Message -->
+                <div id="no-results" class="hidden text-center py-12">
+                    <i data-lucide="folder-search" class="w-16 h-16 mx-auto text-gray-400 mb-4"></i>
+                    <h3 id="no-results-title" class="text-2xl font-semibold text-gray-700">Keine passenden KI-Tools gefunden</h3>
+                    <p id="no-results-subtitle" class="text-gray-500 mt-2">Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detail View (Initially Hidden) -->
+        <div id="detail-view" class="hidden fade-in">
+            <div class="container mx-auto px-4 py-8 md:py-12">
+                <button id="back-to-list" class="mb-8 flex items-center gap-2 bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition shadow-sm border">
+                    <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                    <span id="back-button-text">Zurück zur Übersicht</span>
+                </button>
+                <div class="bg-white p-8 rounded-2xl shadow-xl">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                             <div class="flex items-center gap-4 mb-4">
+                                <div id="detail-icon-container" class="bg-blue-100 p-3 rounded-xl"></div>
+                                <h2 id="detail-name" class="text-3xl md:text-4xl font-bold text-gray-900"></h2>
+                             </div>
+                            <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6">
+                                <span id="detail-category" class="flex items-center gap-2 bg-slate-100 text-slate-800 p-2 rounded-lg text-xs font-semibold"></span>
+                                <span id="detail-pricing-summary" class="flex items-center gap-2 bg-slate-100 text-slate-800 p-2 rounded-lg text-xs font-semibold"></span>
+                            </div>
+                            <p id="detail-description" class="text-lg text-gray-700 leading-relaxed"></p>
+                        </div>
+                        <div class="lg:col-span-1 bg-slate-50 p-6 rounded-xl border">
+                             <h3 id="pricing-details-title" class="text-xl font-bold text-gray-800 mb-4">Preisdetails</h3>
+                             <div id="detail-pricing-details" class="space-y-4 text-gray-600">
+                                <!-- Pricing details will be injected here -->
+                             </div>
+                        </div>
+                    </div>
+                     <a id="detail-link" href="#" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 w-full sm:w-auto bg-blue-600 text-white text-center font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow-lg hover:shadow-blue-300/50">
+                        <span id="visit-website-button">Webseite besuchen</span>
+                        <i data-lucide="external-link" class="w-5 h-5"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <div id="newsletter-section" class="py-16">
+            <div class="container mx-auto px-4">
+                <div class="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-center border border-white/50">
+                    <div id="newsletter-content">
+                        <div class="inline-block bg-white p-3 rounded-xl shadow-sm mb-4">
+                            <i data-lucide="mail-check" class="w-8 h-8 animated-gradient-text"></i>
+                        </div>
+                        <h2 id="newsletter-title" class="text-2xl font-bold text-gray-900 mb-2">Bleiben Sie auf dem Laufenden</h2>
+                        <p id="newsletter-subtitle" class="text-gray-600 mb-6">Melden Sie sich für unseren Newsletter an und erhalten Sie die neuesten KI-Nachrichten direkt in Ihr Postfach.</p>
+                        <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
+                            <input type="email" id="email-input" required class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Ihre E-Mail-Adresse">
+                            <button type="submit" id="newsletter-button" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow-lg hover:shadow-blue-300/50">Anmelden</button>
+                        </form>
+                    </div>
+                    <div id="newsletter-success" class="hidden text-center">
+                        <div class="inline-block bg-green-100 p-3 rounded-xl shadow-sm mb-4">
+                             <i data-lucide="check-circle-2" class="w-8 h-8 text-green-600"></i>
+                        </div>
+                        <h2 id="newsletter-success-title" class="text-2xl font-bold text-gray-900">Vielen Dank!</h2>
+                        <p id="newsletter-success-subtitle" class="text-gray-600">Sie haben sich erfolgreich für den Newsletter angemeldet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="page-footer" class="text-center py-8 border-t border-gray-200 bg-white/50">
+        <div class="container mx-auto px-4">
+            <p class="text-sm text-gray-500">
+                &copy; <span id="copyright-year">2025</span> Der KI-Finder. <span id="footer-rights">Alle Rechte vorbehalten.</span>
+            </p>
+            <div class="mt-4 space-x-4">
+                <button id="footer-imprint-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">Impressum</button>
+                <button id="footer-privacy-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">Datenschutz</button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Imprint Modal -->
+    <div id="imprint-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
+            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 id="imprint-title" class="text-2xl font-bold mb-4">Impressum</h2>
+            <div id="imprint-content" class="text-gray-600 space-y-2">
+                <p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihr eigenes, rechtsgültiges Impressum.</p>
+                <p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p>
+                <p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Modal -->
+    <div id="privacy-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
+            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 id="privacy-title" class="text-2xl font-bold mb-4">Datenschutz</h2>
+            <div id="privacy-content" class="text-gray-600 space-y-2">
+                <p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihre eigene, rechtsgültige Datenschutzerklärung.</p>
+                <p>Wir legen grossen Wert auf den Schutz Ihrer Daten. In dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- TRANSLATIONS ---
+        const translations = {
+            de: {
+                pageTitle: "KI-Finder: Das beste KI-Tool für dich", mainTitle: "Der KI-Finder", mainSubtitle: "Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.", categoryLabel: "Filtere nach Kategorie", searchLabel: "Was möchtest du tun?", searchInputPlaceholder: "z.B. Excel-Tabelle, Stimme klonen...", aiRecTitle: "Was möchtest du tun?", aiRecSubtitle: "Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.", aiPromptPlaceholder: "z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial...", geminiBtnText: "Empfehlung anfordern", aiLoaderText: "Analysiere Tools und finde die beste Übereinstimmung...", geminiError: "Entschuldigung, die KI-Empfehlung konnte nicht geladen werden. Bitte versuchen Sie es später erneut.", noResultsTitle: "Keine passenden KI-Tools gefunden", noResultsSubtitle: "Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.", backButtonText: "Zurück zur Übersicht", pricingDetailsTitle: "Preisdetails", visitWebsiteButton: "Webseite besuchen", beginnerFriendly: "Anfängerfreundlich", newsletterTitle: "Bleiben Sie auf dem Laufenden", newsletterSubtitle: "Melden Sie sich für unseren Newsletter an und erhalten Sie die neuesten KI-Nachrichten direkt in Ihr Postfach.", newsletterPlaceholder: "Ihre E-Mail-Adresse", newsletterButton: "Anmelden", newsletterSuccessTitle: "Vielen Dank!", newsletterSuccessSubtitle: "Sie haben sich erfolgreich für den Newsletter angemeldet.", footerRights: "Alle Rechte vorbehalten.", footerImprint: "Impressum", footerPrivacy: "Datenschutz", imprintTitle: "Impressum", imprintContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihr eigenes, rechtsgültiges Impressum.</p><p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p><p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>`, privacyTitle: "Datenschutz", privacyContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihre eigene, rechtsgültige Datenschutzerklärung.</p><p>Wir legen grossen Wert auf den Schutz Ihrer Daten. In dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>`,
+                pricing: { freemium: "Freemium", subscription: "Abo", addon: "Add-on", beta: "Beta", openSource: "Kostenlos (Open Source)" },
+                categories: { all: "Alle anzeigen", design: "Bild & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Produktivität & Office", code: "Code & Entwicklung" }
+            },
+            en: {
+                pageTitle: "AI Finder: The Best AI Tool for You", mainTitle: "The AI Finder", mainSubtitle: "Which artificial intelligence is the best for your task? Find the perfect tool here.", categoryLabel: "Filter by Category", searchLabel: "What do you want to do?", searchInputPlaceholder: "e.g., Excel spreadsheet, clone voice...", aiRecTitle: "What do you want to do?", aiRecSubtitle: "Describe your task for a personal recommendation or filter manually.", aiPromptPlaceholder: "e.g., I want to create a video for my startup, but I don't have any of my own footage...", geminiBtnText: "Request Recommendation", aiLoaderText: "Analyzing tools and finding the best match...", geminiError: "Sorry, the AI recommendation could not be loaded. Please try again later.", noResultsTitle: "No matching AI tools found", noResultsSubtitle: "Try adjusting your search or selecting a different category.", backButtonText: "Back to Overview", pricingDetailsTitle: "Pricing Details", visitWebsiteButton: "Visit Website", beginnerFriendly: "Beginner-Friendly", newsletterTitle: "Stay Up-to-Date", newsletterSubtitle: "Sign up for our newsletter and get the latest AI news directly in your inbox.", newsletterPlaceholder: "Your email address", newsletterButton: "Subscribe", newsletterSuccessTitle: "Thank you!", newsletterSuccessSubtitle: "You have successfully subscribed to the newsletter.", footerRights: "All rights reserved.", footerImprint: "Legal Notice", footerPrivacy: "Privacy Policy", imprintTitle: "Legal Notice", imprintContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid legal notice.</p><p>John Doe<br>Sample Street 1<br>12345 Sample City<br>Country</p><p><strong>Contact:</strong><br>Email: contact@example.com</p>`, privacyTitle: "Privacy Policy", privacyContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid privacy policy.</p><p>We place great importance on the protection of your data. In this privacy policy, we inform you about which personal data we collect, process, and use when you use our website...</p>`,
+                pricing: { freemium: "Freemium", subscription: "Subscription", addon: "Add-on", beta: "Beta", openSource: "Free (Open Source)" },
+                categories: { all: "Show All", design: "Image & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Productivity & Office", code: "Code & Development" }
+            }
+        };
+
+        // --- DATABASE OF AI MODELS (Full database is here) ---
+        const allAiModels = [
+            {
+                name: "ChatGPT (GPT-4o)",
+                link: "https://openai.com/chatgpt/",
+                featured: true,
+                pricing: "freemium",
+                beginnerFriendly: true,
+                categoryIcon: "message-circle",
+                de: {
+                    category: "Text & Marketing",
+                    description: "Das vielseitigste Sprachmodell. Ideal für Content, Marketing, E-Mails und komplexe Aufgaben wie Datenanalyse.",
+                    useCases: ["marketingtexte", "ads schalten", "blogartikel", "seo", "e-mails", "excel formeln", "word", "powerpoint", "datenanalyse"],
+                    detailedDescription: "ChatGPT ist ein fortschrittliches Konversations-KI-Modell von OpenAI...",
+                    pricingDetails: { free: "Eine kostenlose Version...", plus: "ChatGPT Plus...", team: "Team- und Enterprise-Pläne..." }
+                },
+                en: {
+                    category: "Text & Marketing",
+                    description: "The most versatile language model. Ideal for content, marketing, emails, and complex tasks like data analysis.",
+                    useCases: ["marketing copy", "run ads", "blog articles", "seo", "emails", "excel formulas", "word", "powerpoint", "data analysis"],
+                    detailedDescription: "ChatGPT is an advanced conversational AI model from OpenAI...",
+                    pricingDetails: { free: "A free version...", plus: "ChatGPT Plus...", team: "Team and Enterprise plans..." }
+                }
+            },
+            {
+                name: "Midjourney",
+                link: "https://www.midjourney.com/",
+                featured: true,
+                pricing: "subscription",
+                beginnerFriendly: false,
+                categoryIcon: "image",
+                de: {
+                    category: "Bild & Design",
+                    description: "Erzeugt extrem hochwertige und künstlerische Bilder. Führend in Fotorealismus und kreativen Stilen.",
+                    useCases: ["produktbilder", "kunst", "illustrationen", "logos", "onlineshop", "instagram bilder"],
+                    detailedDescription: "Midjourney ist ein KI-Bildgenerator, der über die Chat-App Discord bedient wird. Er ist bekannt für seine Fähigkeit, äusserst detaillierte, künstlerische und oft surreale Bilder zu erzeugen...",
+                    pricingDetails: { free: "Keine kostenlose Version...", basic: "Basic Plan...", standard: "Standard & Pro Pläne..." }
+                },
+                en: {
+                    category: "Image & Design",
+                    description: "Generates extremely high-quality and artistic images. Leader in photorealism and creative styles.",
+                    useCases: ["product images", "art", "illustrations", "logos", "online store", "instagram pictures"],
+                    detailedDescription: "Midjourney is an AI image generator operated via the Discord chat app...",
+                    pricingDetails: { free: "No free version available...", basic: "Basic Plan...", standard: "Standard & Pro Plans..." }
+                }
+            },
+            {
+                name: "Google Gemini",
+                link: "https://gemini.google.com/",
+                pricing: "freemium",
+                beginnerFriendly: true,
+                categoryIcon: "search",
+                de: {
+                    category: "Text & Marketing",
+                    description: "Multimodales Modell von Google. Stark in der Recherche und Zusammenfassung von Informationen aus dem Web.",
+                    useCases: ["recherche", "texte zusammenfassen", "content-ideen", "ads schalten", "datenanalyse"],
+                    detailedDescription: "Gemini ist Googles multimodales KI-Modell, das Text, Bilder und Code nahtlos verarbeiten kann...",
+                    pricingDetails: { free: "Die Standardversion von Gemini ist kostenlos nutzbar.", advanced: "Gemini Advanced..." }
+                },
+                en: {
+                    category: "Text & Marketing",
+                    description: "Multimodal model from Google. Strong in research and summarizing information from the web.",
+                    useCases: ["research", "summarize texts", "content ideas", "run ads", "data analysis"],
+                    detailedDescription: "Gemini is Google's multimodal AI model that can seamlessly process text, images, and code...",
+                    pricingDetails: { free: "The standard version of Gemini is free to use.", advanced: "Gemini Advanced..." }
+                }
+            },
+            {
+                name: "Claude 3 (Anthropic)",
+                link: "https://www.anthropic.com/claude",
+                pricing: "freemium",
+                beginnerFriendly: true,
+                categoryIcon: "file-text",
+                de: {
+                    category: "Text & Marketing",
+                    description: "Sehr stark in langen Texten, Analysen und als sicherer Chatbot. Besitzt ein grosses Kontextfenster.",
+                    useCases: ["lange dokumente analysieren", "chatbots", "wissenschaftliche texte", "kreatives schreiben", "kundensupport"],
+                    detailedDescription: "Claude 3 von Anthropic ist eine Familie von Sprachmodellen, die für ihre Fähigkeit bekannt sind, sehr lange Texte zu verarbeiten...",
+                    pricingDetails: { free: "Eine kostenlose Version (Claude 3 Sonnet)...", pro: "Ein Pro-Abo...", api: "Entwickler können über eine API..." }
+                },
+                en: {
+                    category: "Text & Marketing",
+                    description: "Very strong in long texts, analysis, and as a secure chatbot. Has a large context window.",
+                    useCases: ["analyze long documents", "chatbots", "scientific papers", "creative writing", "customer support"],
+                    detailedDescription: "Claude 3 from Anthropic is a family of language models known for their ability to process very long texts...",
+                    pricingDetails: { free: "A free version (Claude 3 Sonnet)...", pro: "A Pro subscription...", api: "Developers can access the models via an API." }
+                }
+            },
+            {
+                name: "Perplexity AI",
+                link: "https://www.perplexity.ai/",
+                pricing: "freemium",
+                beginnerFriendly: true,
+                categoryIcon: "book-check",
+                de: {
+                    category: "Text & Marketing",
+                    description: "Spezialisiert auf Recherche mit direkten Quellenangaben. Eine KI-gestützte Antwortmaschine.",
+                    useCases: ["recherche", "faktenprüfung", "quellen finden", "artikel zusammenfassen", "lernen"],
+                    detailedDescription: "Perplexity AI ist eine 'Antwortmaschine', die das Beste aus einer Suchmaschine und einem Chatbot kombiniert...",
+                    pricingDetails: { free: "Die kostenlose Version bietet schnelle Antworten...", pro: "Ein Pro-Abo..." }
+                },
+                en: {
+                    category: "Text & Marketing",
+                    description: "Specialized in research with direct source citations. An AI-powered answer engine.",
+                    useCases: ["research", "fact-checking", "find sources", "summarize articles", "learning"],
+                    detailedDescription: "Perplexity AI is an 'answer engine' that combines the best of a search engine and a chatbot...",
+                    pricingDetails: { free: "The free version offers fast answers...", pro: "A Pro subscription..." }
+                }
+            },
+            {
+                name: "Writesonic",
+                link: "https://writesonic.com/",
+                pricing: "freemium",
+                beginnerFriendly: true,
+                categoryIcon: "pen-tool",
+                de: {
+                    category: "Text & Marketing",
+                    description: "Marketingfokussierte KI mit Vorlagen für Ads, Blogs und Social Media.",
+                    useCases: ["seo texte", "google ads", "blogartikel", "landing pages", "produktbeschreibungen"],
+                    detailedDescription: "Writesonic ist eine All-in-One-Plattform für Content-Erstellung, die speziell auf die Bedürfnisse von Marketern und SEO-Experten zugeschnitten ist...",
+                    pricingDetails: { free: "Eine kostenlose Testversion...", pro: "Pro-Pläne..." }
+                },
+                en: {
+                    category: "Text & Marketing",
+                    description: "Marketing-focused AI with templates for ads, blogs, and social media.",
+                    useCases: ["seo texts", "google ads", "blog articles", "landing pages", "product descriptions"],
+                    detailedDescription: "Writesonic is an all-in-one content creation platform tailored to the needs of marketers and SEO experts...",
+                    pricingDetails: { free: "A free trial...", pro: "Pro plans..." }
+                }
+            },
+            {
+                name: "Grok",
+                link: "https://grok.x.ai/",
+                pricing: "subscription",
+                beginnerFriendly: true,
+                categoryIcon: "message-square",
+                de: {
+                    category: "Text & Marketing",
+                    description: "Konversations-KI mit Echtzeit-Zugriff auf Informationen von der Plattform X (ehemals Twitter).",
+                    useCases: ["echtzeit-recherche", "social media trends", "meinungsbildung", "chat", "humorvolle antworten"],
+                    detailedDescription: "Grok ist eine von xAI entwickelte Konversations-KI, die direkt in die Plattform X integriert ist...",
+                    pricingDetails: { free: "Keine kostenlose Version verfügbar.", premium: "Grok ist Teil des X Premium+ Abonnements..." }
+                },
+                en: {
+                    category: "Text & Marketing",
+                    description: "Conversational AI with real-time access to information from the X platform (formerly Twitter).",
+                    useCases: ["real-time research", "social media trends", "opinion forming", "chat", "humorous answers"],
+                    detailedDescription: "Grok is a conversational AI developed by xAI, integrated directly into the X platform...",
+                    pricingDetails: { free: "No free version available.", premium: "Grok is part of the X Premium+ subscription..." }
+                }
+            },
+            {
+                name: "Leonardo AI",
+                link: "https://leonardo.ai/",
+                pricing: "freemium",
+                beginnerFriendly: false,
+                categoryIcon: "gamepad-2",
+                de: {
+                    category: "Bild & Design",
+                    description: "Beliebt für Game Assets, Mockups und konsistente Charakterdesigns.",
+                    useCases: ["game assets", "charakterdesign", "mockups", "stock-bilder", "texturen"],
+                    detailedDescription: "Leonardo AI ist eine Plattform für generative KI, die sich auf die Erstellung von hochwertigen visuellen Assets spezialisiert hat...",
+                    pricingDetails: { free: "Eine kostenlose Version...", abo: "Verschiedene Abo-Stufen..." }
+                },
+                en: {
+                    category: "Image & Design",
+                    description: "Popular for game assets, mockups, and consistent character designs.",
+                    useCases: ["game assets", "character design", "mockups", "stock images", "textures"],
+                    detailedDescription: "Leonardo AI is a generative AI platform specializing in the creation of high-quality visual assets...",
+                    pricingDetails: { free: "A free version...", subscription: "Various subscription tiers..." }
+                }
+            },
+            {
+                name: "Kling AI",
+                link: "https://kling.kuaishou.com/",
+                pricing: "beta",
+                beginnerFriendly: true,
+                categoryIcon: "film",
+                de: {
+                    category: "Audio & Video",
+                    description: "Ein aufstrebendes Text-zu-Video-Modell, das für seine hohe Realitätstreue und Videolänge bekannt ist.",
+                    useCases: ["realistische videos", "kurzfilme", "storytelling", "text-zu-video"],
+                    detailedDescription: "Kling ist ein neues, vielversprechendes KI-Videomodell, das Videos in hoher Qualität (1080p) und mit einer Länge von bis zu zwei Minuten generieren kann...",
+                    pricingDetails: { beta: "Derzeit ist der Zugang über eine Warteliste in China verfügbar..." }
+                },
+                en: {
+                    category: "Audio & Video",
+                    description: "An emerging text-to-video model known for its high realism and video length.",
+                    useCases: ["realistic videos", "short films", "storytelling", "text-to-video"],
+                    detailedDescription: "Kling is a new, promising AI video model that can generate high-quality (1080p) videos up to two minutes long...",
+                    pricingDetails: { beta: "Access is currently available via a waitlist in China..." }
+                }
+            },
+            {
+                name: "Pika Labs",
+                link: "https://pika.art/",
+                pricing: "freemium",
+                beginnerFriendly: true,
+                categoryIcon: "wand-2",
+                de: {
+                    category: "Audio & Video",
+                    description: "Text-zu-Video-Generator mit einem starken künstlerischen Fokus für kreative und surreale Clips.",
+                    useCases: ["kreative videos", "animations-clips", "visuelle effekte", "musikvideos", "text-zu-video"],
+                    detailedDescription: "Pika Labs (oder Pika) ist ein KI-Videogenerator, der sich durch seinen künstlerischen und filmischen Stil auszeichnet...",
+                    pricingDetails: { free: "Eine kostenlose Version mit Wasserzeichen...", standard: "Standard-Pläne..." }
+                },
+                en: {
+                    category: "Audio & Video",
+                    description: "Text-to-video generator with a strong artistic focus for creative and surreal clips.",
+                    useCases: ["creative videos", "animation clips", "visual effects", "music videos", "text-to-video"],
+                    detailedDescription: "Pika Labs (or Pika) is an AI video generator distinguished by its artistic and cinematic style...",
+                    pricingDetails: { free: "A free version with a watermark...", standard: "Standard plans..." }
+                }
+            },
+            {
+                name: "Descript",
+                link: "https://www.descript.com/",
+                pricing: "freemium",
+                beginnerFriendly: true,
+                categoryIcon: "scissors",
+                de: {
+                    category: "Audio & Video",
+                    description: "KI für Audio-/Video-Bearbeitung, inkl. Transkription und Voice-Cloning.",
+                    useCases: ["podcasts bearbeiten", "videos transkribieren", "voice-over", "stimme klonen", "füllwörter entfernen"],
+                    detailedDescription: "Descript revolutioniert die Audio- und Videobearbeitung, indem es sie so einfach wie die Bearbeitung eines Textdokuments macht...",
+                    pricingDetails: { free: "Kostenlose Version mit begrenzter Transkriptionsdauer...", creator: "Creator-Pläne...", pro: "Pro-Pläne..." }
+                },
+                en: {
+                    category: "Audio & Video",
+                    description: "AI for audio/video editing, including transcription and voice cloning.",
+                    useCases: ["edit podcasts", "transcribe videos", "voice-over", "clone voice", "remove filler words"],
+                    detailedDescription: "Descript revolutionizes audio and video editing by making it as easy as editing a text document...",
+                    pricingDetails: { free: "Free version with limited transcription duration...", creator: "Creator plans...", pro: "Pro plans..." }
+                }
+            },
+            {
+                name: "DeepSeek Coder",
+                link: "https://deepseek.com/",
+                pricing: "freemium",
+                beginnerFriendly: false,
+                categoryIcon: "terminal-square",
+                de: {
+                    category: "Code & Entwicklung",
+                    description: "Ein leistungsstarkes, auf Code spezialisiertes Sprachmodell, das für seine hohe Performance bekannt ist.",
+                    useCases: ["code generierung", "programmieren", "debugging", "code-vervollständigung", "algorithmic tasks"],
+                    detailedDescription: "DeepSeek Coder ist eine Familie von auf Code spezialisierten KI-Modellen...",
+                    pricingDetails: { free: "Kostenlos für Forschung und den persönlichen Gebrauch.", api: "Kommerzielle Nutzung erfolgt über eine API..." }
+                },
+                en: {
+                    category: "Code & Development",
+                    description: "A powerful language model specialized in code, known for its high performance.",
+                    useCases: ["code generation", "programming", "debugging", "code completion", "algorithmic tasks"],
+                    detailedDescription: "DeepSeek Coder is a family of AI models specialized in code...",
+                    pricingDetails: { free: "Free for research and personal use.", api: "Commercial use is available via a usage-based API." }
+                }
+            },
+            {
+                name: "Codeium",
+                link: "https://codeium.com/",
+                pricing: "openSource",
+                beginnerFriendly: true,
+                categoryIcon: "code",
+                de: {
+                    category: "Code & Entwicklung",
+                    description: "Eine sehr schnelle und kostenlose Alternative zu GitHub Copilot für Einzelentwickler.",
+                    useCases: ["programmieren", "code schreiben", "autovervollständigung", "code-chat", "debugging"],
+                    detailedDescription: "Codeium ist ein KI-Coding-Assistent, der sich als direkte Alternative zu GitHub Copilot positioniert...",
+                    pricingDetails: { free: "Für Einzelpersonen ist die Nutzung komplett kostenlos.", teams: "Für Teams gibt es einen kostenpflichtigen Plan..." }
+                },
+                en: {
+                    category: "Code & Development",
+                    description: "A very fast and free alternative to GitHub Copilot for individual developers.",
+                    useCases: ["programming", "writing code", "autocomplete", "code chat", "debugging"],
+                    detailedDescription: "Codeium is an AI coding assistant that positions itself as a direct alternative to GitHub Copilot...",
+                    pricingDetails: { free: "Usage is completely free for individuals.", teams: "For teams, there is a paid plan..." }
+                }
+            },
+            {
+                name: "Tabnine",
+                link: "https://www.tabnine.com/",
+                pricing: "freemium",
+                beginnerFriendly: false,
+                categoryIcon: "shield-check",
+                de: {
+                    category: "Code & Entwicklung",
+                    description: "KI-Coding-Assistent mit starkem Fokus auf Datenschutz und der Möglichkeit, auf eigenem Code zu trainieren.",
+                    useCases: ["programmieren", "code-sicherheit", "team-kollaboration", "autovervollständigung", "privater code"],
+                    detailedDescription: "Tabnine ist ein KI-Assistent für Programmierer, der sich durch seinen Fokus auf Datenschutz und Sicherheit von anderen abhebt...",
+                    pricingDetails: { free: "Ein kostenloser Plan...", pro: "Ein Pro-Plan..." }
+                },
+                en: {
+                    category: "Code & Development",
+                    description: "AI coding assistant with a strong focus on privacy and the ability to train on your own code.",
+                    useCases: ["programming", "code security", "team collaboration", "autocomplete", "private code"],
+                    detailedDescription: "Tabnine is an AI assistant for programmers that stands out for its focus on privacy and security...",
+                    pricingDetails: { free: "A free plan...", pro: "A Pro plan..." }
+                }
+            },
+            {
+                name: "Otter.ai",
+                link: "https://otter.ai/",
+                pricing: "freemium",
+                beginnerFriendly: true,
+                categoryIcon: "mic",
+                de: {
+                    category: "Produktivität & Office",
+                    description: "Führend bei Meeting-Transkriptionen und automatischen Zusammenfassungen in Echtzeit.",
+                    useCases: ["meeting transkribieren", "interviews aufzeichnen", "zusammenfassungen", "action items", "notizen"],
+                    detailedDescription: "Otter.ai ist ein KI-Assistent, der speziell für Meetings entwickelt wurde...",
+                    pricingDetails: { free: "Eine kostenlose Version...", pro: "Pro-Pläne...", business: "Business-Pläne..." }
+                },
+                en: {
+                    category: "Productivity & Office",
+                    description: "Leader in real-time meeting transcriptions and automatic summaries.",
+                    useCases: ["transcribe meetings", "record interviews", "summaries", "action items", "notes"],
+                    detailedDescription: "Otter.ai is an AI assistant designed specifically for meetings...",
+                    pricingDetails: { free: "A free version...", pro: "Pro plans...", business: "Business plans..." }
+                }
+            },
+            {
+                name: "ClickUp AI",
+                link: "https://clickup.com/ai",
+                pricing: "addon",
+                beginnerFriendly: true,
+                categoryIcon: "check-square",
+                de: {
+                    category: "Produktivität & Office",
+                    description: "KI-Features direkt in die Projektmanagement-Plattform ClickUp integriert, um Aufgaben zu automatisieren.",
+                    useCases: ["projektmanagement", "aufgaben zusammenfassen", "action items", "status updates", "brainstorming"],
+                    detailedDescription: "ClickUp AI integriert künstliche Intelligenz direkt in das umfassende Projektmanagement-Tool ClickUp...",
+                    pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen...", addon: "Für die volle Nutzung..." }
+                },
+                en: {
+                    category: "Productivity & Office",
+                    description: "AI features integrated directly into the ClickUp project management platform to automate tasks.",
+                    useCases: ["project management", "summarize tasks", "action items", "status updates", "brainstorming"],
+                    detailedDescription: "ClickUp AI integrates artificial intelligence directly into the comprehensive project management tool ClickUp...",
+                    pricingDetails: { free: "A limited number of AI actions...", addon: "For full use..." }
+                }
+            },
+            {
+                name: "DALL-E 3 (via ChatGPT)",
+                link: "https://openai.com/dall-e-3",
+                pricing: "subscription",
+                beginnerFriendly: true,
+                categoryIcon: "image-plus",
+                de: {
+                    category: "Bild & Design",
+                    description: "Direkt in ChatGPT integriert, einfach zu bedienen. Setzt Textanweisungen präzise in Bilder um.",
+                    useCases: ["social media bilder", "blog-illustrationen", "präsentationen", "onlineshop", "instagram", "logos"],
+                    detailedDescription: "DALL-E 3 ist der Bildgenerator von OpenAI und ist direkt in ChatGPT Plus integriert...",
+                    pricingDetails: { free: "Nicht direkt kostenlos verfügbar...", plus: "Die Bildgenerierung ist Teil des ChatGPT Plus Abos...", api: "Für Entwickler..." }
+                },
+                en: {
+                    category: "Image & Design",
+                    description: "Integrated directly into ChatGPT, easy to use. Accurately translates text instructions into images.",
+                    useCases: ["social media images", "blog illustrations", "presentations", "online store", "instagram", "logos"],
+                    detailedDescription: "DALL-E 3 is OpenAI's image generator and is integrated directly into ChatGPT Plus...",
+                    pricingDetails: { free: "Not available for free directly...", plus: "Image generation is part of the ChatGPT Plus subscription...", api: "For developers..." }
+                }
+            },
+            {
+                name: "Stable Diffusion",
+                link: "https://stability.ai/",
+                pricing: "openSource",
+                beginnerFriendly: false,
+                categoryIcon: "cpu",
+                de: {
+                    category: "Bild & Design",
+                    description: "Open-Source-Modell mit maximaler Kontrolle. Kann lokal ausgeführt werden für hohe Anpassbarkeit.",
+                    useCases: ["charakterdesign", "mode", "architektur", "experimentelle kunst", "lokale bildgenerierung"],
+                    detailedDescription: "Stable Diffusion ist ein leistungsstarkes Open-Source-Modell zur Bilderzeugung...",
+                    pricingDetails: { free: "Das Modell selbst ist kostenlos...", cloud: "Es gibt auch Cloud-Dienste..." }
+                },
+                en: {
+                    category: "Image & Design",
+                    description: "Open-source model with maximum control. Can be run locally for high customizability.",
+                    useCases: ["character design", "fashion", "architecture", "experimental art", "local image generation"],
+                    detailedDescription: "Stable Diffusion is a powerful open-source model for image generation...",
+                    pricingDetails: { free: "The model itself is free...", cloud: "There are also cloud services..." }
+                }
+            },
+             {
+                name: "Jasper",
+                link: "https://www.jasper.ai/",
+                pricing: "subscription",
+                beginnerFriendly: true,
+                categoryIcon: "gem",
+                de: {
+                    category: "Text & Marketing",
+                    description: "Speziell auf Marketing und Werbetexte spezialisierte KI. Bietet viele Vorlagen für Ads, Social Media etc.",
+                    useCases: ["werbetexte", "facebook ads", "google ads", "produktbeschreibungen", "landing pages", "blogartikel"],
+                    detailedDescription: "Jasper ist eine auf Marketing spezialisierte KI-Schreibplattform...",
+                    pricingDetails: { free: "Es gibt in der Regel eine kostenlose Testphase...", creator: "Creator-Pläne...", pro: "Pro- und Business-Pläne..." }
+                },
+                en: {
+                    category: "Text & Marketing",
+                    description: "AI specialized in marketing and ad copy. Offers many templates for ads, social media, etc.",
+                    useCases: ["ad copy", "facebook ads", "google ads", "product descriptions", "landing pages", "blog articles"],
+                    detailedDescription: "Jasper is an AI writing platform specialized in marketing...",
+                    pricingDetails: { free: "There is usually a free trial period...", creator: "Creator plans...", pro: "Pro and Business plans..." }
+                }
+            },
+            {
+                name: "Suno AI",
+                link: "https://www.suno.ai/",
+                pricing: "freemium",
+                beginnerFriendly: true,
+                categoryIcon: "music-2",
+                de: {
+                    category: "Audio & Video",
+                    description: "Erzeugt komplette Songs (Musik und Gesang) basierend auf einer einfachen Texteingabe.",
+                    useCases: ["hintergrundmusik", "jingles", "social media videos", "podcasts", "songwriting"],
+                    detailedDescription: "Suno AI ist ein revolutionäres KI-Tool, das aus einer einfachen Textbeschreibung komplette Lieder mit Gesang, Instrumenten und Texten generieren kann...",
+                    pricingDetails: { free: "Kostenlose Version bietet täglich...", pro: "Pro-Pläne...", premier: "Premier-Pläne..." }
+                },
+                en: {
+                    category: "Audio & Video",
+                    description: "Generates complete songs (music and vocals) based on a simple text input.",
+                    useCases: ["background music", "jingles", "social media videos", "podcasts", "songwriting"],
+                    detailedDescription: "Suno AI is a revolutionary AI tool that can generate complete songs with vocals, instruments, and lyrics from a simple text description...",
+                    pricingDetails: { free: "Free version offers a limited number...", pro: "Pro plans...", premier: "Premier plans..." }
+                }
+            },
+            {
+                name: "RunwayML",
+                link: "https://runwayml.com/",
+                pricing: "freemium",
+                beginnerFriendly: false,
+                categoryIcon: "video",
+                de: {
+                    category: "Audio & Video",
+                    description: "Eine All-in-One-Plattform für Videoerstellung und -bearbeitung mit KI-Tools (Text-zu-Video, Inpainting etc.).",
+                    useCases: ["marketingvideos", "kurzfilme", "visuelle effekte", "video-bearbeitung", "text-zu-video"],
+                    detailedDescription: "RunwayML ist eine leistungsstarke Online-Suite für Videobearbeitung, die mit KI-Funktionen angereichert ist...",
+                    pricingDetails: { free: "Eine kostenlose Version ist mit einem Startguthaben...", standard: "Standard-Plan...", pro: "Pro & Unlimited Pläne..." }
+                },
+                en: {
+                    category: "Audio & Video",
+                    description: "An all-in-one platform for video creation and editing with AI tools (text-to-video, inpainting, etc.).",
+                    useCases: ["marketing videos", "short films", "visual effects", "video editing", "text-to-video"],
+                    detailedDescription: "RunwayML is a powerful online suite for video editing enriched with AI features...",
+                    pricingDetails: { free: "A free version is available with a starting credit balance...", standard: "Standard plan...", pro: "Pro & Unlimited plans..." }
+                }
+            },
+            {
+                name: "GitHub Copilot",
+                link: "https://github.com/features/copilot",
+                pricing: "subscription",
+                beginnerFriendly: false,
+                categoryIcon: "github",
+                de: {
+                    category: "Code & Entwicklung",
+                    description: "Ein KI-gestützter Programmierpartner, der Code direkt im Editor vorschlägt und vervollständigt.",
+                    useCases: ["programmieren", "code schreiben", "debugging", "lernen", "boilerplate reduzieren"],
+                    detailedDescription: "GitHub Copilot ist ein KI-Programmierassistent, der direkt in gängigen Code-Editoren wie VS Code integriert ist...",
+                    pricingDetails: { free: "Kostenlos für verifizierte Studierende...", individual: "Für Einzelpersonen...", business: "Ein Business-Plan..." }
+                },
+                en: {
+                    category: "Code & Development",
+                    description: "An AI-powered coding partner that suggests and completes code directly in the editor.",
+                    useCases: ["programming", "writing code", "debugging", "learning", "reducing boilerplate"],
+                    detailedDescription: "GitHub Copilot is an AI programming assistant integrated directly into popular code editors like VS Code...",
+                    pricingDetails: { free: "Free for verified students...", individual: "For individuals...", business: "A business plan..." }
+                }
+            },
+            {
+                name: "Notion AI",
+                link: "https://www.notion.so/product/ai",
+                pricing: "addon",
+                beginnerFriendly: true,
+                categoryIcon: "notebook-text",
+                de: {
+                    category: "Produktivität & Office",
+                    description: "Integriert in die Notion-Arbeitsumgebung. Hilft beim Schreiben, Zusammenfassen und Organisieren von Notizen.",
+                    useCases: ["notizen organisieren", "meeting-zusammenfassungen", "brainstorming", "texte verbessern", "word"],
+                    detailedDescription: "Notion AI ist direkt in die beliebte Produktivitäts-App Notion integriert...",
+                    pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen...", addon: "Für unbegrenzte Nutzung..." }
+                },
+                en: {
+                    category: "Productivity & Office",
+                    description: "Integrated into the Notion workspace. Helps write, summarize, and organize notes.",
+                    useCases: ["organize notes", "meeting summaries", "brainstorming", "improve texts", "word"],
+                    detailedDescription: "Notion AI is integrated directly into the popular productivity app Notion...",
+                    pricingDetails: { free: "A limited number of AI actions...", addon: "For unlimited use..." }
+                }
+            }
+        ];
+
+        // --- DOM ELEMENTS & STATE ---
+        const mainContent = document.getElementById('main-content');
+        const detailView = document.getElementById('detail-view');
+        const categorySelect = document.getElementById('category-select');
+        const resultsContainer = document.getElementById('results-container');
+        const noResultsMessage = document.getElementById('no-results');
+        const backToListBtn = document.getElementById('back-to-list');
+        const paginationContainer = document.getElementById('pagination-container');
+        const langDeBtn = document.getElementById('lang-de');
+        const langEnBtn = document.getElementById('lang-en');
+        const newsletterForm = document.getElementById('newsletter-form');
+        const newsletterContent = document.getElementById('newsletter-content');
+        const newsletterSuccess = document.getElementById('newsletter-success');
+        const imprintModal = document.getElementById('imprint-modal');
+        const privacyModal = document.getElementById('privacy-modal');
+        const imprintBtn = document.getElementById('footer-imprint-btn');
+        const privacyBtn = document.getElementById('footer-privacy-btn');
+        const geminiSearchBtn = document.getElementById('gemini-search-btn');
+        const aiPromptInput = document.getElementById('ai-prompt-input');
+        const aiResultsContainer = document.getElementById('ai-results-container');
+        const aiLoader = document.getElementById('ai-loader');
+        const aiError = document.getElementById('ai-error');
+
+
+        let currentPage = 1;
+        const itemsPerPage = 9;
+        let currentFilteredModels = [];
+        let currentLang = localStorage.getItem('aiFinderLang') || 'de';
+
+        // --- FUNCTIONS ---
+
+        function openModal(modal) {
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0');
+                modal.querySelector('.modal-content').classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeModal(modal) {
+            modal.querySelector('.modal-content').classList.add('scale-95', 'opacity-0');
+            modal.querySelector('.modal-content').classList.remove('scale-100', 'opacity-100');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function updateContent(lang) {
+            currentLang = lang;
+            localStorage.setItem('aiFinderLang', lang);
+
+            // Update static text
+            document.title = translations[lang].pageTitle;
+            document.documentElement.lang = lang;
+            document.getElementById('main-title').textContent = translations[lang].mainTitle;
+            document.getElementById('main-subtitle').textContent = translations[lang].mainSubtitle;
+            document.getElementById('category-label').textContent = translations[lang].categoryLabel;
+            document.getElementById('ai-rec-title').textContent = translations[lang].aiRecTitle;
+            document.getElementById('ai-rec-subtitle').textContent = translations[lang].aiRecSubtitle;
+            document.getElementById('ai-prompt-input').placeholder = translations[lang].aiPromptPlaceholder;
+            document.getElementById('gemini-btn-text').textContent = translations[lang].geminiBtnText;
+            document.getElementById('ai-loader-text').textContent = translations[lang].aiLoaderText;
+            document.getElementById('no-results-title').textContent = translations[lang].noResultsTitle;
+            document.getElementById('no-results-subtitle').textContent = translations[lang].noResultsSubtitle;
+            document.getElementById('back-button-text').textContent = translations[lang].backButtonText;
+            document.getElementById('pricing-details-title').textContent = translations[lang].pricingDetailsTitle;
+            document.getElementById('visit-website-button').textContent = translations[lang].visitWebsiteButton;
+            document.getElementById('newsletter-title').textContent = translations[lang].newsletterTitle;
+            document.getElementById('newsletter-subtitle').textContent = translations[lang].newsletterSubtitle;
+            document.getElementById('email-input').placeholder = translations[lang].newsletterPlaceholder;
+            document.getElementById('newsletter-button').textContent = translations[lang].newsletterButton;
+            document.getElementById('newsletter-success-title').textContent = translations[lang].newsletterSuccessTitle;
+            document.getElementById('newsletter-success-subtitle').textContent = translations[lang].newsletterSuccessSubtitle;
+            document.getElementById('footer-rights').textContent = translations[lang].footerRights;
+            document.getElementById('footer-imprint-btn').textContent = translations[lang].footerImprint;
+            document.getElementById('footer-privacy-btn').textContent = translations[lang].footerPrivacy;
+            document.getElementById('imprint-title').textContent = translations[lang].imprintTitle;
+            document.getElementById('imprint-content').innerHTML = translations[lang].imprintContent;
+            document.getElementById('privacy-title').textContent = translations[lang].privacyTitle;
+            document.getElementById('privacy-content').innerHTML = translations[lang].privacyContent;
+
+
+            // Update category dropdown
+            const cats = translations[lang].categories;
+            const deCats = translations.de.categories;
+            categorySelect.innerHTML = `
+                <option value="all">${cats.all}</option>
+                <option value="${deCats.design}">${cats.design}</option>
+                <option value="${deCats.marketing}">${cats.marketing}</option>
+                <option value="${deCats.audio}">${cats.audio}</option>
+                <option value="${deCats.productivity}">${cats.productivity}</option>
+                <option value="${deCats.code}">${cats.code}</option>
+            `;
+            
+            // Update active language button
+            langDeBtn.classList.toggle('active', lang === 'de');
+            langEnBtn.classList.toggle('active', lang === 'en');
+
+            filterAndRender();
+        }
+
+        function showDetailView(model) {
+            document.getElementById('detail-name').textContent = model.name;
+            
+            const modelLang = model[currentLang];
+
+            const detailIconContainer = document.getElementById('detail-icon-container');
+            detailIconContainer.innerHTML = `<i data-lucide="${model.categoryIcon}" class="w-8 h-8 text-blue-600"></i>`;
+
+            const categorySpan = document.getElementById('detail-category');
+            categorySpan.innerHTML = `<i data-lucide="tag" class="w-4 h-4"></i><span>${modelLang.category}</span>`;
+
+            const pricingSpan = document.getElementById('detail-pricing-summary');
+            pricingSpan.innerHTML = `<i data-lucide="dollar-sign" class="w-4 h-4"></i><span>${translations[currentLang].pricing[model.pricing]}</span>`;
+
+            document.getElementById('detail-description').textContent = modelLang.detailedDescription;
+            document.getElementById('detail-link').href = model.link;
+            
+            const pricingContainer = document.getElementById('detail-pricing-details');
+            pricingContainer.innerHTML = '';
+            for (const [plan, text] of Object.entries(modelLang.pricingDetails)) {
+                const p = document.createElement('p');
+                p.innerHTML = `<strong class="capitalize text-gray-800 block mb-1">${plan}</strong> ${text}`;
+                pricingContainer.appendChild(p);
+            }
+
+            mainContent.classList.add('hidden');
+            detailView.classList.remove('hidden');
+            window.scrollTo(0, 0);
+            lucide.createIcons();
+        }
+
+        function showMainView() {
+            mainContent.classList.remove('hidden');
+            detailView.classList.add('hidden');
+        }
+
+        function renderPagination() {
+            paginationContainer.innerHTML = '';
+            const totalPages = Math.ceil(currentFilteredModels.length / itemsPerPage);
+
+            if (totalPages <= 1) {
+                paginationContainer.classList.add('hidden');
+                return;
+            };
+            paginationContainer.classList.remove('hidden');
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.className = `pagination-btn px-4 py-2 border rounded-lg transition hover:bg-gray-100`;
+                if (i === currentPage) {
+                    button.classList.add('active');
+                }
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    renderResults();
+                    renderPagination(); 
+                });
+                paginationContainer.appendChild(button);
+            }
+        }
+
+        function renderCard(model, container) {
+            const card = document.createElement('div');
+            const modelLang = model[currentLang];
+            card.className = `card bg-white/70 p-6 rounded-2xl shadow-lg border flex flex-col relative overflow-hidden ${model.featured ? 'featured-card border-2' : 'border-gray-200/50'}`;
+            card.dataset.modelName = model.name;
+            
+            const beginnerBadgeHTML = model.beginnerFriendly ? `<span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5"><i data-lucide="star" class="w-3 h-3"></i>${translations[currentLang].beginnerFriendly}</span>` : '';
+
+            card.innerHTML = `
+                <div class="flex-grow">
+                     <div class="flex justify-between items-start mb-3">
+                        <div class="bg-blue-100 p-2.5 rounded-lg mr-4"><i data-lucide="${model.categoryIcon}" class="w-6 h-6 text-blue-600"></i></div>
+                        <div class="flex-1">
+                            <h3 class="text-lg font-bold text-gray-900">${model.name}</h3>
+                            <p class="text-sm text-gray-500">${modelLang.category}</p>
+                        </div>
+                        ${beginnerBadgeHTML}
+                    </div>
+                    <p class="text-gray-600 my-4">${modelLang.description}</p>
+                </div>
+                 <div class="flex items-center justify-end gap-4 text-sm text-gray-500 mt-auto pt-4 border-t border-gray-200/80">
+                    <span class="flex items-center gap-1.5 bg-slate-100 text-slate-800 p-1.5 rounded-md text-xs"><i data-lucide="dollar-sign" class="w-3 h-3"></i>${translations[currentLang].pricing[model.pricing]}</span>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => {
+                const selectedModel = allAiModels.find(m => m.name === model.name);
+                if (selectedModel) {
+                    showDetailView(selectedModel);
+                }
+            });
+
+            container.appendChild(card);
+        }
+
+        function renderResults() {
+            resultsContainer.innerHTML = ''; 
+
+            const sortedModels = [...currentFilteredModels].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+            
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedModels = sortedModels.slice(startIndex, endIndex);
+
+            if (paginatedModels.length === 0 && currentPage === 1) {
+                noResultsMessage.classList.remove('hidden');
+                resultsContainer.classList.add('hidden');
+                paginationContainer.classList.add('hidden');
+            } else {
+                noResultsMessage.classList.add('hidden');
+                resultsContainer.classList.remove('hidden');
+                paginationContainer.classList.remove('hidden');
+            }
+
+            paginatedModels.forEach(model => {
+                renderCard(model, resultsContainer);
+            });
+            lucide.createIcons();
+        }
+
+        function filterAndRender() {
+            const selectedCategory = categorySelect.value;
+            aiResultsContainer.innerHTML = ''; // Clear AI results when filtering manually
+
+            currentFilteredModels = allAiModels.filter(model => {
+                const modelLang = model[currentLang];
+                return selectedCategory === 'all' || model.de.category === selectedCategory;
+            });
+            
+            currentPage = 1; 
+            renderResults();
+            renderPagination();
+        }
+
+        async function handleGeminiSearch() {
+            const userQuery = aiPromptInput.value;
+            if (!userQuery.trim()) return;
+
+            aiLoader.style.display = 'flex';
+            aiResultsContainer.innerHTML = '';
+            aiError.classList.add('hidden');
+            geminiSearchBtn.disabled = true;
+            
+            const systemPrompt = "You are an expert AI tool consultant. Your task is to analyze a user's request and recommend the most suitable tools from a provided JSON list. You must respond only with a JSON array containing the exact names of the top 3 recommended tools. Do not add any extra text, explanation, or markdown formatting. Your output must be a valid JSON array of strings.";
+            
+            const toolsForPrompt = allAiModels.map(tool => ({
+                name: tool.name,
+                description: tool[currentLang].description,
+                useCases: tool[currentLang].useCases
+            }));
+
+            const prompt = `User Request: "${userQuery}". Tool List: ${JSON.stringify(toolsForPrompt)}`;
+            
+            try {
+                const apiKey = ""; // Leave empty
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                const payload = {
+                  contents: [{ parts: [{ text: prompt }] }],
+                  systemInstruction: { parts: [{ text: systemPrompt }] },
+                  generationConfig: { responseMimeType: "application/json" }
+                };
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+
+                const result = await response.json();
+                const recommendedNamesText = result.candidates[0].content.parts[0].text;
+                const recommendedNames = JSON.parse(recommendedNamesText);
+
+                const recommendedModels = recommendedNames
+                    .map(name => allAiModels.find(tool => tool.name === name))
+                    .filter(Boolean);
+
+                aiResultsContainer.innerHTML = '';
+                if (recommendedModels.length > 0) {
+                    resultsContainer.classList.remove('hidden'); // Show main container
+                    paginationContainer.classList.remove('hidden'); // Show pagination
+                    noResultsMessage.classList.add('hidden');
+                    recommendedModels.forEach(model => {
+                        renderCard(model, aiResultsContainer);
+                    });
+                } else {
+                    noResultsMessage.classList.remove('hidden');
+                }
+                lucide.createIcons();
+
+            } catch (error) {
+                console.error("Error calling Gemini API:", error);
+                aiError.textContent = translations[currentLang].geminiError;
+                aiError.classList.remove('hidden');
+            } finally {
+                aiLoader.style.display = 'none';
+                geminiSearchBtn.disabled = false;
+            }
+        }
+
+        // --- EVENT LISTENERS ---
+        categorySelect.addEventListener('change', filterAndRender);
+        backToListBtn.addEventListener('click', showMainView);
+        langDeBtn.addEventListener('click', () => updateContent('de'));
+        langEnBtn.addEventListener('click', () => updateContent('en'));
+        newsletterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            newsletterContent.classList.add('hidden');
+            newsletterSuccess.classList.remove('hidden');
+        });
+        geminiSearchBtn.addEventListener('click', handleGeminiSearch);
+
+        imprintBtn.addEventListener('click', () => openModal(imprintModal));
+        privacyBtn.addEventListener('click', () => openModal(privacyModal));
+        
+        [imprintModal, privacyModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(modal);
+                }
+            });
+            modal.querySelector('.close-modal-btn').addEventListener('click', () => closeModal(modal));
+        });
+
+        // --- INITIAL RENDER ---
+        document.getElementById('copyright-year').textContent = new Date().getFullYear();
+        lucide.createIcons();
+        updateContent(currentLang);
+
+    </script>
+</body>
+</html>

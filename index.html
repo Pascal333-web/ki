@@ -139,13 +139,22 @@
                     </div>
                 </div>
 
-                 <!-- Feedback Section for AI Search -->
+                <!-- Feedback Section for AI Search -->
                 <div id="ai-feedback-wrapper" class="text-center mb-8">
                     <div id="ai-loader" class="hidden flex flex-col items-center justify-center">
                         <div class="loader mb-2"></div>
                         <p id="ai-loader-text" class="text-gray-600">Analysiere Tools und finde die beste Übereinstimmung...</p>
                     </div>
                     <div id="ai-error" class="hidden p-4 bg-red-100 text-red-700 rounded-lg max-w-3xl mx-auto"></div>
+                </div>
+
+                <!-- AI Recommendation Explanation -->
+                <div id="ai-explanation-container" class="hidden max-w-3xl mx-auto mb-8 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-white/50 fade-in">
+                    <h3 id="ai-explanation-title" class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
+                        <i data-lucide="info" class="w-5 h-5 text-blue-600"></i>
+                        <span>Persönliche Empfehlung</span>
+                    </h3>
+                    <p id="ai-explanation-text" class="text-gray-600"></p>
                 </div>
                 
                 <!-- Main Results Section -->
@@ -277,11 +286,13 @@
         const translations = {
             de: {
                 pageTitle: "KI-Finder: Das beste KI-Tool für dich", mainTitle: "Der KI-Finder", mainSubtitle: "Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.", categoryLabel: "Filtere nach Kategorie", searchLabel: "Was möchtest du tun?", searchInputPlaceholder: "z.B. Excel-Tabelle, Stimme klonen...", aiRecTitle: "Was möchtest du tun?", aiRecSubtitle: "Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.", aiPromptPlaceholder: "z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial...", geminiBtnText: "Empfehlung anfordern", aiLoaderText: "Analysiere Tools und finde die beste Übereinstimmung...", geminiError: "Entschuldigung, die Empfehlung konnte nicht geladen werden. Bitte versuchen Sie es später erneut.", noResultsTitle: "Keine passenden KI-Tools gefunden", noResultsSubtitle: "Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.", backButtonText: "Zurück zur Übersicht", pricingDetailsTitle: "Preisdetails", visitWebsiteButton: "Webseite besuchen", beginnerFriendly: "Anfängerfreundlich", newsletterTitle: "Bleiben Sie auf dem Laufenden", newsletterSubtitle: "Melden Sie sich für unseren Newsletter an und erhalten Sie die neuesten KI-Nachrichten direkt in Ihr Postfach.", newsletterPlaceholder: "Ihre E-Mail-Adresse", newsletterButton: "Anmelden", newsletterSuccessTitle: "Vielen Dank!", newsletterSuccessSubtitle: "Sie haben sich erfolgreich für den Newsletter angemeldet.", footerRights: "Alle Rechte vorbehalten.", footerImprint: "Impressum", footerPrivacy: "Datenschutz", imprintTitle: "Impressum", imprintContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihr eigenes, rechtsgültiges Impressum.</p><p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p><p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>`, privacyTitle: "Datenschutz", privacyContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihre eigene, rechtsgültige Datenschutzerklärung.</p><p>Wir legen grossen Wert auf den Schutz Ihrer Daten. In dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>`,
+                aiExplanationTitle: "Persönliche Empfehlung",
                 pricing: { freemium: "Freemium", subscription: "Abo", addon: "Add-on", beta: "Beta", openSource: "Kostenlos (Open Source)" },
                 categories: { all: "Alle anzeigen", design: "Bild & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Produktivität & Office", code: "Code & Entwicklung" }
             },
             en: {
                 pageTitle: "AI Finder: The Best AI Tool for You", mainTitle: "The AI Finder", mainSubtitle: "Which artificial intelligence is the best for your task? Find the perfect tool here.", categoryLabel: "Filter by Category", searchLabel: "What do you want to do?", searchInputPlaceholder: "e.g., Excel spreadsheet, clone voice...", aiRecTitle: "What do you want to do?", aiRecSubtitle: "Describe your task for a personal recommendation or filter manually.", aiPromptPlaceholder: "e.g., I want to create a video for my startup, but I don't have any of my own footage...", geminiBtnText: "Request Recommendation", aiLoaderText: "Analyzing tools and finding the best match...", geminiError: "Sorry, the recommendation could not be loaded. Please try again later.", noResultsTitle: "No matching AI tools found", noResultsSubtitle: "Try adjusting your search or selecting a different category.", backButtonText: "Back to Overview", pricingDetailsTitle: "Pricing Details", visitWebsiteButton: "Visit Website", beginnerFriendly: "Beginner-Friendly", newsletterTitle: "Stay Up-to-Date", newsletterSubtitle: "Sign up for our newsletter and get the latest AI news directly in your inbox.", newsletterPlaceholder: "Your email address", newsletterButton: "Subscribe", newsletterSuccessTitle: "Thank you!", newsletterSuccessSubtitle: "You have successfully subscribed to the newsletter.", footerRights: "All rights reserved.", footerImprint: "Legal Notice", footerPrivacy: "Privacy Policy", imprintTitle: "Legal Notice", imprintContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid legal notice.</p><p>John Doe<br>Sample Street 1<br>12345 Sample City<br>Country</p><p><strong>Contact:</strong><br>Email: contact@example.com</p>`, privacyTitle: "Privacy Policy", privacyContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid privacy policy.</p><p>We place great importance on the protection of your data. In this privacy policy, we inform you about which personal data we collect, process, and use when you use our website...</p>`,
+                aiExplanationTitle: "Personal Recommendation",
                 pricing: { freemium: "Freemium", subscription: "Subscription", addon: "Add-on", beta: "Beta", openSource: "Free (Open Source)" },
                 categories: { all: "Show All", design: "Image & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Productivity & Office", code: "Code & Development" }
             }
@@ -797,6 +808,8 @@
         const aiPromptInput = document.getElementById('ai-prompt-input');
         const aiLoader = document.getElementById('ai-loader');
         const aiError = document.getElementById('ai-error');
+        const aiExplanationContainer = document.getElementById('ai-explanation-container');
+        const aiExplanationText = document.getElementById('ai-explanation-text');
 
 
         let currentPage = 1;
@@ -857,6 +870,7 @@
             document.getElementById('imprint-content').innerHTML = translations[lang].imprintContent;
             document.getElementById('privacy-title').textContent = translations[lang].privacyTitle;
             document.getElementById('privacy-content').innerHTML = translations[lang].privacyContent;
+            document.querySelector('#ai-explanation-title span').textContent = translations[lang].aiExplanationTitle;
 
 
             // Update category dropdown
@@ -1002,6 +1016,7 @@
 
         function filterAndRender() {
             const selectedCategory = categorySelect.value;
+            aiExplanationContainer.classList.add('hidden');
             
             currentFilteredModels = allAiModels.filter(model => {
                 return selectedCategory === 'all' || model.de.category === selectedCategory;
@@ -1018,9 +1033,15 @@
 
             aiLoader.classList.remove('hidden');
             aiError.classList.add('hidden');
+            aiExplanationContainer.classList.add('hidden');
             geminiSearchBtn.disabled = true;
             
-            const systemPrompt = "You are an expert AI tool consultant. Your task is to analyze a user's request and recommend the most suitable tools from a provided JSON list. You must respond only with a JSON array containing the exact names of the top 3 recommended tools. Do not add any extra text, explanation, or markdown formatting. Your output must be a valid JSON array of strings.";
+            const langForPrompt = currentLang === 'de' ? 'German' : 'English';
+            const beginnerFriendlyInstruction = currentLang === 'de' 
+                ? "Schreibe die Erklärung in einfacher Sprache, die auch ein absoluter Anfänger versteht." 
+                : "Write the explanation in simple language that an absolute beginner can understand.";
+
+            const systemPrompt = `You are an expert AI tool consultant. Your task is to analyze a user's request and recommend the most suitable tools from a provided JSON list. You must respond with a single, valid JSON object. This object must have two keys: 1. "recommendations": An array containing the exact names of the top 3 recommended tools. 2. "explanation": A concise, helpful paragraph in ${langForPrompt} that explains why these tools are a good fit for the user's request, highlighting the specific strengths of each recommended tool for the given task. ${beginnerFriendlyInstruction} Do not add any extra text, explanation, or markdown formatting around the JSON object. Your entire output must be only the JSON object.`;
             
             const toolsForPrompt = allAiModels.map(tool => ({
                 name: tool.name,
@@ -1063,20 +1084,23 @@
                     throw new Error("Invalid response structure from API.");
                 }
                 
-                let recommendedNames;
+                let recommendationObject;
                 try {
                     const cleanedText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-                    recommendedNames = JSON.parse(cleanedText);
+                    recommendationObject = JSON.parse(cleanedText);
                 } catch (e) {
                     console.error("Failed to parse JSON from Gemini response:", responseText);
                     throw new Error("Could not understand the recommendation format.");
                 }
 
-                if (!Array.isArray(recommendedNames)) {
-                     throw new Error("Recommendation format is not an array.");
+                if (!recommendationObject || !Array.isArray(recommendationObject.recommendations) || typeof recommendationObject.explanation !== 'string') {
+                     throw new Error("Recommendation format is incorrect.");
                 }
+                
+                aiExplanationText.textContent = recommendationObject.explanation;
+                aiExplanationContainer.classList.remove('hidden');
 
-                currentFilteredModels = recommendedNames
+                currentFilteredModels = recommendationObject.recommendations
                     .map(name => allAiModels.find(tool => tool.name === name))
                     .filter(Boolean);
                 

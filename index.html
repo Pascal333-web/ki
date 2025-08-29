@@ -139,16 +139,13 @@
                     </div>
                 </div>
 
-                <!-- AI Results Section -->
-                <div id="ai-results-wrapper" class="max-w-5xl mx-auto">
-                    <div id="ai-loader" class="hidden flex flex-col items-center justify-center text-center py-4">
+                 <!-- Feedback Section for AI Search -->
+                <div id="ai-feedback-wrapper" class="text-center mb-8">
+                    <div id="ai-loader" class="hidden flex flex-col items-center justify-center">
                         <div class="loader mb-2"></div>
                         <p id="ai-loader-text" class="text-gray-600">Analysiere Tools und finde die beste Übereinstimmung...</p>
                     </div>
-                    <div id="ai-error" class="hidden text-center py-4 text-red-600"></div>
-                    <div id="ai-results-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                        <!-- AI recommended cards will be injected here -->
-                    </div>
+                    <div id="ai-error" class="hidden p-4 bg-red-100 text-red-700 rounded-lg max-w-3xl mx-auto"></div>
                 </div>
                 
                 <!-- Main Results Section -->
@@ -279,12 +276,12 @@
         // --- TRANSLATIONS ---
         const translations = {
             de: {
-                pageTitle: "KI-Finder: Das beste KI-Tool für dich", mainTitle: "Der KI-Finder", mainSubtitle: "Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.", categoryLabel: "Filtere nach Kategorie", searchLabel: "Was möchtest du tun?", searchInputPlaceholder: "z.B. Excel-Tabelle, Stimme klonen...", aiRecTitle: "Was möchtest du tun?", aiRecSubtitle: "Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.", aiPromptPlaceholder: "z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial...", geminiBtnText: "Empfehlung anfordern", aiLoaderText: "Analysiere Tools und finde die beste Übereinstimmung...", geminiError: "Entschuldigung, die KI-Empfehlung konnte nicht geladen werden. Bitte versuchen Sie es später erneut.", noResultsTitle: "Keine passenden KI-Tools gefunden", noResultsSubtitle: "Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.", backButtonText: "Zurück zur Übersicht", pricingDetailsTitle: "Preisdetails", visitWebsiteButton: "Webseite besuchen", beginnerFriendly: "Anfängerfreundlich", newsletterTitle: "Bleiben Sie auf dem Laufenden", newsletterSubtitle: "Melden Sie sich für unseren Newsletter an und erhalten Sie die neuesten KI-Nachrichten direkt in Ihr Postfach.", newsletterPlaceholder: "Ihre E-Mail-Adresse", newsletterButton: "Anmelden", newsletterSuccessTitle: "Vielen Dank!", newsletterSuccessSubtitle: "Sie haben sich erfolgreich für den Newsletter angemeldet.", footerRights: "Alle Rechte vorbehalten.", footerImprint: "Impressum", footerPrivacy: "Datenschutz", imprintTitle: "Impressum", imprintContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihr eigenes, rechtsgültiges Impressum.</p><p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p><p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>`, privacyTitle: "Datenschutz", privacyContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihre eigene, rechtsgültige Datenschutzerklärung.</p><p>Wir legen grossen Wert auf den Schutz Ihrer Daten. In dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>`,
+                pageTitle: "KI-Finder: Das beste KI-Tool für dich", mainTitle: "Der KI-Finder", mainSubtitle: "Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.", categoryLabel: "Filtere nach Kategorie", searchLabel: "Was möchtest du tun?", searchInputPlaceholder: "z.B. Excel-Tabelle, Stimme klonen...", aiRecTitle: "Was möchtest du tun?", aiRecSubtitle: "Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.", aiPromptPlaceholder: "z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial...", geminiBtnText: "Empfehlung anfordern", aiLoaderText: "Analysiere Tools und finde die beste Übereinstimmung...", geminiError: "Entschuldigung, die Empfehlung konnte nicht geladen werden. Bitte versuchen Sie es später erneut.", noResultsTitle: "Keine passenden KI-Tools gefunden", noResultsSubtitle: "Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.", backButtonText: "Zurück zur Übersicht", pricingDetailsTitle: "Preisdetails", visitWebsiteButton: "Webseite besuchen", beginnerFriendly: "Anfängerfreundlich", newsletterTitle: "Bleiben Sie auf dem Laufenden", newsletterSubtitle: "Melden Sie sich für unseren Newsletter an und erhalten Sie die neuesten KI-Nachrichten direkt in Ihr Postfach.", newsletterPlaceholder: "Ihre E-Mail-Adresse", newsletterButton: "Anmelden", newsletterSuccessTitle: "Vielen Dank!", newsletterSuccessSubtitle: "Sie haben sich erfolgreich für den Newsletter angemeldet.", footerRights: "Alle Rechte vorbehalten.", footerImprint: "Impressum", footerPrivacy: "Datenschutz", imprintTitle: "Impressum", imprintContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihr eigenes, rechtsgültiges Impressum.</p><p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p><p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>`, privacyTitle: "Datenschutz", privacyContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihre eigene, rechtsgültige Datenschutzerklärung.</p><p>Wir legen grossen Wert auf den Schutz Ihrer Daten. In dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>`,
                 pricing: { freemium: "Freemium", subscription: "Abo", addon: "Add-on", beta: "Beta", openSource: "Kostenlos (Open Source)" },
                 categories: { all: "Alle anzeigen", design: "Bild & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Produktivität & Office", code: "Code & Entwicklung" }
             },
             en: {
-                pageTitle: "AI Finder: The Best AI Tool for You", mainTitle: "The AI Finder", mainSubtitle: "Which artificial intelligence is the best for your task? Find the perfect tool here.", categoryLabel: "Filter by Category", searchLabel: "What do you want to do?", searchInputPlaceholder: "e.g., Excel spreadsheet, clone voice...", aiRecTitle: "What do you want to do?", aiRecSubtitle: "Describe your task for a personal recommendation or filter manually.", aiPromptPlaceholder: "e.g., I want to create a video for my startup, but I don't have any of my own footage...", geminiBtnText: "Request Recommendation", aiLoaderText: "Analyzing tools and finding the best match...", geminiError: "Sorry, the AI recommendation could not be loaded. Please try again later.", noResultsTitle: "No matching AI tools found", noResultsSubtitle: "Try adjusting your search or selecting a different category.", backButtonText: "Back to Overview", pricingDetailsTitle: "Pricing Details", visitWebsiteButton: "Visit Website", beginnerFriendly: "Beginner-Friendly", newsletterTitle: "Stay Up-to-Date", newsletterSubtitle: "Sign up for our newsletter and get the latest AI news directly in your inbox.", newsletterPlaceholder: "Your email address", newsletterButton: "Subscribe", newsletterSuccessTitle: "Thank you!", newsletterSuccessSubtitle: "You have successfully subscribed to the newsletter.", footerRights: "All rights reserved.", footerImprint: "Legal Notice", footerPrivacy: "Privacy Policy", imprintTitle: "Legal Notice", imprintContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid legal notice.</p><p>John Doe<br>Sample Street 1<br>12345 Sample City<br>Country</p><p><strong>Contact:</strong><br>Email: contact@example.com</p>`, privacyTitle: "Privacy Policy", privacyContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid privacy policy.</p><p>We place great importance on the protection of your data. In this privacy policy, we inform you about which personal data we collect, process, and use when you use our website...</p>`,
+                pageTitle: "AI Finder: The Best AI Tool for You", mainTitle: "The AI Finder", mainSubtitle: "Which artificial intelligence is the best for your task? Find the perfect tool here.", categoryLabel: "Filter by Category", searchLabel: "What do you want to do?", searchInputPlaceholder: "e.g., Excel spreadsheet, clone voice...", aiRecTitle: "What do you want to do?", aiRecSubtitle: "Describe your task for a personal recommendation or filter manually.", aiPromptPlaceholder: "e.g., I want to create a video for my startup, but I don't have any of my own footage...", geminiBtnText: "Request Recommendation", aiLoaderText: "Analyzing tools and finding the best match...", geminiError: "Sorry, the recommendation could not be loaded. Please try again later.", noResultsTitle: "No matching AI tools found", noResultsSubtitle: "Try adjusting your search or selecting a different category.", backButtonText: "Back to Overview", pricingDetailsTitle: "Pricing Details", visitWebsiteButton: "Visit Website", beginnerFriendly: "Beginner-Friendly", newsletterTitle: "Stay Up-to-Date", newsletterSubtitle: "Sign up for our newsletter and get the latest AI news directly in your inbox.", newsletterPlaceholder: "Your email address", newsletterButton: "Subscribe", newsletterSuccessTitle: "Thank you!", newsletterSuccessSubtitle: "You have successfully subscribed to the newsletter.", footerRights: "All rights reserved.", footerImprint: "Legal Notice", footerPrivacy: "Privacy Policy", imprintTitle: "Legal Notice", imprintContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid legal notice.</p><p>John Doe<br>Sample Street 1<br>12345 Sample City<br>Country</p><p><strong>Contact:</strong><br>Email: contact@example.com</p>`, privacyTitle: "Privacy Policy", privacyContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid privacy policy.</p><p>We place great importance on the protection of your data. In this privacy policy, we inform you about which personal data we collect, process, and use when you use our website...</p>`,
                 pricing: { freemium: "Freemium", subscription: "Subscription", addon: "Add-on", beta: "Beta", openSource: "Free (Open Source)" },
                 categories: { all: "Show All", design: "Image & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Productivity & Office", code: "Code & Development" }
             }
@@ -303,15 +300,15 @@
                     category: "Text & Marketing",
                     description: "Das vielseitigste Sprachmodell. Ideal für Content, Marketing, E-Mails und komplexe Aufgaben wie Datenanalyse.",
                     useCases: ["marketingtexte", "ads schalten", "blogartikel", "seo", "e-mails", "excel formeln", "word", "powerpoint", "datenanalyse"],
-                    detailedDescription: "ChatGPT ist ein fortschrittliches Konversations-KI-Modell von OpenAI...",
-                    pricingDetails: { free: "Eine kostenlose Version...", plus: "ChatGPT Plus...", team: "Team- und Enterprise-Pläne..." }
+                    detailedDescription: "ChatGPT ist ein fortschrittliches Konversations-KI-Modell von OpenAI. Es kann menschenähnliche Texte verstehen und generieren, was es extrem vielseitig macht. Nutzen Sie es zum Verfassen von E-Mails, zum Erstellen von Code, zum Brainstorming von Ideen oder zur Analyse komplexer Datensätze in Tabellenform.",
+                    pricingDetails: { free: "Eine kostenlose Version mit GPT-3.5 und eingeschränktem GPT-4o Zugang ist verfügbar, ideal für alltägliche Aufgaben.", plus: "ChatGPT Plus (ca. 20 USD/Monat) bietet priorisierten Zugang zum leistungsstärkeren GPT-4o, schnellere Antwortzeiten und exklusive Features wie DALL-E 3.", team: "Team- und Enterprise-Pläne bieten erweiterte Sicherheits- und Kollaborationsfunktionen für Unternehmen." }
                 },
                 en: {
                     category: "Text & Marketing",
                     description: "The most versatile language model. Ideal for content, marketing, emails, and complex tasks like data analysis.",
                     useCases: ["marketing copy", "run ads", "blog articles", "seo", "emails", "excel formulas", "word", "powerpoint", "data analysis"],
-                    detailedDescription: "ChatGPT is an advanced conversational AI model from OpenAI...",
-                    pricingDetails: { free: "A free version...", plus: "ChatGPT Plus...", team: "Team and Enterprise plans..." }
+                    detailedDescription: "ChatGPT is an advanced conversational AI model from OpenAI. It can understand and generate human-like text, making it extremely versatile. Use it to write emails, create code, brainstorm ideas, or analyze complex datasets in tabular form.",
+                    pricingDetails: { free: "A free version with GPT-3.5 and limited GPT-4o access is available, ideal for everyday tasks.", plus: "ChatGPT Plus (approx. $20/month) offers priority access to the more powerful GPT-4o, faster response times, and exclusive features like DALL-E 3.", team: "Team and Enterprise plans offer enhanced security and collaboration features for businesses." }
                 }
             },
             {
@@ -325,15 +322,15 @@
                     category: "Bild & Design",
                     description: "Erzeugt extrem hochwertige und künstlerische Bilder. Führend in Fotorealismus und kreativen Stilen.",
                     useCases: ["produktbilder", "kunst", "illustrationen", "logos", "onlineshop", "instagram bilder"],
-                    detailedDescription: "Midjourney ist ein KI-Bildgenerator, der über die Chat-App Discord bedient wird. Er ist bekannt für seine Fähigkeit, äusserst detaillierte, künstlerische und oft surreale Bilder zu erzeugen...",
-                    pricingDetails: { free: "Keine kostenlose Version...", basic: "Basic Plan...", standard: "Standard & Pro Pläne..." }
+                    detailedDescription: "Midjourney ist ein KI-Bildgenerator, der über die Chat-App Discord bedient wird. Er ist bekannt für seine Fähigkeit, äusserst detaillierte, künstlerische und oft surreale Bilder zu erzeugen. Die Qualität ist in vielen Bereichen marktführend, erfordert aber etwas Einarbeitung in die Befehlseingabe.",
+                    pricingDetails: { free: "Keine kostenlose Version verfügbar (manchmal zeitlich begrenzte Testphasen).", basic: "Basic Plan (ab ca. 10 USD/Monat) für eine begrenzte Anzahl an Bildgenerationen.", standard: "Standard & Pro Pläne (ab ca. 30 USD/Monat) bieten mehr Kapazität und schnellere Generierungszeiten." }
                 },
                 en: {
                     category: "Image & Design",
                     description: "Generates extremely high-quality and artistic images. Leader in photorealism and creative styles.",
                     useCases: ["product images", "art", "illustrations", "logos", "online store", "instagram pictures"],
-                    detailedDescription: "Midjourney is an AI image generator operated via the Discord chat app...",
-                    pricingDetails: { free: "No free version available...", basic: "Basic Plan...", standard: "Standard & Pro Plans..." }
+                    detailedDescription: "Midjourney is an AI image generator operated via the Discord chat app. It is known for its ability to create extremely detailed, artistic, and often surreal images. The quality is a market leader in many areas but requires some practice with command inputs.",
+                    pricingDetails: { free: "No free version available (sometimes limited-time trials).", basic: "Basic Plan (from approx. $10/month) for a limited number of image generations.", standard: "Standard & Pro Plans (from approx. $30/month) offer more capacity and faster generation times." }
                 }
             },
             {
@@ -346,15 +343,15 @@
                     category: "Text & Marketing",
                     description: "Multimodales Modell von Google. Stark in der Recherche und Zusammenfassung von Informationen aus dem Web.",
                     useCases: ["recherche", "texte zusammenfassen", "content-ideen", "ads schalten", "datenanalyse"],
-                    detailedDescription: "Gemini ist Googles multimodales KI-Modell, das Text, Bilder und Code nahtlos verarbeiten kann...",
-                    pricingDetails: { free: "Die Standardversion von Gemini ist kostenlos nutzbar.", advanced: "Gemini Advanced..." }
+                    detailedDescription: "Gemini ist Googles multimodales KI-Modell, das Text, Bilder und Code nahtlos verarbeiten kann. Es ist tief in das Google-Ökosystem integriert und zeichnet sich durch seine Fähigkeit aus, Informationen in Echtzeit aus dem Internet abzurufen und zusammenzufassen. Ideal für Recherche, das Erstellen von Inhaltsplänen und die Analyse von Daten.",
+                    pricingDetails: { free: "Die Standardversion von Gemini ist kostenlos nutzbar.", advanced: "Gemini Advanced (Teil des Google One AI Premium Abos für ca. 20 USD/Monat) bietet Zugang zum leistungsstärksten Modell und mehr Funktionen." }
                 },
                 en: {
                     category: "Text & Marketing",
                     description: "Multimodal model from Google. Strong in research and summarizing information from the web.",
                     useCases: ["research", "summarize texts", "content ideas", "run ads", "data analysis"],
-                    detailedDescription: "Gemini is Google's multimodal AI model that can seamlessly process text, images, and code...",
-                    pricingDetails: { free: "The standard version of Gemini is free to use.", advanced: "Gemini Advanced..." }
+                    detailedDescription: "Gemini is Google's multimodal AI model that can seamlessly process text, images, and code. It is deeply integrated into the Google ecosystem and is characterized by its ability to retrieve and summarize information from the internet in real time. Ideal for research, creating content plans, and analyzing data.",
+                    pricingDetails: { free: "The standard version of Gemini is free to use.", advanced: "Gemini Advanced (part of the Google One AI Premium subscription for approx. $20/month) provides access to the most powerful model and more features." }
                 }
             },
             {
@@ -367,15 +364,15 @@
                     category: "Text & Marketing",
                     description: "Sehr stark in langen Texten, Analysen und als sicherer Chatbot. Besitzt ein grosses Kontextfenster.",
                     useCases: ["lange dokumente analysieren", "chatbots", "wissenschaftliche texte", "kreatives schreiben", "kundensupport"],
-                    detailedDescription: "Claude 3 von Anthropic ist eine Familie von Sprachmodellen, die für ihre Fähigkeit bekannt sind, sehr lange Texte zu verarbeiten...",
-                    pricingDetails: { free: "Eine kostenlose Version (Claude 3 Sonnet)...", pro: "Ein Pro-Abo...", api: "Entwickler können über eine API..." }
+                    detailedDescription: "Claude 3 von Anthropic ist eine Familie von Sprachmodellen, die für ihre Fähigkeit bekannt sind, sehr lange Texte (bis zu 150.000 Wörter) zu verarbeiten. Dies macht sie ideal für die Analyse von Verträgen, wissenschaftlichen Arbeiten oder ganzen Büchern. Claude legt zudem einen grossen Wert auf Sicherheit und die Vermeidung von schädlichen Inhalten.",
+                    pricingDetails: { free: "Eine kostenlose Version (Claude 3 Sonnet) ist über die Webseite claude.ai mit täglichen Limits verfügbar.", pro: "Ein Pro-Abo (ca. 20 USD/Monat) bietet Zugang zum leistungsstärksten Modell (Claude 3 Opus) und höhere Nutzungslimits.", api: "Entwickler können über eine API auf die Modelle zugreifen." }
                 },
                 en: {
                     category: "Text & Marketing",
                     description: "Very strong in long texts, analysis, and as a secure chatbot. Has a large context window.",
                     useCases: ["analyze long documents", "chatbots", "scientific papers", "creative writing", "customer support"],
-                    detailedDescription: "Claude 3 from Anthropic is a family of language models known for their ability to process very long texts...",
-                    pricingDetails: { free: "A free version (Claude 3 Sonnet)...", pro: "A Pro subscription...", api: "Developers can access the models via an API." }
+                    detailedDescription: "Claude 3 from Anthropic is a family of language models known for their ability to process very long texts (up to 150,000 words). This makes them ideal for analyzing contracts, scientific papers, or entire books. Claude also places a strong emphasis on security and avoiding harmful content.",
+                    pricingDetails: { free: "A free version (Claude 3 Sonnet) is available via the claude.ai website with daily limits.", pro: "A Pro subscription (approx. $20/month) provides access to the most powerful model (Claude 3 Opus) and higher usage limits.", api: "Developers can access the models via an API." }
                 }
             },
             {
@@ -388,15 +385,15 @@
                     category: "Text & Marketing",
                     description: "Spezialisiert auf Recherche mit direkten Quellenangaben. Eine KI-gestützte Antwortmaschine.",
                     useCases: ["recherche", "faktenprüfung", "quellen finden", "artikel zusammenfassen", "lernen"],
-                    detailedDescription: "Perplexity AI ist eine 'Antwortmaschine', die das Beste aus einer Suchmaschine und einem Chatbot kombiniert...",
-                    pricingDetails: { free: "Die kostenlose Version bietet schnelle Antworten...", pro: "Ein Pro-Abo..." }
+                    detailedDescription: "Perplexity AI ist eine 'Antwortmaschine', die das Beste aus einer Suchmaschine und einem Chatbot kombiniert. Anstatt nur Links zu liefern, durchsucht Perplexity das Web und gibt eine direkte, zusammengefasste Antwort auf eine Frage, inklusive Links zu den Quellen. Das macht es zu einem extrem leistungsfähigen Werkzeug für Recherche und Faktenprüfung.",
+                    pricingDetails: { free: "Die kostenlose Version bietet schnelle Antworten mit dem eigenen Modell.", pro: "Ein Pro-Abo (ca. 20 USD/Monat) ermöglicht die Nutzung von fortschrittlicheren Modellen wie GPT-4o und Claude 3 für die Antworten." }
                 },
                 en: {
                     category: "Text & Marketing",
                     description: "Specialized in research with direct source citations. An AI-powered answer engine.",
                     useCases: ["research", "fact-checking", "find sources", "summarize articles", "learning"],
-                    detailedDescription: "Perplexity AI is an 'answer engine' that combines the best of a search engine and a chatbot...",
-                    pricingDetails: { free: "The free version offers fast answers...", pro: "A Pro subscription..." }
+                    detailedDescription: "Perplexity AI is an 'answer engine' that combines the best of a search engine and a chatbot. Instead of just providing links, Perplexity searches the web and gives a direct, summarized answer to a question, including links to the sources. This makes it an extremely powerful tool for research and fact-checking.",
+                    pricingDetails: { free: "The free version offers fast answers with its own model.", pro: "A Pro subscription (approx. $20/month) allows the use of more advanced models like GPT-4o and Claude 3 for answers." }
                 }
             },
             {
@@ -409,15 +406,15 @@
                     category: "Text & Marketing",
                     description: "Marketingfokussierte KI mit Vorlagen für Ads, Blogs und Social Media.",
                     useCases: ["seo texte", "google ads", "blogartikel", "landing pages", "produktbeschreibungen"],
-                    detailedDescription: "Writesonic ist eine All-in-One-Plattform für Content-Erstellung, die speziell auf die Bedürfnisse von Marketern und SEO-Experten zugeschnitten ist...",
-                    pricingDetails: { free: "Eine kostenlose Testversion...", pro: "Pro-Pläne..." }
+                    detailedDescription: "Writesonic ist eine All-in-One-Plattform für Content-Erstellung, die speziell auf die Bedürfnisse von Marketern und SEO-Experten zugeschnitten ist. Sie bietet eine breite Palette an Vorlagen, von Blog-Artikeln über Google Ads bis hin zu Landing Pages. Funktionen wie der AI Article Writer können in wenigen Minuten komplette, SEO-optimierte Artikel erstellen.",
+                    pricingDetails: { free: "Eine kostenlose Testversion mit einem monatlichen Wortlimit ist verfügbar.", pro: "Pro-Pläne (ab ca. 13 USD/Monat) bieten mehr Wörter, höhere Qualität und zusätzliche Funktionen wie den 'Brand Voice'-Modus." }
                 },
                 en: {
                     category: "Text & Marketing",
                     description: "Marketing-focused AI with templates for ads, blogs, and social media.",
                     useCases: ["seo texts", "google ads", "blog articles", "landing pages", "product descriptions"],
-                    detailedDescription: "Writesonic is an all-in-one content creation platform tailored to the needs of marketers and SEO experts...",
-                    pricingDetails: { free: "A free trial...", pro: "Pro plans..." }
+                    detailedDescription: "Writesonic is an all-in-one content creation platform tailored to the needs of marketers and SEO experts. It offers a wide range of templates, from blog articles and Google Ads to landing pages. Features like the AI Article Writer can create complete, SEO-optimized articles in minutes.",
+                    pricingDetails: { free: "A free trial with a monthly word limit is available.", pro: "Pro plans (from approx. $13/month) offer more words, higher quality, and additional features like 'Brand Voice' mode." }
                 }
             },
             {
@@ -430,15 +427,15 @@
                     category: "Text & Marketing",
                     description: "Konversations-KI mit Echtzeit-Zugriff auf Informationen von der Plattform X (ehemals Twitter).",
                     useCases: ["echtzeit-recherche", "social media trends", "meinungsbildung", "chat", "humorvolle antworten"],
-                    detailedDescription: "Grok ist eine von xAI entwickelte Konversations-KI, die direkt in die Plattform X integriert ist...",
-                    pricingDetails: { free: "Keine kostenlose Version verfügbar.", premium: "Grok ist Teil des X Premium+ Abonnements..." }
+                    detailedDescription: "Grok ist eine von xAI entwickelte Konversations-KI, die direkt in die Plattform X integriert ist. Sein Hauptvorteil ist der Echtzeit-Zugriff auf den öffentlichen Diskurs auf X, was ihm ein aktuelles und oft unverblümtes Verständnis für Themen verleiht. Grok ist darauf ausgelegt, Fragen mit Witz und einer rebellischen Ader zu beantworten.",
+                    pricingDetails: { free: "Keine kostenlose Version verfügbar.", premium: "Grok ist Teil des X Premium+ Abonnements (ca. 16 USD/Monat) und für diese Nutzer direkt auf der Plattform verfügbar." }
                 },
                 en: {
                     category: "Text & Marketing",
                     description: "Conversational AI with real-time access to information from the X platform (formerly Twitter).",
                     useCases: ["real-time research", "social media trends", "opinion forming", "chat", "humorous answers"],
-                    detailedDescription: "Grok is a conversational AI developed by xAI, integrated directly into the X platform...",
-                    pricingDetails: { free: "No free version available.", premium: "Grok is part of the X Premium+ subscription..." }
+                    detailedDescription: "Grok is a conversational AI developed by xAI, integrated directly into the X platform. Its main advantage is real-time access to public discourse on X, giving it an up-to-date and often candid understanding of topics. Grok is designed to answer questions with wit and a rebellious streak.",
+                    pricingDetails: { free: "No free version available.", premium: "Grok is part of the X Premium+ subscription (approx. $16/month) and is directly available to these users on the platform." }
                 }
             },
             {
@@ -451,15 +448,15 @@
                     category: "Bild & Design",
                     description: "Beliebt für Game Assets, Mockups und konsistente Charakterdesigns.",
                     useCases: ["game assets", "charakterdesign", "mockups", "stock-bilder", "texturen"],
-                    detailedDescription: "Leonardo AI ist eine Plattform für generative KI, die sich auf die Erstellung von hochwertigen visuellen Assets spezialisiert hat...",
-                    pricingDetails: { free: "Eine kostenlose Version...", abo: "Verschiedene Abo-Stufen..." }
+                    detailedDescription: "Leonardo AI ist eine Plattform für generative KI, die sich auf die Erstellung von hochwertigen visuellen Assets spezialisiert hat. Sie ist besonders bei Game-Entwicklern und Designern beliebt, da sie es ermöglicht, eigene Modelle zu trainieren, um konsistente Charaktere oder Stile zu erzeugen. Neben der Bilderzeugung bietet sie auch Tools zur Bildbearbeitung und -erweiterung.",
+                    pricingDetails: { free: "Eine kostenlose Version mit einer täglichen Anzahl an Credits ist verfügbar.", abo: "Verschiedene Abo-Stufen (ab ca. 10 USD/Monat) bieten mehr Credits, schnellere Generierung und erweiterte Funktionen." }
                 },
                 en: {
                     category: "Image & Design",
                     description: "Popular for game assets, mockups, and consistent character designs.",
                     useCases: ["game assets", "character design", "mockups", "stock images", "textures"],
-                    detailedDescription: "Leonardo AI is a generative AI platform specializing in the creation of high-quality visual assets...",
-                    pricingDetails: { free: "A free version...", subscription: "Various subscription tiers..." }
+                    detailedDescription: "Leonardo AI is a generative AI platform specializing in the creation of high-quality visual assets. It is particularly popular with game developers and designers as it allows them to train their own models to create consistent characters or styles. In addition to image generation, it also offers tools for image editing and enhancement.",
+                    pricingDetails: { free: "A free version with a daily number of credits is available.", subscription: "Various subscription tiers (from approx. $10/month) offer more credits, faster generation, and advanced features." }
                 }
             },
             {
@@ -472,15 +469,15 @@
                     category: "Audio & Video",
                     description: "Ein aufstrebendes Text-zu-Video-Modell, das für seine hohe Realitätstreue und Videolänge bekannt ist.",
                     useCases: ["realistische videos", "kurzfilme", "storytelling", "text-zu-video"],
-                    detailedDescription: "Kling ist ein neues, vielversprechendes KI-Videomodell, das Videos in hoher Qualität (1080p) und mit einer Länge von bis zu zwei Minuten generieren kann...",
-                    pricingDetails: { beta: "Derzeit ist der Zugang über eine Warteliste in China verfügbar..." }
+                    detailedDescription: "Kling ist ein neues, vielversprechendes KI-Videomodell, das Videos in hoher Qualität (1080p) und mit einer Länge von bis zu zwei Minuten generieren kann. Es zeichnet sich durch ein gutes Verständnis physikalischer Bewegungen und die Erzeugung realistischer Szenen aus. Derzeit ist der Zugang noch beschränkt, aber es gilt als starker Konkurrent für andere Text-zu-Video-Modelle.",
+                    pricingDetails: { beta: "Derzeit ist der Zugang über eine Warteliste in China verfügbar. Ein globales Release und Preismodell sind noch nicht bekannt." }
                 },
                 en: {
                     category: "Audio & Video",
                     description: "An emerging text-to-video model known for its high realism and video length.",
                     useCases: ["realistic videos", "short films", "storytelling", "text-to-video"],
-                    detailedDescription: "Kling is a new, promising AI video model that can generate high-quality (1080p) videos up to two minutes long...",
-                    pricingDetails: { beta: "Access is currently available via a waitlist in China..." }
+                    detailedDescription: "Kling is a new, promising AI video model that can generate high-quality (1080p) videos up to two minutes long. It is characterized by a good understanding of physical movements and the creation of realistic scenes. Access is currently limited, but it is considered a strong competitor to other text-to-video models.",
+                    pricingDetails: { beta: "Access is currently available via a waitlist in China. A global release and pricing model are not yet known." }
                 }
             },
             {
@@ -493,15 +490,15 @@
                     category: "Audio & Video",
                     description: "Text-zu-Video-Generator mit einem starken künstlerischen Fokus für kreative und surreale Clips.",
                     useCases: ["kreative videos", "animations-clips", "visuelle effekte", "musikvideos", "text-zu-video"],
-                    detailedDescription: "Pika Labs (oder Pika) ist ein KI-Videogenerator, der sich durch seinen künstlerischen und filmischen Stil auszeichnet...",
-                    pricingDetails: { free: "Eine kostenlose Version mit Wasserzeichen...", standard: "Standard-Pläne..." }
+                    detailedDescription: "Pika Labs (oder Pika) ist ein KI-Videogenerator, der sich durch seinen künstlerischen und filmischen Stil auszeichnet. Nutzer können per Text oder Bild-Upload kurze Videoclips erstellen. Die Plattform bietet viele Kontrollmöglichkeiten über Kamerabewegung, Stil und Seitenverhältnis. Ideal für Künstler und Kreative, die visuell beeindruckende, kurze Clips erstellen möchten.",
+                    pricingDetails: { free: "Eine kostenlose Version mit Wasserzeichen und begrenzten Credits ist verfügbar.", standard: "Standard-Pläne (ab ca. 8 USD/Monat) entfernen das Wasserzeichen und bieten mehr Credits." }
                 },
                 en: {
                     category: "Audio & Video",
                     description: "Text-to-video generator with a strong artistic focus for creative and surreal clips.",
                     useCases: ["creative videos", "animation clips", "visual effects", "music videos", "text-to-video"],
-                    detailedDescription: "Pika Labs (or Pika) is an AI video generator distinguished by its artistic and cinematic style...",
-                    pricingDetails: { free: "A free version with a watermark...", standard: "Standard plans..." }
+                    detailedDescription: "Pika Labs (or Pika) is an AI video generator distinguished by its artistic and cinematic style. Users can create short video clips via text or image upload. The platform offers many controls over camera movement, style, and aspect ratio. Ideal for artists and creatives who want to create visually stunning short clips.",
+                    pricingDetails: { free: "A free version with a watermark and limited credits is available.", standard: "Standard plans (from approx. $8/month) remove the watermark and offer more credits." }
                 }
             },
             {
@@ -514,15 +511,15 @@
                     category: "Audio & Video",
                     description: "KI für Audio-/Video-Bearbeitung, inkl. Transkription und Voice-Cloning.",
                     useCases: ["podcasts bearbeiten", "videos transkribieren", "voice-over", "stimme klonen", "füllwörter entfernen"],
-                    detailedDescription: "Descript revolutioniert die Audio- und Videobearbeitung, indem es sie so einfach wie die Bearbeitung eines Textdokuments macht...",
-                    pricingDetails: { free: "Kostenlose Version mit begrenzter Transkriptionsdauer...", creator: "Creator-Pläne...", pro: "Pro-Pläne..." }
+                    detailedDescription: "Descript revolutioniert die Audio- und Videobearbeitung, indem es sie so einfach wie die Bearbeitung eines Textdokuments macht. Die Software transkribiert automatisch das gesprochene Wort. Man kann dann einfach Text löschen, um die entsprechenden Audio-/Video-Passagen zu schneiden. Weitere KI-Features sind das Entfernen von Füllwörtern ('ähms'), das Klonen der eigenen Stimme und die Verbesserung der Audioqualität.",
+                    pricingDetails: { free: "Kostenlose Version mit begrenzter Transkriptionsdauer und Wasserzeichen im Videoexport.", creator: "Creator-Pläne (ab ca. 12 USD/Monat) bieten mehr Stunden und entfernen das Wasserzeichen.", pro: "Pro-Pläne bieten unbegrenzte Transkription und professionelle Funktionen." }
                 },
                 en: {
                     category: "Audio & Video",
                     description: "AI for audio/video editing, including transcription and voice cloning.",
                     useCases: ["edit podcasts", "transcribe videos", "voice-over", "clone voice", "remove filler words"],
-                    detailedDescription: "Descript revolutionizes audio and video editing by making it as easy as editing a text document...",
-                    pricingDetails: { free: "Free version with limited transcription duration...", creator: "Creator plans...", pro: "Pro plans..." }
+                    detailedDescription: "Descript revolutionizes audio and video editing by making it as easy as editing a text document. The software automatically transcribes the spoken word. You can then simply delete text to cut the corresponding audio/video passages. Other AI features include removing filler words ('ums'), cloning your own voice, and improving audio quality.",
+                    pricingDetails: { free: "Free version with limited transcription duration and watermark on video exports.", creator: "Creator plans (from approx. $12/month) offer more hours and remove the watermark.", pro: "Pro plans offer unlimited transcription and professional features." }
                 }
             },
             {
@@ -535,15 +532,15 @@
                     category: "Code & Entwicklung",
                     description: "Ein leistungsstarkes, auf Code spezialisiertes Sprachmodell, das für seine hohe Performance bekannt ist.",
                     useCases: ["code generierung", "programmieren", "debugging", "code-vervollständigung", "algorithmic tasks"],
-                    detailedDescription: "DeepSeek Coder ist eine Familie von auf Code spezialisierten KI-Modellen...",
-                    pricingDetails: { free: "Kostenlos für Forschung und den persönlichen Gebrauch.", api: "Kommerzielle Nutzung erfolgt über eine API..." }
+                    detailedDescription: "DeepSeek Coder ist eine Familie von auf Code spezialisierten KI-Modellen. Sie wurden darauf trainiert, eine Vielzahl von Programmiersprachen zu verstehen und zu generieren. Ihre Stärke liegt in der Fähigkeit, komplexe Programmierprobleme zu lösen und effizienten Code zu schreiben, was sie zu einem Favoriten für wettbewerbsorientierte Programmierung und anspruchsvolle Entwicklungsaufgaben macht.",
+                    pricingDetails: { free: "Kostenlos für Forschung und den persönlichen Gebrauch.", api: "Kommerzielle Nutzung erfolgt über eine API mit nutzungsbasierter Abrechnung, die oft günstiger ist als bei Konkurrenzmodellen." }
                 },
                 en: {
                     category: "Code & Development",
                     description: "A powerful language model specialized in code, known for its high performance.",
                     useCases: ["code generation", "programming", "debugging", "code completion", "algorithmic tasks"],
-                    detailedDescription: "DeepSeek Coder is a family of AI models specialized in code...",
-                    pricingDetails: { free: "Free for research and personal use.", api: "Commercial use is available via a usage-based API." }
+                    detailedDescription: "DeepSeek Coder is a family of AI models specialized in code. They have been trained to understand and generate a variety of programming languages. Their strength lies in their ability to solve complex programming problems and write efficient code, making them a favorite for competitive programming and demanding development tasks.",
+                    pricingDetails: { free: "Free for research and personal use.", api: "Commercial use is available via a usage-based API, which is often more affordable than competing models." }
                 }
             },
             {
@@ -556,15 +553,15 @@
                     category: "Code & Entwicklung",
                     description: "Eine sehr schnelle und kostenlose Alternative zu GitHub Copilot für Einzelentwickler.",
                     useCases: ["programmieren", "code schreiben", "autovervollständigung", "code-chat", "debugging"],
-                    detailedDescription: "Codeium ist ein KI-Coding-Assistent, der sich als direkte Alternative zu GitHub Copilot positioniert...",
-                    pricingDetails: { free: "Für Einzelpersonen ist die Nutzung komplett kostenlos.", teams: "Für Teams gibt es einen kostenpflichtigen Plan..." }
+                    detailedDescription: "Codeium ist ein KI-Coding-Assistent, der sich als direkte Alternative zu GitHub Copilot positioniert. Er bietet extrem schnelle Code-Vervollständigungen und einen integrierten Chat, um Fragen zum Code zu stellen. Das Besondere: Für Einzelentwickler ist Codeium komplett kostenlos, ohne Einschränkungen bei der Funktionalität. Es unterstützt über 70 Programmiersprachen und lässt sich in alle gängigen IDEs integrieren.",
+                    pricingDetails: { free: "Für Einzelpersonen ist die Nutzung komplett kostenlos.", teams: "Für Teams gibt es einen kostenpflichtigen Plan (ab ca. 12 USD/Benutzer/Monat) mit zusätzlichen Verwaltungs- und Sicherheitsfunktionen." }
                 },
                 en: {
                     category: "Code & Development",
                     description: "A very fast and free alternative to GitHub Copilot for individual developers.",
                     useCases: ["programming", "writing code", "autocomplete", "code chat", "debugging"],
-                    detailedDescription: "Codeium is an AI coding assistant that positions itself as a direct alternative to GitHub Copilot...",
-                    pricingDetails: { free: "Usage is completely free for individuals.", teams: "For teams, there is a paid plan..." }
+                    detailedDescription: "Codeium is an AI coding assistant that positions itself as a direct alternative to GitHub Copilot. It offers extremely fast code completions and an integrated chat to ask questions about the code. The special feature: For individual developers, Codeium is completely free with no functional limitations. It supports over 70 programming languages and integrates with all major IDEs.",
+                    pricingDetails: { free: "Usage is completely free for individuals.", teams: "For teams, there is a paid plan (from approx. $12/user/month) with additional management and security features." }
                 }
             },
             {
@@ -577,15 +574,15 @@
                     category: "Code & Entwicklung",
                     description: "KI-Coding-Assistent mit starkem Fokus auf Datenschutz und der Möglichkeit, auf eigenem Code zu trainieren.",
                     useCases: ["programmieren", "code-sicherheit", "team-kollaboration", "autovervollständigung", "privater code"],
-                    detailedDescription: "Tabnine ist ein KI-Assistent für Programmierer, der sich durch seinen Fokus auf Datenschutz und Sicherheit von anderen abhebt...",
-                    pricingDetails: { free: "Ein kostenloser Plan...", pro: "Ein Pro-Plan..." }
+                    detailedDescription: "Tabnine ist ein KI-Assistent für Programmierer, der sich durch seinen Fokus auf Datenschutz und Sicherheit von anderen abhebt. Er kann so konfiguriert werden, dass er niemals Code teilt oder auf eigenen, privaten Code-Repositories trainiert wird. Dies macht ihn besonders für Unternehmen attraktiv. Tabnine bietet kontextsensitive Code-Vervollständigungen und lernt den individuellen Stil des Entwicklers.",
+                    pricingDetails: { free: "Ein kostenloser Plan mit grundlegenden Code-Vervollständigungen ist verfügbar.", pro: "Ein Pro-Plan (ab ca. 12 USD/Monat) bietet erweiterte Funktionen und kann auf den eigenen Code-Repositories trainieren." }
                 },
                 en: {
                     category: "Code & Development",
                     description: "AI coding assistant with a strong focus on privacy and the ability to train on your own code.",
                     useCases: ["programming", "code security", "team collaboration", "autocomplete", "private code"],
-                    detailedDescription: "Tabnine is an AI assistant for programmers that stands out for its focus on privacy and security...",
-                    pricingDetails: { free: "A free plan...", pro: "A Pro plan..." }
+                    detailedDescription: "Tabnine is an AI assistant for programmers that stands out for its focus on privacy and security. It can be configured to never share code or train on its own private code repositories. This makes it particularly attractive for businesses. Tabnine provides context-sensitive code completions and learns the developer's individual style.",
+                    pricingDetails: { free: "A free plan with basic code completions is available.", pro: "A Pro plan (from approx. $12/month) offers advanced features and can train on your own code repositories." }
                 }
             },
             {
@@ -598,15 +595,15 @@
                     category: "Produktivität & Office",
                     description: "Führend bei Meeting-Transkriptionen und automatischen Zusammenfassungen in Echtzeit.",
                     useCases: ["meeting transkribieren", "interviews aufzeichnen", "zusammenfassungen", "action items", "notizen"],
-                    detailedDescription: "Otter.ai ist ein KI-Assistent, der speziell für Meetings entwickelt wurde...",
-                    pricingDetails: { free: "Eine kostenlose Version...", pro: "Pro-Pläne...", business: "Business-Pläne..." }
+                    detailedDescription: "Otter.ai ist ein KI-Assistent, der speziell für Meetings entwickelt wurde. Er kann an Online-Meetings (Zoom, Google Meet, etc.) teilnehmen, das Gespräch in Echtzeit transkribieren und identifiziert dabei sogar die verschiedenen Sprecher. Nach dem Meeting erstellt Otter automatisch eine Zusammenfassung, identifiziert die wichtigsten Punkte und listet Action Items auf. Ein 'Must-have' für alle, die viele Meetings haben.",
+                    pricingDetails: { free: "Eine kostenlose Version mit einem monatlichen Kontingent an Transkriptionsminuten ist verfügbar.", pro: "Pro-Pläne (ab ca. 10 USD/Monat) bieten deutlich mehr Minuten und erweiterte Funktionen.", business: "Business-Pläne für Teams mit zentraler Verwaltung." }
                 },
                 en: {
                     category: "Productivity & Office",
                     description: "Leader in real-time meeting transcriptions and automatic summaries.",
                     useCases: ["transcribe meetings", "record interviews", "summaries", "action items", "notes"],
-                    detailedDescription: "Otter.ai is an AI assistant designed specifically for meetings...",
-                    pricingDetails: { free: "A free version...", pro: "Pro plans...", business: "Business plans..." }
+                    detailedDescription: "Otter.ai is an AI assistant designed specifically for meetings. It can join online meetings (Zoom, Google Meet, etc.), transcribe the conversation in real time, and even identify different speakers. After the meeting, Otter automatically creates a summary, identifies key points, and lists action items. A 'must-have' for anyone who has a lot of meetings.",
+                    pricingDetails: { free: "A free version with a monthly quota of transcription minutes is available.", pro: "Pro plans (from approx. $10/month) offer significantly more minutes and advanced features.", business: "Business plans for teams with central administration." }
                 }
             },
             {
@@ -619,15 +616,15 @@
                     category: "Produktivität & Office",
                     description: "KI-Features direkt in die Projektmanagement-Plattform ClickUp integriert, um Aufgaben zu automatisieren.",
                     useCases: ["projektmanagement", "aufgaben zusammenfassen", "action items", "status updates", "brainstorming"],
-                    detailedDescription: "ClickUp AI integriert künstliche Intelligenz direkt in das umfassende Projektmanagement-Tool ClickUp...",
-                    pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen...", addon: "Für die volle Nutzung..." }
+                    detailedDescription: "ClickUp AI integriert künstliche Intelligenz direkt in das umfassende Projektmanagement-Tool ClickUp. Es kann Aufgaben basierend auf einem Ziel erstellen, Kommentare zusammenfassen, Status-Updates schreiben oder den Inhalt von Dokumenten und Aufgaben verbessern. Ziel ist es, repetitive administrative Arbeit zu reduzieren, damit sich Teams auf die eigentlichen Aufgaben konzentrieren können.",
+                    pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen ist in allen Plänen (auch dem kostenlosen) zum Ausprobieren enthalten.", addon: "Für die volle Nutzung ist es ein kostenpflichtiges Add-on (ca. 5 USD/Benutzer/Monat) zu jedem ClickUp-Plan." }
                 },
                 en: {
                     category: "Productivity & Office",
                     description: "AI features integrated directly into the ClickUp project management platform to automate tasks.",
                     useCases: ["project management", "summarize tasks", "action items", "status updates", "brainstorming"],
-                    detailedDescription: "ClickUp AI integrates artificial intelligence directly into the comprehensive project management tool ClickUp...",
-                    pricingDetails: { free: "A limited number of AI actions...", addon: "For full use..." }
+                    detailedDescription: "ClickUp AI integrates artificial intelligence directly into the comprehensive project management tool ClickUp. It can create tasks based on a goal, summarize comments, write status updates, or improve the content of documents and tasks. The goal is to reduce repetitive administrative work so teams can focus on the actual tasks.",
+                    pricingDetails: { free: "A limited number of AI actions are included in all plans (including the free one) for trial.", addon: "For full use, it is a paid add-on (approx. $5/user/month) to any ClickUp plan." }
                 }
             },
             {
@@ -640,15 +637,15 @@
                     category: "Bild & Design",
                     description: "Direkt in ChatGPT integriert, einfach zu bedienen. Setzt Textanweisungen präzise in Bilder um.",
                     useCases: ["social media bilder", "blog-illustrationen", "präsentationen", "onlineshop", "instagram", "logos"],
-                    detailedDescription: "DALL-E 3 ist der Bildgenerator von OpenAI und ist direkt in ChatGPT Plus integriert...",
-                    pricingDetails: { free: "Nicht direkt kostenlos verfügbar...", plus: "Die Bildgenerierung ist Teil des ChatGPT Plus Abos...", api: "Für Entwickler..." }
+                    detailedDescription: "DALL-E 3 ist der Bildgenerator von OpenAI und ist direkt in ChatGPT Plus integriert. Seine grösste Stärke liegt im Verständnis von komplexen und detaillierten Anweisungen. Man kann im Gespräch mit ChatGPT eine Idee verfeinern und DALL-E 3 setzt diese dann visuell um. Es ist besonders gut darin, Text korrekt in Bildern darzustellen. Die einfache Bedienung über den Chat macht es extrem anfängerfreundlich.",
+                    pricingDetails: { free: "Nicht direkt kostenlos verfügbar. Die Nutzung ist im ChatGPT Plus Abonnement enthalten.", plus: "Die Bildgenerierung ist Teil des ChatGPT Plus Abos (ca. 20 USD/Monat).", api: "Für Entwickler ist der Zugang auch über die OpenAI API mit nutzungsbasierter Abrechnung möglich." }
                 },
                 en: {
                     category: "Image & Design",
                     description: "Integrated directly into ChatGPT, easy to use. Accurately translates text instructions into images.",
                     useCases: ["social media images", "blog illustrations", "presentations", "online store", "instagram", "logos"],
-                    detailedDescription: "DALL-E 3 is OpenAI's image generator and is integrated directly into ChatGPT Plus...",
-                    pricingDetails: { free: "Not available for free directly...", plus: "Image generation is part of the ChatGPT Plus subscription...", api: "For developers..." }
+                    detailedDescription: "DALL-E 3 is OpenAI's image generator and is integrated directly into ChatGPT Plus. Its greatest strength lies in understanding complex and detailed instructions. You can refine an idea in conversation with ChatGPT, and DALL-E 3 will then realize it visually. It is particularly good at correctly rendering text in images. The easy operation via chat makes it extremely beginner-friendly.",
+                    pricingDetails: { free: "Not available for free directly. Use is included in the ChatGPT Plus subscription.", plus: "Image generation is part of the ChatGPT Plus subscription (approx. $20/month).", api: "For developers, access is also possible via the OpenAI API with usage-based billing." }
                 }
             },
             {
@@ -661,15 +658,15 @@
                     category: "Bild & Design",
                     description: "Open-Source-Modell mit maximaler Kontrolle. Kann lokal ausgeführt werden für hohe Anpassbarkeit.",
                     useCases: ["charakterdesign", "mode", "architektur", "experimentelle kunst", "lokale bildgenerierung"],
-                    detailedDescription: "Stable Diffusion ist ein leistungsstarkes Open-Source-Modell zur Bilderzeugung...",
-                    pricingDetails: { free: "Das Modell selbst ist kostenlos...", cloud: "Es gibt auch Cloud-Dienste..." }
+                    detailedDescription: "Stable Diffusion ist ein leistungsstarkes Open-Source-Modell zur Bilderzeugung. Im Gegensatz zu vielen anderen Diensten kann es auf dem eigenen Computer (mit einer ausreichend starken Grafikkarte) installiert und ausgeführt werden. Dies bietet maximale Kontrolle über den Prozess, ermöglicht das Trainieren mit eigenen Daten und ist kostenlos in der Nutzung. Es ist die bevorzugte Wahl für Entwickler, Forscher und Künstler, die volle Kontrolle wünschen.",
+                    pricingDetails: { free: "Das Modell selbst ist kostenlos. Man benötigt lediglich die passende Hardware (Grafikkarte).", cloud: "Es gibt auch Cloud-Dienste wie DreamStudio von Stability AI, die eine nutzungsbasierte Abrechnung (Credits) für die Verwendung von Stable Diffusion anbieten, ohne dass man eigene Hardware benötigt." }
                 },
                 en: {
                     category: "Image & Design",
                     description: "Open-source model with maximum control. Can be run locally for high customizability.",
                     useCases: ["character design", "fashion", "architecture", "experimental art", "local image generation"],
-                    detailedDescription: "Stable Diffusion is a powerful open-source model for image generation...",
-                    pricingDetails: { free: "The model itself is free...", cloud: "There are also cloud services..." }
+                    detailedDescription: "Stable Diffusion is a powerful open-source model for image generation. Unlike many other services, it can be installed and run on your own computer (with a sufficiently powerful graphics card). This offers maximum control over the process, allows training with your own data, and is free to use. It is the preferred choice for developers, researchers, and artists who want full control.",
+                    pricingDetails: { free: "The model itself is free. You just need the appropriate hardware (graphics card).", cloud: "There are also cloud services like DreamStudio from Stability AI that offer usage-based billing (credits) for using Stable Diffusion without needing your own hardware." }
                 }
             },
              {
@@ -682,15 +679,15 @@
                     category: "Text & Marketing",
                     description: "Speziell auf Marketing und Werbetexte spezialisierte KI. Bietet viele Vorlagen für Ads, Social Media etc.",
                     useCases: ["werbetexte", "facebook ads", "google ads", "produktbeschreibungen", "landing pages", "blogartikel"],
-                    detailedDescription: "Jasper ist eine auf Marketing spezialisierte KI-Schreibplattform...",
-                    pricingDetails: { free: "Es gibt in der Regel eine kostenlose Testphase...", creator: "Creator-Pläne...", pro: "Pro- und Business-Pläne..." }
+                    detailedDescription: "Jasper ist eine auf Marketing spezialisierte KI-Schreibplattform. Sie ist darauf trainiert, überzeugende und markenkonforme Texte zu erstellen. Mit Dutzenden von Vorlagen für Social-Media-Posts, Werbeanzeigen, Blogartikel und E-Mails hilft Jasper Marketern, schneller hochwertigen Content zu produzieren. Die 'Brand Voice'-Funktion ermöglicht es, den Schreibstil an eine bestimmte Marke anzupassen.",
+                    pricingDetails: { free: "Es gibt in der Regel eine kostenlose Testphase, aber keinen permanenten kostenlosen Plan.", creator: "Creator-Pläne (ab ca. 39 USD/Monat) sind für Einzelpersonen und kleine Teams gedacht.", pro: "Pro- und Business-Pläne bieten mehr Funktionen für die Zusammenarbeit im Team und erweiterte Analyse-Tools." }
                 },
                 en: {
                     category: "Text & Marketing",
                     description: "AI specialized in marketing and ad copy. Offers many templates for ads, social media, etc.",
                     useCases: ["ad copy", "facebook ads", "google ads", "product descriptions", "landing pages", "blog articles"],
-                    detailedDescription: "Jasper is an AI writing platform specialized in marketing...",
-                    pricingDetails: { free: "There is usually a free trial period...", creator: "Creator plans...", pro: "Pro and Business plans..." }
+                    detailedDescription: "Jasper is an AI writing platform specialized in marketing. It is trained to create persuasive and brand-compliant texts. With dozens of templates for social media posts, ads, blog articles, and emails, Jasper helps marketers produce high-quality content faster. The 'Brand Voice' feature allows the writing style to be adapted to a specific brand.",
+                    pricingDetails: { free: "There is usually a free trial period, but no permanent free plan.", creator: "Creator plans (from approx. $39/month) are for individuals and small teams.", pro: "Pro and Business plans offer more features for team collaboration and advanced analysis tools." }
                 }
             },
             {
@@ -703,15 +700,15 @@
                     category: "Audio & Video",
                     description: "Erzeugt komplette Songs (Musik und Gesang) basierend auf einer einfachen Texteingabe.",
                     useCases: ["hintergrundmusik", "jingles", "social media videos", "podcasts", "songwriting"],
-                    detailedDescription: "Suno AI ist ein revolutionäres KI-Tool, das aus einer einfachen Textbeschreibung komplette Lieder mit Gesang, Instrumenten und Texten generieren kann...",
-                    pricingDetails: { free: "Kostenlose Version bietet täglich...", pro: "Pro-Pläne...", premier: "Premier-Pläne..." }
+                    detailedDescription: "Suno AI ist ein revolutionäres KI-Tool, das aus einer einfachen Textbeschreibung komplette Lieder mit Gesang, Instrumenten und Texten generieren kann. Nutzer können einen Stil (z.B. 'Pop', 'Rock') und einen Text vorgeben, und die KI komponiert und produziert einen einzigartigen Song. Es ist unglaublich einfach zu bedienen und ideal für Content Creator, Musiker oder einfach zum Spass.",
+                    pricingDetails: { free: "Kostenlose Version bietet täglich eine begrenzte Anzahl an Credits, um Songs zu erstellen.", pro: "Pro-Pläne (ab ca. 8 USD/Monat) bieten mehr Credits, schnellere Generierung und erlauben die kommerzielle Nutzung der erstellten Songs.", premier: "Premier-Pläne für Power-User mit einem sehr hohen Bedarf an Song-Generierungen." }
                 },
                 en: {
                     category: "Audio & Video",
                     description: "Generates complete songs (music and vocals) based on a simple text input.",
                     useCases: ["background music", "jingles", "social media videos", "podcasts", "songwriting"],
-                    detailedDescription: "Suno AI is a revolutionary AI tool that can generate complete songs with vocals, instruments, and lyrics from a simple text description...",
-                    pricingDetails: { free: "Free version offers a limited number...", pro: "Pro plans...", premier: "Premier plans..." }
+                    detailedDescription: "Suno AI is a revolutionary AI tool that can generate complete songs with vocals, instruments, and lyrics from a simple text description. Users can specify a style (e.g., 'Pop', 'Rock') and lyrics, and the AI composes and produces a unique song. It is incredibly easy to use and ideal for content creators, musicians, or just for fun.",
+                    pricingDetails: { free: "Free version offers a limited number of credits daily to create songs.", pro: "Pro plans (from approx. $8/month) offer more credits, faster generation, and allow commercial use of the created songs.", premier: "Premier plans for power users with a very high demand for song generation." }
                 }
             },
             {
@@ -724,15 +721,15 @@
                     category: "Audio & Video",
                     description: "Eine All-in-One-Plattform für Videoerstellung und -bearbeitung mit KI-Tools (Text-zu-Video, Inpainting etc.).",
                     useCases: ["marketingvideos", "kurzfilme", "visuelle effekte", "video-bearbeitung", "text-zu-video"],
-                    detailedDescription: "RunwayML ist eine leistungsstarke Online-Suite für Videobearbeitung, die mit KI-Funktionen angereichert ist...",
-                    pricingDetails: { free: "Eine kostenlose Version ist mit einem Startguthaben...", standard: "Standard-Plan...", pro: "Pro & Unlimited Pläne..." }
+                    detailedDescription: "RunwayML ist eine leistungsstarke Online-Suite für Videobearbeitung, die mit KI-Funktionen angereichert ist. Die Plattform bietet Werkzeuge wie Text-zu-Video (Gen-2), das Entfernen von Objekten aus Videos, unendliche Bild-Erweiterung und vieles mehr. Es ist ein kreativer Spielplatz für Videokünstler und Filmemacher, die die Grenzen des Möglichen ausloten wollen.",
+                    pricingDetails: { free: "Eine kostenlose Version ist mit einem Startguthaben an Credits und eingeschränkten Exportoptionen (z.B. Wasserzeichen) verfügbar.", standard: "Standard-Plan (ab ca. 12 USD/Monat) bietet mehr Credits, höhere Exportqualität und mehr Speicherplatz.", pro: "Pro & Unlimited Pläne bieten noch mehr Credits und erweiterte Funktionen für professionelle Anwender." }
                 },
                 en: {
                     category: "Audio & Video",
                     description: "An all-in-one platform for video creation and editing with AI tools (text-to-video, inpainting, etc.).",
                     useCases: ["marketing videos", "short films", "visual effects", "video editing", "text-to-video"],
-                    detailedDescription: "RunwayML is a powerful online suite for video editing enriched with AI features...",
-                    pricingDetails: { free: "A free version is available with a starting credit balance...", standard: "Standard plan...", pro: "Pro & Unlimited plans..." }
+                    detailedDescription: "RunwayML is a powerful online suite for video editing enriched with AI features. The platform offers tools like text-to-video (Gen-2), removing objects from videos, infinite image expansion, and much more. It is a creative playground for video artists and filmmakers looking to push the boundaries of what is possible.",
+                    pricingDetails: { free: "A free version is available with a starting credit balance and limited export options (e.g., watermark).", standard: "Standard plan (from approx. $12/month) offers more credits, higher export quality, and more storage.", pro: "Pro & Unlimited plans offer even more credits and advanced features for professional users." }
                 }
             },
             {
@@ -745,15 +742,15 @@
                     category: "Code & Entwicklung",
                     description: "Ein KI-gestützter Programmierpartner, der Code direkt im Editor vorschlägt und vervollständigt.",
                     useCases: ["programmieren", "code schreiben", "debugging", "lernen", "boilerplate reduzieren"],
-                    detailedDescription: "GitHub Copilot ist ein KI-Programmierassistent, der direkt in gängigen Code-Editoren wie VS Code integriert ist...",
-                    pricingDetails: { free: "Kostenlos für verifizierte Studierende...", individual: "Für Einzelpersonen...", business: "Ein Business-Plan..." }
+                    detailedDescription: "GitHub Copilot ist ein KI-Programmierassistent, der direkt in gängigen Code-Editoren wie VS Code integriert ist. Er analysiert den Kontext des geschriebenen Codes und schlägt ganze Codezeilen oder sogar komplette Funktionen vor. Dies beschleunigt die Entwicklung erheblich, hilft beim Erlernen neuer Sprachen und reduziert das Schreiben von sich wiederholendem Code.",
+                    pricingDetails: { free: "Kostenlos für verifizierte Studierende und Betreuer von populären Open-Source-Projekten.", individual: "Für Einzelpersonen kostet es ca. 10 USD/Monat.", business: "Ein Business-Plan mit zusätzlichen Verwaltungsfunktionen ist für ca. 19 USD/Benutzer/Monat erhältlich." }
                 },
                 en: {
                     category: "Code & Development",
                     description: "An AI-powered coding partner that suggests and completes code directly in the editor.",
                     useCases: ["programming", "writing code", "debugging", "learning", "reducing boilerplate"],
-                    detailedDescription: "GitHub Copilot is an AI programming assistant integrated directly into popular code editors like VS Code...",
-                    pricingDetails: { free: "Free for verified students...", individual: "For individuals...", business: "A business plan..." }
+                    detailedDescription: "GitHub Copilot is an AI programming assistant integrated directly into popular code editors like VS Code. It analyzes the context of the written code and suggests entire lines of code or even complete functions. This significantly speeds up development, helps in learning new languages, and reduces writing repetitive code.",
+                    pricingDetails: { free: "Free for verified students and maintainers of popular open-source projects.", individual: "For individuals, it costs approx. $10/month.", business: "A business plan with additional administrative features is available for approx. $19/user/month." }
                 }
             },
             {
@@ -766,15 +763,15 @@
                     category: "Produktivität & Office",
                     description: "Integriert in die Notion-Arbeitsumgebung. Hilft beim Schreiben, Zusammenfassen und Organisieren von Notizen.",
                     useCases: ["notizen organisieren", "meeting-zusammenfassungen", "brainstorming", "texte verbessern", "word"],
-                    detailedDescription: "Notion AI ist direkt in die beliebte Produktivitäts-App Notion integriert...",
-                    pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen...", addon: "Für unbegrenzte Nutzung..." }
+                    detailedDescription: "Notion AI ist direkt in die beliebte Produktivitäts-App Notion integriert. Es agiert als Schreibassistent, der Texte zusammenfassen, umschreiben, verlängern oder den Tonfall ändern kann. Zudem kann es basierend auf vorhandenen Notizen To-Do-Listen oder Tabellen erstellen. Es ist perfekt, um den Workflow innerhalb von Notion zu beschleunigen und zu verbessern.",
+                    pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen ist in jedem Notion-Plan (auch dem kostenlosen) enthalten.", addon: "Für unbegrenzte Nutzung kann Notion AI als Add-on für ca. 8 USD/Benutzer/Monat zu jedem Plan hinzugefügt werden." }
                 },
                 en: {
                     category: "Productivity & Office",
                     description: "Integrated into the Notion workspace. Helps write, summarize, and organize notes.",
                     useCases: ["organize notes", "meeting summaries", "brainstorming", "improve texts", "word"],
-                    detailedDescription: "Notion AI is integrated directly into the popular productivity app Notion...",
-                    pricingDetails: { free: "A limited number of AI actions...", addon: "For unlimited use..." }
+                    detailedDescription: "Notion AI is integrated directly into the popular productivity app Notion. It acts as a writing assistant that can summarize, rewrite, extend, or change the tone of texts. It can also create to-do lists or tables based on existing notes. It is perfect for speeding up and improving the workflow within Notion.",
+                    pricingDetails: { free: "A limited number of AI actions are included in every Notion plan (including the free one).", addon: "For unlimited use, Notion AI can be added as an add-on for approx. $8/user/month to any plan." }
                 }
             }
         ];
@@ -798,7 +795,6 @@
         const privacyBtn = document.getElementById('footer-privacy-btn');
         const geminiSearchBtn = document.getElementById('gemini-search-btn');
         const aiPromptInput = document.getElementById('ai-prompt-input');
-        const aiResultsContainer = document.getElementById('ai-results-container');
         const aiLoader = document.getElementById('ai-loader');
         const aiError = document.getElementById('ai-error');
 
@@ -995,7 +991,7 @@
             } else {
                 noResultsMessage.classList.add('hidden');
                 resultsContainer.classList.remove('hidden');
-                paginationContainer.classList.remove('hidden');
+                // paginationContainer is handled by renderPagination
             }
 
             paginatedModels.forEach(model => {
@@ -1006,10 +1002,8 @@
 
         function filterAndRender() {
             const selectedCategory = categorySelect.value;
-            aiResultsContainer.innerHTML = ''; // Clear AI results when filtering manually
-
+            
             currentFilteredModels = allAiModels.filter(model => {
-                const modelLang = model[currentLang];
                 return selectedCategory === 'all' || model.de.category === selectedCategory;
             });
             
@@ -1022,8 +1016,7 @@
             const userQuery = aiPromptInput.value;
             if (!userQuery.trim()) return;
 
-            aiLoader.style.display = 'flex';
-            aiResultsContainer.innerHTML = '';
+            aiLoader.classList.remove('hidden');
             aiError.classList.add('hidden');
             geminiSearchBtn.disabled = true;
             
@@ -1053,35 +1046,48 @@
                     body: JSON.stringify(payload)
                 });
 
-                if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status} ${response.statusText}`);
+                }
 
                 const result = await response.json();
-                const recommendedNamesText = result.candidates[0].content.parts[0].text;
-                const recommendedNames = JSON.parse(recommendedNamesText);
+                
+                const responseText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!responseText) {
+                    throw new Error("Invalid response structure from API.");
+                }
+                
+                let recommendedNames;
+                try {
+                    const cleanedText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+                    recommendedNames = JSON.parse(cleanedText);
+                } catch (e) {
+                    console.error("Failed to parse JSON from Gemini response:", responseText);
+                    throw new Error("Could not understand the recommendation format.");
+                }
 
-                const recommendedModels = recommendedNames
+                if (!Array.isArray(recommendedNames)) {
+                     throw new Error("Recommendation format is not an array.");
+                }
+
+                currentFilteredModels = recommendedNames
                     .map(name => allAiModels.find(tool => tool.name === name))
                     .filter(Boolean);
-
-                aiResultsContainer.innerHTML = '';
-                if (recommendedModels.length > 0) {
-                    resultsContainer.classList.remove('hidden'); // Show main container
-                    paginationContainer.classList.remove('hidden'); // Show pagination
-                    noResultsMessage.classList.add('hidden');
-                    recommendedModels.forEach(model => {
-                        renderCard(model, aiResultsContainer);
-                    });
-                } else {
-                    noResultsMessage.classList.remove('hidden');
-                }
-                lucide.createIcons();
-
+                
+                currentPage = 1;
+                renderResults();
+                renderPagination();
+                
             } catch (error) {
-                console.error("Error calling Gemini API:", error);
+                console.error("Error during Gemini recommendation:", error);
                 aiError.textContent = translations[currentLang].geminiError;
                 aiError.classList.remove('hidden');
+                
+                // Fallback: Reset to the default category view
+                filterAndRender();
+
             } finally {
-                aiLoader.style.display = 'none';
+                aiLoader.classList.add('hidden');
                 geminiSearchBtn.disabled = false;
             }
         }
@@ -1118,3 +1124,4 @@
     </script>
 </body>
 </html>
+

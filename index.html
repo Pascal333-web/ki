@@ -1031,8 +1031,14 @@
             const prompt = `User Request: "${userQuery}". Tool List: ${JSON.stringify(toolsForPrompt)}`;
             
             try {
-                const apiKey = ""; // Leave empty
+                // WICHTIG: Ersetzen Sie den Platzhalter durch Ihren eigenen Google AI API-Schlüssel.
+                // Sie erhalten ihn kostenlos im Google AI Studio.
+                const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                if (apiKey === "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs") {
+                    throw new Error("API key is missing.");
+                }
 
                 const payload = {
                   contents: [{ parts: [{ text: prompt }] }],
@@ -1124,4 +1130,5 @@
     </script>
 </body>
 </html>
+
 

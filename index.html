@@ -4,6 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KI-Berater: Das beste KI-Tool für dich</title>
+
+    <!-- SEO Meta Tags -->
+    <meta id="meta-description" name="description" content="Finde das beste KI-Tool für deine Aufgabe. Der KI-Berater hilft dir mit intelligenten Empfehlungen, die perfekte künstliche Intelligenz für Bildgenerierung, Text, Code und mehr zu finden.">
+    <meta id="meta-keywords" name="keywords" content="KI-Tools, künstliche Intelligenz, KI-Berater, KI empfehlen, beste KI, ChatGPT, Midjourney, AI Tools, Textanalyse, Bildgenerierung">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ki-advisor.netlify.app/">
+    <meta id="og-title" property="og:title" content="KI-Berater: Das beste KI-Tool für dich">
+    <meta id="og-description" property="og:description" content="Finde das beste KI-Tool für deine Aufgabe. Der KI-Berater hilft dir mit intelligenten Empfehlungen, die perfekte künstliche Intelligenz für Bildgenerierung, Text, Code und mehr zu finden.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1620712943543-95fc69614534?q=80&w=2070&auto=format&fit=crop">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ki-advisor.netlify.app/">
+    <meta id="twitter-title" property="twitter:title" content="KI-Berater: Das beste KI-Tool für dich">
+    <meta id="twitter-description" property="twitter:description" content="Finde das beste KI-Tool für deine Aufgabe. Der KI-Berater hilft dir mit intelligenten Empfehlungen, die perfekte künstliche Intelligenz für Bildgenerierung, Text, Code und mehr zu finden.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1620712943543-95fc69614534?q=80&w=2070&auto=format&fit=crop">
+    
+    <!--
+    SEO HINWEIS: Um Google Analytics hinzuzufügen, erstelle ein Konto auf analytics.google.com,
+    hole dir deinen Tracking-Code (gtag.js) und füge ihn hier im <head> Bereich ein.
+    
+    SEO HINWEIS 2: Erstelle eine `sitemap.xml`-Datei im Hauptverzeichnis deiner Webseite, 
+    um Suchmaschinen eine Übersicht aller Seiten zu geben.
+    -->
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -117,11 +144,39 @@
                     </p>
                 </header>
 
+                <!-- How it Works Section -->
+                <section class="mb-16">
+                    <h2 id="how-it-works-title" class="text-3xl font-bold text-center text-gray-800 mb-8">So funktioniert's</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                        <div id="step1-card" class="text-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 hover:shadow-xl transition-shadow cursor-pointer">
+                            <div class="inline-block bg-white p-3 rounded-xl shadow-md mb-4">
+                                <i data-lucide="edit-3" class="w-8 h-8 text-purple-600"></i>
+                            </div>
+                            <h3 id="step1-title" class="text-xl font-semibold mb-2">1. Beschreibe deine Aufgabe</h3>
+                            <p id="step1-text" class="text-gray-600">Gib einfach in das Suchfeld ein, was du erledigen möchtest.</p>
+                        </div>
+                        <div class="text-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50">
+                             <div class="inline-block bg-white p-3 rounded-xl shadow-md mb-4">
+                                <i data-lucide="sparkles" class="w-8 h-8 text-amber-500"></i>
+                            </div>
+                            <h3 id="step2-title" class="text-xl font-semibold mb-2">2. Erhalte eine Empfehlung</h3>
+                            <p id="step2-text" class="text-gray-600">Unsere KI analysiert deine Anfrage und schlägt dir die besten Tools vor.</p>
+                        </div>
+                        <div class="text-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50">
+                             <div class="inline-block bg-white p-3 rounded-xl shadow-md mb-4">
+                                <i data-lucide="compass" class="w-8 h-8 text-sky-500"></i>
+                            </div>
+                            <h3 id="step3-title" class="text-xl font-semibold mb-2">3. Entdecke die Tools</h3>
+                            <p id="step3-text" class="text-gray-600">Vergleiche die Vorschläge und finde die perfekte Lösung für dein Projekt.</p>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Combined Search Section -->
-                <div class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-lg mb-12 max-w-3xl mx-auto border border-white/50">
+                <div id="search-section" class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-lg mb-12 max-w-3xl mx-auto border border-white/50">
                     <div class="text-center mb-4">
                         <h2 id="ai-rec-title" class="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">Was möchtest du tun?</h2>
-                        <p id="ai-rec-subtitle" class="text-gray-600 mt-1">Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.</p>
+                        <p id="ai-rec-subtitle" class="text-gray-600 mt-1">Beschreibe deine Aufgabe für eine persönliche Empfehlung.</p>
                     </div>
                     <div class="flex flex-col gap-4">
                         <label for="ai-prompt-input" class="sr-only">Aufgabenbeschreibung</label>
@@ -130,11 +185,6 @@
                             <i data-lucide="sparkles" class="w-5 h-5"></i>
                             <span id="gemini-btn-text">Empfehlung anfordern</span>
                         </button>
-                    </div>
-                    <div class="my-4 text-center text-gray-500 text-sm" id="or-divider">oder</div>
-                    <div>
-                        <label id="category-label" class="sr-only" for="category-select-placeholder">Filtere nach Kategorie</label>
-                        <select id="category-select-placeholder" class="hidden w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></select>
                     </div>
                 </div>
                 
@@ -287,8 +337,9 @@
                         <p id="newsletter-subtitle" class="text-gray-600 mb-6">Melde dich für unseren Newsletter an und erhalte die neuesten KI-Nachrichten direkt in dein Postfach.</p>
                         <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
                             <label for="email-input" class="sr-only">Deine E-Mail-Adresse</label>
-                            <input type="email" id="email-input" required class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Deine E-Mail-Adresse">
+                            <input type="email" id="email-input" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Deine E-Mail-Adresse">
                             <button type="submit" id="newsletter-button" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow-lg hover:shadow-blue-300/50">Anmelden</button>
+                            <p id="email-error" class="text-red-500 text-sm mt-1 hidden text-left"></p>
                         </form>
                     </div>
                     <div id="newsletter-success" class="hidden text-center">
@@ -309,12 +360,37 @@
             <p class="text-sm text-gray-500">
                 &copy; <span id="copyright-year">2025</span> Der KI-Berater. <span id="footer-rights">Alle Rechte vorbehalten.</span>
             </p>
-            <div class="mt-4 space-x-4">
+            <div class="mt-4 space-x-4 md:space-x-6">
+                <button id="footer-about-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">Über Uns</button>
+                <button id="footer-faq-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">FAQ</button>
                 <button id="footer-imprint-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">Impressum</button>
                 <button id="footer-privacy-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">Datenschutz</button>
             </div>
         </div>
     </footer>
+    
+    <!-- MODALS -->
+    <!-- About Modal -->
+    <div id="about-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
+            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition" aria-label="Schliessen">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 id="about-title" class="text-2xl font-bold mb-4"></h2>
+            <div id="about-content" class="text-gray-600 space-y-4"></div>
+        </div>
+    </div>
+    
+    <!-- FAQ Modal -->
+    <div id="faq-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
+            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition" aria-label="Schliessen">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+            <h2 id="faq-title" class="text-2xl font-bold mb-4"></h2>
+            <div id="faq-content" class="text-gray-600 space-y-4"></div>
+        </div>
+    </div>
 
     <!-- Imprint Modal -->
     <div id="imprint-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
@@ -353,6 +429,10 @@
                     promptGeneratorTitle: "Kreative Starthilfe", promptGeneratorSubtitle: "Gib eine einfache Idee ein und erhalte professionelle Prompts für dieses Tool.", promptGeneratorPlaceholder: "z.B. Ein Logo für ein Café", generatePromptsBtnText: "Prompt-Ideen generieren", promptLoaderText: "Generiere kreative Ideen...", copyPrompt: "Kopieren", copied: "Kopiert!",
                     suggestedQuestionsTitle: "Vorschläge", suggestedQuestionsLoaderText: "Lade Vorschläge...",
                     exampleTitle: "Oder entdecke beliebte Kategorien",
+                    howItWorksTitle: "So funktioniert's", step1Title: "1. Beschreibe deine Aufgabe", step1Text: "Gib einfach in das Suchfeld ein, was du erledigen möchtest.", step2Title: "2. Erhalte eine Empfehlung", step2Text: "Unsere KI analysiert deine Anfrage und schlägt dir die besten Tools vor.", step3Title: "3. Entdecke die Tools", step3Text: "Vergleiche die Vorschläge und finde die perfekte Lösung für dein Projekt.",
+                    aboutTitle: "Über Uns", aboutContent: `<p>Der KI-Berater ist dein unabhängiger Wegweiser durch den schnell wachsenden Dschungel der künstlichen Intelligenz. Unsere Mission ist es, dir zu helfen, das perfekte KI-Tool für jede erdenkliche Aufgabe zu finden – egal ob du Bilder generieren, Texte schreiben oder Code entwickeln möchtest.</p><p>Wir analysieren und vergleichen die besten Tools auf dem Markt, damit du fundierte Entscheidungen treffen und das volle Potenzial der KI für deine Projekte nutzen kannst.</p>`,
+                    faqTitle: "Häufig gestellte Fragen (FAQ)", faqContent: `<div><h4 class="font-semibold text-gray-800">Sind die Empfehlungen wirklich unabhängig?</h4><p>Ja. Unsere KI-gestützte Empfehlung basiert ausschliesslich auf dem Abgleich deiner Anfrage mit den Fähigkeiten der Tools in unserer Datenbank. Wir bevorzugen kein Tool.</p></div><div><h4 class="font-semibold text-gray-800 mt-4">Wie verdient diese Seite Geld?</h4><p>Einige Links zu den KI-Tools sind sogenannte Affiliate-Links. Wenn du über unseren Link ein Tool abonnierst, erhalten wir eine kleine Provision, ohne dass für dich zusätzliche Kosten entstehen. Das hilft uns, die Seite zu betreiben und aktuell zu halten.</p></div><div><h4 class="font-semibold text-gray-800 mt-4">Wie aktuell ist die Liste der Tools?</h4><p>Wir bemühen uns, die Liste regelmässig zu aktualisieren und neue, vielversprechende KI-Tools aufzunehmen, sobald sie sich bewährt haben.</p></div>`,
+                    emailValidationError: "Bitte gib eine gültige E-Mail-Adresse ein.",
                     pricing: { freemium: "Freemium", subscription: "Abo", addon: "Add-on", beta: "Beta", openSource: "Kostenlos (Open Source)" },
                     categories: { all: "Alle anzeigen", design: "Bild & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Produktivität & Office", code: "Code & Entwicklung" }
                 },
@@ -363,8 +443,12 @@
                     promptGeneratorTitle: "Creative Kickstart", promptGeneratorSubtitle: "Enter a simple idea and get professional prompts for this tool.", promptGeneratorPlaceholder: "e.g., A logo for a coffee shop", generatePromptsBtnText: "Generate Prompt Ideas", promptLoaderText: "Generating creative ideas...", copyPrompt: "Copy", copied: "Copied!",
                     suggestedQuestionsTitle: "Suggestions", suggestedQuestionsLoaderText: "Loading suggestions...",
                     exampleTitle: "Or discover popular categories",
+                    howItWorksTitle: "How it Works", step1Title: "1. Describe Your Task", step1Text: "Just type what you want to accomplish into the search field.", step2Title: "2. Get a Recommendation", step2Text: "Our AI analyzes your request and suggests the best tools for you.", step3Title: "3. Explore the Tools", step3Text: "Compare the suggestions and find the perfect solution for your project.",
+                    aboutTitle: "About Us", aboutContent: `<p>The AI Advisor is your independent guide through the rapidly growing jungle of artificial intelligence. Our mission is to help you find the perfect AI tool for any imaginable task – whether you want to generate images, write texts, or develop code.</p><p>We analyze and compare the best tools on the market so you can make informed decisions and leverage the full potential of AI for your projects.</p>`,
+                    faqTitle: "Frequently Asked Questions (FAQ)", faqContent: `<div><h4 class="font-semibold text-gray-800">Are the recommendations truly independent?</h4><p>Yes. Our AI-powered recommendation is based solely on matching your request with the capabilities of the tools in our database. We do not favor any tool.</p></div><div><h4 class="font-semibold text-gray-800 mt-4">How does this site make money?</h4><p>Some links to the AI tools are affiliate links. If you subscribe to a tool through our link, we receive a small commission at no extra cost to you. This helps us operate and keep the site up-to-date.</p></div><div><h4 class="font-semibold text-gray-800 mt-4">How current is the list of tools?</h4><p>We strive to update the list regularly and include new, promising AI tools as soon as they have proven themselves.</p></div>`,
+                    emailValidationError: "Please enter a valid email address.",
                     pricing: { freemium: "Freemium", subscription: "Subscription", addon: "Add-on", beta: "Beta", openSource: "Free (Open Source)" },
-                    categories: { all: "Show All", design: "Image & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Productivity & Office", code: "Code & Development" }
+                    categories: { all: "Alle anzeigen", design: "Image & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Productivity & Office", code: "Code & Development" }
                 }
             };
 
@@ -395,7 +479,7 @@
             ];
 
             // --- DOM ELEMENTS & STATE ---
-            let mainContent, detailView, resultsContainer, noResultsMessage, backToListBtn, paginationContainer, langDeBtn, langEnBtn, newsletterForm, newsletterContent, newsletterSuccess, imprintModal, privacyModal, imprintBtn, privacyBtn, geminiSearchBtn, aiPromptInput, aiLoader, aiError, aiExplanationContainer, aiExplanationText, chatSendBtn, chatInput, promptGeneratorContainer, generatePromptsBtn, suggestedQuestionsContainer, exampleCategoriesContainer;
+            let mainContent, detailView, resultsContainer, noResultsMessage, backToListBtn, paginationContainer, langDeBtn, langEnBtn, newsletterForm, newsletterContent, newsletterSuccess, imprintModal, privacyModal, aboutModal, faqModal, imprintBtn, privacyBtn, aboutBtn, faqBtn, geminiSearchBtn, aiPromptInput, aiLoader, aiError, aiExplanationContainer, aiExplanationText, chatSendBtn, chatInput, promptGeneratorContainer, generatePromptsBtn, suggestedQuestionsContainer, exampleCategoriesContainer, step1Card;
             let currentPage = 1;
             const itemsPerPage = 9;
             let currentFilteredModels = [];
@@ -429,6 +513,21 @@
                 const catIcons = { all: 'layout-grid', design: 'image', marketing: 'pen-tool', audio: 'music-2', productivity: 'briefcase', code: 'code' };
 
                 Object.keys(cats).forEach(key => {
+                    if (key === 'all') { // Add "Show All" button
+                        const button = document.createElement('button');
+                        button.innerHTML = `<i data-lucide="${catIcons[key]}" class="w-4 h-4 mr-2"></i> ${cats[key]}`;
+                        button.className = "bg-white/70 backdrop-blur-sm text-slate-700 text-sm px-4 py-2 rounded-lg hover:bg-white transition border border-white/50 shadow-sm flex items-center";
+                        button.onclick = () => {
+                            filterAndRenderByCategory(deCats[key]);
+                            document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
+                        };
+                        exampleCategoriesContainer.appendChild(button);
+                    }
+                });
+
+
+                Object.keys(cats).forEach(key => {
+                    if (key === 'all') return;
                     const button = document.createElement('button');
                     button.innerHTML = `<i data-lucide="${catIcons[key]}" class="w-4 h-4 mr-2"></i> ${cats[key]}`;
                     button.className = "bg-white/70 backdrop-blur-sm text-slate-700 text-sm px-4 py-2 rounded-lg hover:bg-white transition border border-white/50 shadow-sm flex items-center";
@@ -923,10 +1022,16 @@
                 document.getElementById('footer-rights').textContent = translations[lang].footerRights;
                 document.getElementById('footer-imprint-btn').textContent = translations[lang].footerImprint;
                 document.getElementById('footer-privacy-btn').textContent = translations[lang].footerPrivacy;
+                document.getElementById('footer-about-btn').textContent = translations[lang].aboutTitle;
+                document.getElementById('footer-faq-btn').textContent = translations[lang].faqTitle;
                 document.getElementById('imprint-title').textContent = translations[lang].imprintTitle;
                 document.getElementById('imprint-content').innerHTML = translations[lang].imprintContent;
                 document.getElementById('privacy-title').textContent = translations[lang].privacyTitle;
                 document.getElementById('privacy-content').innerHTML = translations[lang].privacyContent;
+                document.getElementById('about-title').textContent = translations[lang].aboutTitle;
+                document.getElementById('about-content').innerHTML = translations[lang].aboutContent;
+                document.getElementById('faq-title').textContent = translations[lang].faqTitle;
+                document.getElementById('faq-content').innerHTML = translations[lang].faqContent;
                 document.querySelector('#ai-explanation-title span').textContent = translations[lang].aiExplanationTitle;
                 document.getElementById('chat-title').querySelector('span').textContent = translations[lang].chatTitle;
                 document.getElementById('chat-input').placeholder = translations[lang].chatPlaceholder;
@@ -939,6 +1044,13 @@
                 document.getElementById('suggested-questions-title').textContent = translations[lang].suggestedQuestionsTitle;
                 document.getElementById('suggested-questions-loader-text').textContent = translations[lang].suggestedQuestionsLoaderText;
                 document.getElementById('example-title').textContent = translations[lang].exampleTitle;
+                document.getElementById('how-it-works-title').textContent = translations[lang].howItWorksTitle;
+                document.getElementById('step1-title').textContent = translations[lang].step1Title;
+                document.getElementById('step1-text').textContent = translations[lang].step1Text;
+                document.getElementById('step2-title').textContent = translations[lang].step2Title;
+                document.getElementById('step2-text').textContent = translations[lang].step2Text;
+                document.getElementById('step3-title').textContent = translations[lang].step3Title;
+                document.getElementById('step3-text').textContent = translations[lang].step3Text;
                 
                 langDeBtn.classList.toggle('active', lang === 'de');
                 langEnBtn.classList.toggle('active', lang === 'en');
@@ -961,8 +1073,12 @@
             newsletterSuccess = document.getElementById('newsletter-success');
             imprintModal = document.getElementById('imprint-modal');
             privacyModal = document.getElementById('privacy-modal');
+            aboutModal = document.getElementById('about-modal');
+            faqModal = document.getElementById('faq-modal');
             imprintBtn = document.getElementById('footer-imprint-btn');
             privacyBtn = document.getElementById('footer-privacy-btn');
+            aboutBtn = document.getElementById('footer-about-btn');
+            faqBtn = document.getElementById('footer-faq-btn');
             geminiSearchBtn = document.getElementById('gemini-search-btn');
             aiPromptInput = document.getElementById('ai-prompt-input');
             aiLoader = document.getElementById('ai-loader');
@@ -975,20 +1091,34 @@
             generatePromptsBtn = document.getElementById('generate-prompts-btn');
             suggestedQuestionsContainer = document.getElementById('suggested-questions-container');
             exampleCategoriesContainer = document.getElementById('example-categories');
+            step1Card = document.getElementById('step1-card');
 
             backToListBtn.addEventListener('click', showMainView);
             langDeBtn.addEventListener('click', () => updateContent('de'));
             langEnBtn.addEventListener('click', () => updateContent('en'));
+            
             newsletterForm.addEventListener('submit', (e) => {
                 e.preventDefault();
+                const emailInput = document.getElementById('email-input');
+                const emailError = document.getElementById('email-error');
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    emailError.textContent = translations[currentLang].emailValidationError;
+                    emailError.classList.remove('hidden');
+                    return;
+                }
+                emailError.classList.add('hidden');
                 newsletterContent.classList.add('hidden');
                 newsletterSuccess.classList.remove('hidden');
             });
+
             geminiSearchBtn.addEventListener('click', handleGeminiSearch);
             imprintBtn.addEventListener('click', () => openModal(imprintModal));
             privacyBtn.addEventListener('click', () => openModal(privacyModal));
+            aboutBtn.addEventListener('click', () => openModal(aboutModal));
+            faqBtn.addEventListener('click', () => openModal(faqModal));
             
-            [imprintModal, privacyModal].forEach(modal => {
+            [imprintModal, privacyModal, aboutModal, faqModal].forEach(modal => {
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) closeModal(modal);
                 });
@@ -1003,6 +1133,9 @@
                 }
             });
             generatePromptsBtn.addEventListener('click', handleGeneratePrompts);
+            step1Card.addEventListener('click', () => {
+                document.getElementById('search-section').scrollIntoView({ behavior: 'smooth' });
+            });
             
             // Initial Render
             document.getElementById('copyright-year').textContent = new Date().getFullYear();

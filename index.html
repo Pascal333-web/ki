@@ -103,10 +103,10 @@
                 <!-- Header -->
                 <header class="text-center mb-10 relative">
                      <div class="absolute top-0 right-0 bg-white/60 backdrop-blur-sm p-1 rounded-lg shadow-md border">
-                        <button id="lang-de" class="lang-btn px-3 py-1 text-sm font-semibold rounded-md transition">DE</button>
-                        <button id="lang-en" class="lang-btn px-3 py-1 text-sm font-semibold rounded-md transition">EN</button>
+                        <button id="lang-de" aria-label="Sprache auf Deutsch umstellen" class="lang-btn px-3 py-1 text-sm font-semibold rounded-md transition">DE</button>
+                        <button id="lang-en" aria-label="Switch language to English" class="lang-btn px-3 py-1 text-sm font-semibold rounded-md transition">EN</button>
                     </div>
-                     <div class="inline-block bg-white p-4 rounded-2xl shadow-sm mb-4">
+                     <div class="inline-block bg-white p-4 rounded-2xl shadow-sm mb-4" aria-hidden="true">
                         <i data-lucide="brain-circuit" class="w-12 h-12 animated-gradient-text"></i>
                     </div>
                     <h1 id="main-title" class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 animated-gradient-text">
@@ -124,6 +124,7 @@
                         <p id="ai-rec-subtitle" class="text-gray-600 mt-1">Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.</p>
                     </div>
                     <div class="flex flex-col gap-4">
+                        <label for="ai-prompt-input" class="sr-only">Aufgabenbeschreibung</label>
                         <textarea id="ai-prompt-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" rows="3" placeholder="z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial..."></textarea>
                         <button id="gemini-search-btn" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition shadow-lg hover:shadow-indigo-300/50 flex items-center justify-center gap-2">
                             <i data-lucide="sparkles" class="w-5 h-5"></i>
@@ -132,10 +133,16 @@
                     </div>
                     <div class="my-4 text-center text-gray-500 text-sm" id="or-divider">oder</div>
                     <div>
-                        <label id="category-label" for="category-select" class="block text-sm font-medium text-gray-700 mb-1">Filtere nach Kategorie</label>
-                        <select id="category-select" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                            <!-- Options will be populated by JS -->
-                        </select>
+                        <label id="category-label" class="sr-only" for="category-select-placeholder">Filtere nach Kategorie</label>
+                        <select id="category-select-placeholder" class="hidden w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"></select>
+                    </div>
+                </div>
+                
+                <!-- Example Categories Section -->
+                <div class="text-center mb-12">
+                    <h3 id="example-title" class="text-lg font-semibold text-gray-700 mb-4">Oder entdecke beliebte Kategorien</h3>
+                    <div id="example-categories" class="flex flex-wrap justify-center gap-3">
+                        <!-- Example buttons will be injected here -->
                     </div>
                 </div>
 
@@ -158,7 +165,7 @@
                 </div>
                 
                 <!-- Main Results Section -->
-                <main id="results-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[700px]">
+                <main id="results-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[500px]">
                     <!-- AI model cards will be injected here by JavaScript -->
                 </main>
 
@@ -214,8 +221,9 @@
                            <i data-lucide="lightbulb" class="w-6 h-6 text-yellow-500"></i>
                            <span>Kreative Starthilfe</span>
                         </h3>
-                        <p id="prompt-generator-subtitle" class="text-gray-600 mb-4">Geben Sie eine einfache Idee ein und erhalten Sie professionelle Prompts für dieses Tool.</p>
+                        <p id="prompt-generator-subtitle" class="text-gray-600 mb-4">Gib eine einfache Idee ein und erhalte professionelle Prompts für dieses Tool.</p>
                         <div class="flex flex-col gap-2">
+                            <label for="prompt-idea-input" class="sr-only">Deine Idee für einen Prompt</label>
                             <input type="text" id="prompt-idea-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="z.B. Ein Logo für ein Café">
                             <button id="generate-prompts-btn" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2">
                                 <i data-lucide="sparkles" class="w-5 h-5"></i>
@@ -235,7 +243,7 @@
                     <div id="detail-chat-container" class="mt-12 border-t pt-8">
                         <h3 id="chat-title" class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                             <i data-lucide="bot" class="w-6 h-6"></i>
-                            <span>Fragen Sie einen Experten zu diesem Tool</span>
+                            <span>Frag einen Experten zu diesem Tool</span>
                         </h3>
                         <div id="chat-history" class="mb-4 space-y-4 max-h-64 overflow-y-auto bg-slate-50 p-4 rounded-lg border">
                             <!-- Chat messages will be appended here -->
@@ -252,8 +260,9 @@
                             </div>
                         </div>
                         <div class="flex gap-2">
+                            <label for="chat-input" class="sr-only">Deine Frage</label>
                             <input type="text" id="chat-input" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="z.B. Kann ich damit auch Logos erstellen?">
-                            <button id="chat-send-btn" class="bg-blue-600 text-white font-semibold p-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
+                            <button id="chat-send-btn" aria-label="Frage senden" class="bg-blue-600 text-white font-semibold p-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
                                 <i data-lucide="send" class="w-5 h-5"></i>
                             </button>
                         </div>
@@ -274,10 +283,11 @@
                         <div class="inline-block bg-white p-3 rounded-xl shadow-sm mb-4">
                             <i data-lucide="mail-check" class="w-8 h-8 animated-gradient-text"></i>
                         </div>
-                        <h2 id="newsletter-title" class="text-2xl font-bold text-gray-900 mb-2">Bleiben Sie auf dem Laufenden</h2>
-                        <p id="newsletter-subtitle" class="text-gray-600 mb-6">Melden Sie sich für unseren Newsletter an und erhalten Sie die neuesten KI-Nachrichten direkt in Ihr Postfach.</p>
+                        <h2 id="newsletter-title" class="text-2xl font-bold text-gray-900 mb-2">Bleib auf dem Laufenden</h2>
+                        <p id="newsletter-subtitle" class="text-gray-600 mb-6">Melde dich für unseren Newsletter an und erhalte die neuesten KI-Nachrichten direkt in dein Postfach.</p>
                         <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
-                            <input type="email" id="email-input" required class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Ihre E-Mail-Adresse">
+                            <label for="email-input" class="sr-only">Deine E-Mail-Adresse</label>
+                            <input type="email" id="email-input" required class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Deine E-Mail-Adresse">
                             <button type="submit" id="newsletter-button" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow-lg hover:shadow-blue-300/50">Anmelden</button>
                         </form>
                     </div>
@@ -286,7 +296,7 @@
                              <i data-lucide="check-circle-2" class="w-8 h-8 text-green-600"></i>
                         </div>
                         <h2 id="newsletter-success-title" class="text-2xl font-bold text-gray-900">Vielen Dank!</h2>
-                        <p id="newsletter-success-subtitle" class="text-gray-600">Sie haben sich erfolgreich für den Newsletter angemeldet.</p>
+                        <p id="newsletter-success-subtitle" class="text-gray-600">Du hast dich erfolgreich für den Newsletter angemeldet.</p>
                     </div>
                 </div>
             </div>
@@ -309,14 +319,12 @@
     <!-- Imprint Modal -->
     <div id="imprint-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
         <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
-            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition">
+            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition" aria-label="Schliessen">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
             <h2 id="imprint-title" class="text-2xl font-bold mb-4">Impressum</h2>
             <div id="imprint-content" class="text-gray-600 space-y-2">
-                <p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihr eigenes, rechtsgültiges Impressum.</p>
-                <p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p>
-                <p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>
+                <!-- Content injected by JS -->
             </div>
         </div>
     </div>
@@ -324,1186 +332,683 @@
     <!-- Privacy Modal -->
     <div id="privacy-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
         <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
-            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition">
+            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition" aria-label="Schliessen">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
             <h2 id="privacy-title" class="text-2xl font-bold mb-4">Datenschutz</h2>
             <div id="privacy-content" class="text-gray-600 space-y-2">
-                <p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihre eigene, rechtsgültige Datenschutzerklärung.</p>
-                <p>Wir legen grossen Wert auf den Schutz Ihrer Daten. In dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>
+                 <!-- Content injected by JS -->
             </div>
         </div>
     </div>
 
 
     <script>
-        // --- TRANSLATIONS ---
-        const translations = {
-            de: {
-                pageTitle: "KI-Berater: Das beste KI-Tool für dich", mainTitle: "Der KI-Berater", mainSubtitle: "Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.", categoryLabel: "Filtere nach Kategorie", searchLabel: "Was möchtest du tun?", searchInputPlaceholder: "z.B. Excel-Tabelle, Stimme klonen...", aiRecTitle: "Was möchtest du tun?", aiRecSubtitle: "Beschreibe deine Aufgabe für eine persönliche Empfehlung oder filtere manuell.", aiPromptPlaceholder: "z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial...", geminiBtnText: "Empfehlung anfordern", aiLoaderText: "Analysiere Tools und finde die beste Übereinstimmung...", geminiError: "Entschuldigung, die Empfehlung konnte nicht geladen werden. Bitte versuchen Sie es später erneut.", noResultsTitle: "Keine passenden KI-Tools gefunden", noResultsSubtitle: "Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.", backButtonText: "Zurück zur Übersicht", pricingDetailsTitle: "Preisdetails", visitWebsiteButton: "Webseite besuchen", beginnerFriendly: "Anfängerfreundlich", newsletterTitle: "Bleiben Sie auf dem Laufenden", newsletterSubtitle: "Melden Sie sich für unseren Newsletter an und erhalten Sie die neuesten KI-Nachrichten direkt in Ihr Postfach.", newsletterPlaceholder: "Ihre E-Mail-Adresse", newsletterButton: "Anmelden", newsletterSuccessTitle: "Vielen Dank!", newsletterSuccessSubtitle: "Sie haben sich erfolgreich für den Newsletter angemeldet.", footerRights: "Alle Rechte vorbehalten.", footerImprint: "Impressum", footerPrivacy: "Datenschutz", imprintTitle: "Impressum", imprintContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihr eigenes, rechtsgültiges Impressum.</p><p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p><p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>`, privacyTitle: "Datenschutz", privacyContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetzen Sie diesen Text durch Ihre eigene, rechtsgültige Datenschutzerklärung.</p><p>Wir legen grossen Wert auf den Schutz Ihrer Daten. In dieser Datenschutzerklärung informieren wir Sie darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>`,
-                aiExplanationTitle: "Persönliche Empfehlung",
-                chatTitle: "Fragen Sie einen Experten zu diesem Tool", chatPlaceholder: "z.B. Kann ich damit auch Logos erstellen?", chatLoaderText: "Antwort wird generiert...", chatError: "Entschuldigung, die Antwort konnte nicht geladen werden.",
-                promptGeneratorTitle: "Kreative Starthilfe", promptGeneratorSubtitle: "Geben Sie eine einfache Idee ein und erhalten Sie professionelle Prompts für dieses Tool.", promptGeneratorPlaceholder: "z.B. Ein Logo für ein Café", generatePromptsBtnText: "Prompt-Ideen generieren", promptLoaderText: "Generiere kreative Ideen...", copyPrompt: "Kopieren", copied: "Kopiert!",
-                suggestedQuestionsTitle: "Vorschläge", suggestedQuestionsLoaderText: "Lade Vorschläge...",
-                pricing: { freemium: "Freemium", subscription: "Abo", addon: "Add-on", beta: "Beta", openSource: "Kostenlos (Open Source)" },
-                categories: { all: "Alle anzeigen", design: "Bild & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Produktivität & Office", code: "Code & Entwicklung" }
-            },
-            en: {
-                pageTitle: "AI Advisor: The Best AI Tool for You", mainTitle: "The AI Advisor", mainSubtitle: "Which artificial intelligence is the best for your task? Find the perfect tool here.", categoryLabel: "Filter by Category", searchLabel: "What do you want to do?", searchInputPlaceholder: "e.g., Excel spreadsheet, clone voice...", aiRecTitle: "What do you want to do?", aiRecSubtitle: "Describe your task for a personal recommendation or filter manually.", aiPromptPlaceholder: "e.g., I want to create a video for my startup, but I don't have any of my own footage...", geminiBtnText: "Request Recommendation", aiLoaderText: "Analyzing tools and finding the best match...", geminiError: "Sorry, the recommendation could not be loaded. Please try again later.", noResultsTitle: "No matching AI tools found", noResultsSubtitle: "Try adjusting your search or selecting a different category.", backButtonText: "Back to Overview", pricingDetailsTitle: "Pricing Details", visitWebsiteButton: "Visit Website", beginnerFriendly: "Beginner-Friendly", newsletterTitle: "Stay Up-to-Date", newsletterSubtitle: "Sign up for our newsletter and get the latest AI news directly in your inbox.", newsletterPlaceholder: "Your email address", newsletterButton: "Subscribe", newsletterSuccessTitle: "Thank you!", newsletterSuccessSubtitle: "You have successfully subscribed to the newsletter.", footerRights: "All rights reserved.", footerImprint: "Legal Notice", footerPrivacy: "Privacy Policy", imprintTitle: "Legal Notice", imprintContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid legal notice.</p><p>John Doe<br>Sample Street 1<br>12345 Sample City<br>Country</p><p><strong>Contact:</strong><br>Email: contact@example.com</p>`, privacyTitle: "Privacy Policy", privacyContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid privacy policy.</p><p>We place great importance on the protection of your data. In this privacy policy, we inform you about which personal data we collect, process, and use when you use our website...</p>`,
-                aiExplanationTitle: "Personal Recommendation",
-                chatTitle: "Ask an expert about this tool", chatPlaceholder: "e.g., Can I create logos with this?", chatLoaderText: "Generating answer...", chatError: "Sorry, the answer could not be loaded.",
-                promptGeneratorTitle: "Creative Kickstart", promptGeneratorSubtitle: "Enter a simple idea and get professional prompts for this tool.", promptGeneratorPlaceholder: "e.g., A logo for a coffee shop", generatePromptsBtnText: "Generate Prompt Ideas", promptLoaderText: "Generating creative ideas...", copyPrompt: "Copy", copied: "Copied!",
-                suggestedQuestionsTitle: "Suggestions", suggestedQuestionsLoaderText: "Loading suggestions...",
-                pricing: { freemium: "Freemium", subscription: "Subscription", addon: "Add-on", beta: "Beta", openSource: "Free (Open Source)" },
-                categories: { all: "Show All", design: "Image & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Productivity & Office", code: "Code & Development" }
-            }
-        };
-
-        // --- DATABASE OF AI MODELS (Full database is here) ---
-        const allAiModels = [
-            {
-                name: "ChatGPT (GPT-4o)",
-                link: "https://openai.com/chatgpt/",
-                featured: true,
-                pricing: "freemium",
-                beginnerFriendly: true,
-                categoryIcon: "message-circle",
-                promptHelper: true,
+        document.addEventListener('DOMContentLoaded', () => {
+            const translations = {
                 de: {
-                    category: "Text & Marketing",
-                    description: "Das vielseitigste Sprachmodell. Ideal für Content, Marketing, E-Mails und komplexe Aufgaben wie Datenanalyse.",
-                    useCases: ["marketingtexte", "ads schalten", "blogartikel", "seo", "e-mails", "excel formeln", "word", "powerpoint", "datenanalyse"],
-                    detailedDescription: "ChatGPT ist ein fortschrittliches Konversations-KI-Modell von OpenAI. Es kann menschenähnliche Texte verstehen und generieren, was es extrem vielseitig macht. Nutzen Sie es zum Verfassen von E-Mails, zum Erstellen von Code, zum Brainstorming von Ideen oder zur Analyse komplexer Datensätze in Tabellenform.",
-                    pricingDetails: { free: "Eine kostenlose Version mit GPT-3.5 und eingeschränktem GPT-4o Zugang ist verfügbar, ideal für alltägliche Aufgaben.", plus: "ChatGPT Plus (ca. 20 USD/Monat) bietet priorisierten Zugang zum leistungsstärkeren GPT-4o, schnellere Antwortzeiten und exklusive Features wie DALL-E 3.", team: "Team- und Enterprise-Pläne bieten erweiterte Sicherheits- und Kollaborationsfunktionen für Unternehmen." }
+                    pageTitle: "KI-Berater: Das beste KI-Tool für dich", mainTitle: "Der KI-Berater", mainSubtitle: "Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.", categoryLabel: "Filtere nach Kategorie", aiRecTitle: "Was möchtest du tun?", aiRecSubtitle: "Beschreibe deine Aufgabe für eine persönliche Empfehlung.", aiPromptPlaceholder: "z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial...", geminiBtnText: "Empfehlung anfordern", aiLoaderText: "Analysiere Tools und finde die beste Übereinstimmung...", geminiError: "Entschuldigung, die Empfehlung konnte nicht geladen werden. Bitte versuche es später erneut.", noResultsTitle: "Keine passenden KI-Tools gefunden", noResultsSubtitle: "Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.", backButtonText: "Zurück zur Übersicht", pricingDetailsTitle: "Preisdetails", visitWebsiteButton: "Webseite besuchen", beginnerFriendly: "Anfängerfreundlich", newsletterTitle: "Bleib auf dem Laufenden", newsletterSubtitle: "Melde dich für unseren Newsletter an und erhalte die neuesten KI-Nachrichten direkt in dein Postfach.", newsletterPlaceholder: "Deine E-Mail-Adresse", newsletterButton: "Anmelden", newsletterSuccessTitle: "Vielen Dank!", newsletterSuccessSubtitle: "Du hast dich erfolgreich für den Newsletter angemeldet.", footerRights: "Alle Rechte vorbehalten.", footerImprint: "Impressum", footerPrivacy: "Datenschutz", imprintTitle: "Impressum", imprintContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetze diesen Text durch dein eigenes, rechtsgültiges Impressum.</p><p>Max Mustermann<br>Musterstrasse 1<br>8000 Zürich<br>Schweiz</p><p><strong>Kontakt:</strong><br>E-Mail: kontakt@beispiel.ch</p>`, privacyTitle: "Datenschutz", privacyContent: `<p><strong>WICHTIGER HINWEIS:</strong> Dies ist ein Platzhalter. Ersetze diesen Text durch deine eigene, rechtsgültige Datenschutzerklärung.</p><p>Wir legen grossen Wert auf den Schutz deiner Daten. In dieser Datenschutzerklärung informieren wir dich darüber, welche personenbezogenen Daten wir im Rahmen der Nutzung unserer Webseite erheben, verarbeiten und nutzen...</p>`,
+                    aiExplanationTitle: "Persönliche Empfehlung",
+                    chatTitle: "Frag einen Experten zu diesem Tool", chatPlaceholder: "z.B. Kann ich damit auch Logos erstellen?", chatLoaderText: "Antwort wird generiert...", chatError: "Entschuldigung, die Antwort konnte nicht geladen werden.",
+                    promptGeneratorTitle: "Kreative Starthilfe", promptGeneratorSubtitle: "Gib eine einfache Idee ein und erhalte professionelle Prompts für dieses Tool.", promptGeneratorPlaceholder: "z.B. Ein Logo für ein Café", generatePromptsBtnText: "Prompt-Ideen generieren", promptLoaderText: "Generiere kreative Ideen...", copyPrompt: "Kopieren", copied: "Kopiert!",
+                    suggestedQuestionsTitle: "Vorschläge", suggestedQuestionsLoaderText: "Lade Vorschläge...",
+                    exampleTitle: "Oder entdecke beliebte Kategorien",
+                    pricing: { freemium: "Freemium", subscription: "Abo", addon: "Add-on", beta: "Beta", openSource: "Kostenlos (Open Source)" },
+                    categories: { all: "Alle anzeigen", design: "Bild & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Produktivität & Office", code: "Code & Entwicklung" }
                 },
                 en: {
-                    category: "Text & Marketing",
-                    description: "The most versatile language model. Ideal for content, marketing, emails, and complex tasks like data analysis.",
-                    useCases: ["marketing copy", "run ads", "blog articles", "seo", "emails", "excel formulas", "word", "powerpoint", "data analysis"],
-                    detailedDescription: "ChatGPT is an advanced conversational AI model from OpenAI. It can understand and generate human-like text, making it extremely versatile. Use it to write emails, create code, brainstorm ideas, or analyze complex datasets in tabular form.",
-                    pricingDetails: { free: "A free version with GPT-3.5 and limited GPT-4o access is available, ideal for everyday tasks.", plus: "ChatGPT Plus (approx. $20/month) offers priority access to the more powerful GPT-4o, faster response times, and exclusive features like DALL-E 3.", team: "Team and Enterprise plans offer enhanced security and collaboration features for businesses." }
+                    pageTitle: "AI Advisor: The Best AI Tool for You", mainTitle: "The AI Advisor", mainSubtitle: "Which artificial intelligence is the best for your task? Find the perfect tool here.", categoryLabel: "Filter by Category", aiRecTitle: "What do you want to do?", aiRecSubtitle: "Describe your task for a personal recommendation.", aiPromptPlaceholder: "e.g., I want to create a video for my startup, but I don't have any of my own footage...", geminiBtnText: "Request Recommendation", aiLoaderText: "Analyzing tools and finding the best match...", geminiError: "Sorry, the recommendation could not be loaded. Please try again later.", noResultsTitle: "No matching AI tools found", noResultsSubtitle: "Try adjusting your search or selecting a different category.", backButtonText: "Back to Overview", pricingDetailsTitle: "Pricing Details", visitWebsiteButton: "Visit Website", beginnerFriendly: "Beginner-Friendly", newsletterTitle: "Stay Up-to-Date", newsletterSubtitle: "Sign up for our newsletter and get the latest AI news directly in your inbox.", newsletterPlaceholder: "Your email address", newsletterButton: "Subscribe", newsletterSuccessTitle: "Thank you!", newsletterSuccessSubtitle: "You have successfully subscribed to the newsletter.", footerRights: "All rights reserved.", footerImprint: "Legal Notice", footerPrivacy: "Privacy Policy", imprintTitle: "Legal Notice", imprintContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid legal notice.</p><p>John Doe<br>Sample Street 1<br>12345 Sample City<br>Country</p><p><strong>Contact:</strong><br>Email: contact@example.com</p>`, privacyTitle: "Privacy Policy", privacyContent: `<p><strong>IMPORTANT NOTE:</strong> This is a placeholder. Replace this text with your own legally valid privacy policy.</p><p>We place great importance on the protection of your data. In this privacy policy, we inform you about which personal data we collect, process, and use when you use our website...</p>`,
+                    aiExplanationTitle: "Personal Recommendation",
+                    chatTitle: "Ask an expert about this tool", chatPlaceholder: "e.g., Can I create logos with this?", chatLoaderText: "Generating answer...", chatError: "Sorry, the answer could not be loaded.",
+                    promptGeneratorTitle: "Creative Kickstart", promptGeneratorSubtitle: "Enter a simple idea and get professional prompts for this tool.", promptGeneratorPlaceholder: "e.g., A logo for a coffee shop", generatePromptsBtnText: "Generate Prompt Ideas", promptLoaderText: "Generating creative ideas...", copyPrompt: "Copy", copied: "Copied!",
+                    suggestedQuestionsTitle: "Suggestions", suggestedQuestionsLoaderText: "Loading suggestions...",
+                    exampleTitle: "Or discover popular categories",
+                    pricing: { freemium: "Freemium", subscription: "Subscription", addon: "Add-on", beta: "Beta", openSource: "Free (Open Source)" },
+                    categories: { all: "Show All", design: "Image & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Productivity & Office", code: "Code & Development" }
                 }
-            },
-            {
-                name: "Midjourney",
-                link: "https://www.midjourney.com/",
-                featured: true,
-                pricing: "subscription",
-                beginnerFriendly: false,
-                categoryIcon: "image",
-                promptHelper: true,
-                de: {
-                    category: "Bild & Design",
-                    description: "Erzeugt extrem hochwertige und künstlerische Bilder. Führend in Fotorealismus und kreativen Stilen.",
-                    useCases: ["produktbilder", "kunst", "illustrationen", "logos", "onlineshop", "instagram bilder"],
-                    detailedDescription: "Midjourney ist ein KI-Bildgenerator, der über die Chat-App Discord bedient wird. Er ist bekannt für seine Fähigkeit, äusserst detaillierte, künstlerische und oft surreale Bilder zu erzeugen. Die Qualität ist in vielen Bereichen marktführend, erfordert aber etwas Einarbeitung in die Befehlseingabe.",
-                    pricingDetails: { free: "Keine kostenlose Version verfügbar (manchmal zeitlich begrenzte Testphasen).", basic: "Basic Plan (ab ca. 10 USD/Monat) für eine begrenzte Anzahl an Bildgenerationen.", standard: "Standard & Pro Pläne (ab ca. 30 USD/Monat) bieten mehr Kapazität und schnellere Generierungszeiten." }
-                },
-                en: {
-                    category: "Image & Design",
-                    description: "Generates extremely high-quality and artistic images. Leader in photorealism and creative styles.",
-                    useCases: ["product images", "art", "illustrations", "logos", "online store", "instagram pictures"],
-                    detailedDescription: "Midjourney is an AI image generator operated via the Discord chat app. It is known for its ability to create extremely detailed, artistic, and often surreal images. The quality is a market leader in many areas but requires some practice with command inputs.",
-                    pricingDetails: { free: "No free version available (sometimes limited-time trials).", basic: "Basic Plan (from approx. $10/month) for a limited number of image generations.", standard: "Standard & Pro Plans (from approx. $30/month) offer more capacity and faster generation times." }
-                }
-            },
-            {
-                name: "Google Gemini",
-                link: "https://gemini.google.com/",
-                pricing: "freemium",
-                beginnerFriendly: true,
-                categoryIcon: "search",
-                promptHelper: false,
-                de: {
-                    category: "Text & Marketing",
-                    description: "Multimodales Modell von Google. Stark in der Recherche und Zusammenfassung von Informationen aus dem Web.",
-                    useCases: ["recherche", "texte zusammenfassen", "content-ideen", "ads schalten", "datenanalyse"],
-                    detailedDescription: "Gemini ist Googles multimodales KI-Modell, das Text, Bilder und Code nahtlos verarbeiten kann. Es ist tief in das Google-Ökosystem integriert und zeichnet sich durch seine Fähigkeit aus, Informationen in Echtzeit aus dem Internet abzurufen und zusammenzufassen. Ideal für Recherche, das Erstellen von Inhaltsplänen und die Analyse von Daten.",
-                    pricingDetails: { free: "Die Standardversion von Gemini ist kostenlos nutzbar.", advanced: "Gemini Advanced (Teil des Google One AI Premium Abos für ca. 20 USD/Monat) bietet Zugang zum leistungsstärksten Modell und mehr Funktionen." }
-                },
-                en: {
-                    category: "Text & Marketing",
-                    description: "Multimodal model from Google. Strong in research and summarizing information from the web.",
-                    useCases: ["research", "summarize texts", "content ideas", "run ads", "data analysis"],
-                    detailedDescription: "Gemini is Google's multimodal AI model that can seamlessly process text, images, and code. It is deeply integrated into the Google ecosystem and is characterized by its ability to retrieve and summarize information from the internet in real time. Ideal for research, creating content plans, and analyzing data.",
-                    pricingDetails: { free: "The standard version of Gemini is free to use.", advanced: "Gemini Advanced (part of the Google One AI Premium subscription for approx. $20/month) provides access to the most powerful model and more features." }
-                }
-            },
-            {
-                name: "Claude 3 (Anthropic)",
-                link: "https://www.anthropic.com/claude",
-                pricing: "freemium",
-                beginnerFriendly: true,
-                categoryIcon: "file-text",
-                promptHelper: false,
-                de: {
-                    category: "Text & Marketing",
-                    description: "Sehr stark in langen Texten, Analysen und als sicherer Chatbot. Besitzt ein grosses Kontextfenster.",
-                    useCases: ["lange dokumente analysieren", "chatbots", "wissenschaftliche texte", "kreatives schreiben", "kundensupport"],
-                    detailedDescription: "Claude 3 von Anthropic ist eine Familie von Sprachmodellen, die für ihre Fähigkeit bekannt sind, sehr lange Texte (bis zu 150.000 Wörter) zu verarbeiten. Dies macht sie ideal für die Analyse von Verträgen, wissenschaftlichen Arbeiten oder ganzen Büchern. Claude legt zudem einen grossen Wert auf Sicherheit und die Vermeidung von schädlichen Inhalten.",
-                    pricingDetails: { free: "Eine kostenlose Version (Claude 3 Sonnet) ist über die Webseite claude.ai mit täglichen Limits verfügbar.", pro: "Ein Pro-Abo (ca. 20 USD/Monat) bietet Zugang zum leistungsstärksten Modell (Claude 3 Opus) und höhere Nutzungslimits.", api: "Entwickler können über eine API auf die Modelle zugreifen." }
-                },
-                en: {
-                    category: "Text & Marketing",
-                    description: "Very strong in long texts, analysis, and as a secure chatbot. Has a large context window.",
-                    useCases: ["analyze long documents", "chatbots", "scientific papers", "creative writing", "customer support"],
-                    detailedDescription: "Claude 3 from Anthropic is a family of language models known for their ability to process very long texts (up to 150,000 words). This makes them ideal for analyzing contracts, scientific papers, or entire books. Claude also places a strong emphasis on security and avoiding harmful content.",
-                    pricingDetails: { free: "A free version (Claude 3 Sonnet) is available via the claude.ai website with daily limits.", pro: "A Pro subscription (approx. $20/month) provides access to the most powerful model (Claude 3 Opus) and higher usage limits.", api: "Developers can access the models via an API." }
-                }
-            },
-            {
-                name: "Perplexity AI",
-                link: "https://www.perplexity.ai/",
-                pricing: "freemium",
-                beginnerFriendly: true,
-                categoryIcon: "book-check",
-                promptHelper: false,
-                de: {
-                    category: "Text & Marketing",
-                    description: "Spezialisiert auf Recherche mit direkten Quellenangaben. Eine KI-gestützte Antwortmaschine.",
-                    useCases: ["recherche", "faktenprüfung", "quellen finden", "artikel zusammenfassen", "lernen"],
-                    detailedDescription: "Perplexity AI ist eine 'Antwortmaschine', die das Beste aus einer Suchmaschine und einem Chatbot kombiniert. Anstatt nur Links zu liefern, durchsucht Perplexity das Web und gibt eine direkte, zusammengefasste Antwort auf eine Frage, inklusive Links zu den Quellen. Das macht es zu einem extrem leistungsfähigen Werkzeug für Recherche und Faktenprüfung.",
-                    pricingDetails: { free: "Die kostenlose Version bietet schnelle Antworten mit dem eigenen Modell.", pro: "Ein Pro-Abo (ca. 20 USD/Monat) ermöglicht die Nutzung von fortschrittlicheren Modellen wie GPT-4o und Claude 3 für die Antworten." }
-                },
-                en: {
-                    category: "Text & Marketing",
-                    description: "Specialized in research with direct source citations. An AI-powered answer engine.",
-                    useCases: ["research", "fact-checking", "find sources", "summarize articles", "learning"],
-                    detailedDescription: "Perplexity AI is an 'answer engine' that combines the best of a search engine and a chatbot. Instead of just providing links, Perplexity searches the web and gives a direct, summarized answer to a question, including links to the sources. This makes it an extremely powerful tool for research and fact-checking.",
-                    pricingDetails: { free: "The free version offers fast answers with its own model.", pro: "A Pro subscription (approx. $20/month) allows the use of more advanced models like GPT-4o and Claude 3 for answers." }
-                }
-            },
-            {
-                name: "Writesonic",
-                link: "https://writesonic.com/",
-                pricing: "freemium",
-                beginnerFriendly: true,
-                categoryIcon: "pen-tool",
-                promptHelper: true,
-                de: {
-                    category: "Text & Marketing",
-                    description: "Marketingfokussierte KI mit Vorlagen für Ads, Blogs und Social Media.",
-                    useCases: ["seo texte", "google ads", "blogartikel", "landing pages", "produktbeschreibungen"],
-                    detailedDescription: "Writesonic ist eine All-in-One-Plattform für Content-Erstellung, die speziell auf die Bedürfnisse von Marketern und SEO-Experten zugeschnitten ist. Sie bietet eine breite Palette an Vorlagen, von Blog-Artikeln über Google Ads bis hin zu Landing Pages. Funktionen wie der AI Article Writer können in wenigen Minuten komplette, SEO-optimierte Artikel erstellen.",
-                    pricingDetails: { free: "Eine kostenlose Testversion mit einem monthlichem Wortlimit ist verfügbar.", pro: "Pro-Pläne (ab ca. 13 USD/Monat) bieten mehr Wörter, höhere Qualität und zusätzliche Funktionen wie den 'Brand Voice'-Modus." }
-                },
-                en: {
-                    category: "Text & Marketing",
-                    description: "Marketing-focused AI with templates for ads, blogs, and social media.",
-                    useCases: ["seo texts", "google ads", "blog articles", "landing pages", "product descriptions"],
-                    detailedDescription: "Writesonic is an all-in-one content creation platform tailored to the needs of marketers and SEO experts. It offers a wide range of templates, from blog articles and Google Ads to landing pages. Features like the AI Article Writer can create complete, SEO-optimized articles in minutes.",
-                    pricingDetails: { free: "A free trial with a monthly word limit is available.", pro: "Pro plans (from approx. $13/month) offer more words, higher quality, and additional features like 'Brand Voice' mode." }
-                }
-            },
-            {
-                name: "Grok",
-                link: "https://grok.x.ai/",
-                pricing: "subscription",
-                beginnerFriendly: true,
-                categoryIcon: "message-square",
-                promptHelper: false,
-                de: {
-                    category: "Text & Marketing",
-                    description: "Konversations-KI mit Echtzeit-Zugriff auf Informationen von der Plattform X (ehemals Twitter).",
-                    useCases: ["echtzeit-recherche", "social media trends", "meinungsbildung", "chat", "humorvolle antworten"],
-                    detailedDescription: "Grok ist eine von xAI entwickelte Konversations-KI, die direkt in die Plattform X integriert ist. Sein Hauptvorteil ist der Echtzeit-Zugriff auf den öffentlichen Diskurs auf X, was ihm ein aktuelles und oft unverblümtes Verständnis für Themen verleiht. Grok ist darauf ausgelegt, Fragen mit Witz und einer rebellischen Ader zu beantworten.",
-                    pricingDetails: { free: "Keine kostenlose Version verfügbar.", premium: "Grok ist Teil des X Premium+ Abonnements (ca. 16 USD/Monat) und für diese Nutzer direkt auf der Plattform verfügbar." }
-                },
-                en: {
-                    category: "Text & Marketing",
-                    description: "Conversational AI with real-time access to information from the X platform (formerly Twitter).",
-                    useCases: ["real-time research", "social media trends", "opinion forming", "chat", "humorous answers"],
-                    detailedDescription: "Grok is a conversational AI developed by xAI, integrated directly into the X platform. Its main advantage is real-time access to public discourse on X, giving it an up-to-date and often candid understanding of topics. Grok is designed to answer questions with wit and a rebellious streak.",
-                    pricingDetails: { free: "No free version available.", premium: "Grok is part of the X Premium+ subscription (approx. $16/month) and is directly available to these users on the platform." }
-                }
-            },
-            {
-                name: "Leonardo AI",
-                link: "https://leonardo.ai/",
-                pricing: "freemium",
-                beginnerFriendly: false,
-                categoryIcon: "gamepad-2",
-                promptHelper: true,
-                de: {
-                    category: "Bild & Design",
-                    description: "Beliebt für Game Assets, Mockups und konsistente Charakterdesigns.",
-                    useCases: ["game assets", "charakterdesign", "mockups", "stock-bilder", "texturen"],
-                    detailedDescription: "Leonardo AI ist eine Plattform für generative KI, die sich auf die Erstellung von hochwertigen visuellen Assets spezialisiert hat. Sie ist besonders bei Game-Entwicklern und Designern beliebt, da sie es ermöglicht, eigene Modelle zu trainieren, um konsistente Charaktere oder Stile zu erzeugen. Neben der Bilderzeugung bietet sie auch Tools zur Bildbearbeitung und -erweiterung.",
-                    pricingDetails: { free: "Eine kostenlose Version mit einer täglichen Anzahl an Credits ist verfügbar.", abo: "Verschiedene Abo-Stufen (ab ca. 10 USD/Monat) bieten mehr Credits, schnellere Generierung und erweiterte Funktionen." }
-                },
-                en: {
-                    category: "Image & Design",
-                    description: "Popular for game assets, mockups, and consistent character designs.",
-                    useCases: ["game assets", "character design", "mockups", "stock images", "textures"],
-                    detailedDescription: "Leonardo AI is a generative AI platform specializing in the creation of high-quality visual assets. It is particularly popular with game developers and designers as it allows them to train their own models to create consistent characters or styles. In addition to image generation, it also offers tools for image editing and enhancement.",
-                    pricingDetails: { free: "A free version with a daily number of credits is available.", subscription: "Various subscription tiers (from approx. $10/month) offer more credits, faster generation, and advanced features." }
-                }
-            },
-            {
-                name: "Kling AI",
-                link: "https://kling.kuaishou.com/",
-                pricing: "beta",
-                beginnerFriendly: true,
-                categoryIcon: "film",
-                promptHelper: false,
-                de: {
-                    category: "Audio & Video",
-                    description: "Ein aufstrebendes Text-zu-Video-Modell, das für seine hohe Realitätstreue und Videolänge bekannt ist.",
-                    useCases: ["realistische videos", "kurzfilme", "storytelling", "text-zu-video"],
-                    detailedDescription: "Kling ist ein neues, vielversprechendes KI-Videomodell, das Videos in hoher Qualität (1080p) und mit einer Länge von bis zu zwei Minuten generieren kann. Es zeichnet sich durch ein gutes Verständnis physikalischer Bewegungen und die Erzeugung realistischer Szenen aus. Derzeit ist der Zugang noch beschränkt, aber es gilt als starker Konkurrent für andere Text-zu-Video-Modelle.",
-                    pricingDetails: { beta: "Derzeit ist der Zugang über eine Warteliste in China verfügbar. Ein globales Release und Preismodell sind noch nicht bekannt." }
-                },
-                en: {
-                    category: "Audio & Video",
-                    description: "An emerging text-to-video model known for its high realism and video length.",
-                    useCases: ["realistic videos", "short films", "storytelling", "text-to-video"],
-                    detailedDescription: "Kling is a new, promising AI video model that can generate high-quality (1080p) videos up to two minutes long. It is characterized by a good understanding of physical movements and the creation of realistic scenes. Access is currently limited, but it is considered a strong competitor to other text-to-video models.",
-                    pricingDetails: { beta: "Access is currently available via a waitlist in China. A global release and pricing model are not yet known." }
-                }
-            },
-            {
-                name: "Pika Labs",
-                link: "https://pika.art/",
-                pricing: "freemium",
-                beginnerFriendly: true,
-                categoryIcon: "wand-2",
-                promptHelper: true,
-                de: {
-                    category: "Audio & Video",
-                    description: "Text-zu-Video-Generator mit einem starken künstlerischen Fokus für kreative und surreale Clips.",
-                    useCases: ["kreative videos", "animations-clips", "visuelle effekte", "musikvideos", "text-zu-video"],
-                    detailedDescription: "Pika Labs (oder Pika) ist ein KI-Videogenerator, der sich durch seinen künstlerischen und filmischen Stil auszeichnet. Nutzer können per Text oder Bild-Upload kurze Videoclips erstellen. Die Plattform bietet viele Kontrollmöglichkeiten über Kamerabewegung, Stil und Seitenverhältnis. Ideal für Künstler und Kreative, die visuell beeindruckende, kurze Clips erstellen möchten.",
-                    pricingDetails: { free: "Eine kostenlose Version mit Wasserzeichen und begrenzten Credits ist verfügbar.", standard: "Standard-Pläne (ab ca. 8 USD/Monat) entfernen das Wasserzeichen und bieten mehr Credits." }
-                },
-                en: {
-                    category: "Audio & Video",
-                    description: "Text-to-video generator with a strong artistic focus for creative and surreal clips.",
-                    useCases: ["creative videos", "animation clips", "visual effects", "music videos", "text-to-video"],
-                    detailedDescription: "Pika Labs (or Pika) is an AI video generator distinguished by its artistic and cinematic style. Users can create short video clips via text or image upload. The platform offers many controls over camera movement, style, and aspect ratio. Ideal for artists and creatives who want to create visually stunning short clips.",
-                    pricingDetails: { free: "A free version with a watermark and limited credits is available.", standard: "Standard plans (from approx. $8/month) remove the watermark and offer more credits." }
-                }
-            },
-            {
-                name: "Descript",
-                link: "https://www.descript.com/",
-                pricing: "freemium",
-                beginnerFriendly: true,
-                categoryIcon: "scissors",
-                promptHelper: false,
-                de: {
-                    category: "Audio & Video",
-                    description: "KI für Audio-/Video-Bearbeitung, inkl. Transkription und Voice-Cloning.",
-                    useCases: ["podcasts bearbeiten", "videos transkribieren", "voice-over", "stimme klonen", "füllwörter entfernen"],
-                    detailedDescription: "Descript revolutioniert die Audio- und Videobearbeitung, indem es sie so einfach wie die Bearbeitung eines Textdokuments macht. Die Software transkribiert automatisch das gesprochene Wort. Man kann dann einfach Text löschen, um die entsprechenden Audio-/Video-Passagen zu schneiden. Weitere KI-Features sind das Entfernen von Füllwörtern ('ähms'), das Klonen der eigenen Stimme und die Verbesserung der Audioqualität.",
-                    pricingDetails: { free: "Kostenlose Version mit begrenzter Transkriptionsdauer und Wasserzeichen im Videoexport.", creator: "Creator-Pläne (ab ca. 12 USD/Monat) bieten mehr Stunden und entfernen das Wasserzeichen.", pro: "Pro-Pläne bieten unbegrenzte Transkription und professionelle Funktionen." }
-                },
-                en: {
-                    category: "Audio & Video",
-                    description: "AI for audio/video editing, including transcription and voice cloning.",
-                    useCases: ["edit podcasts", "transcribe videos", "voice-over", "clone voice", "remove filler words"],
-                    detailedDescription: "Descript revolutionizes audio and video editing by making it as easy as editing a text document. The software automatically transcribes the spoken word. You can then simply delete text to cut the corresponding audio/video passages. Other AI features include removing filler words ('ums'), cloning your own voice, and improving audio quality.",
-                    pricingDetails: { free: "Free version with limited transcription duration and watermark on video exports.", creator: "Creator plans (from approx. $12/month) offer more hours and remove the watermark.", pro: "Pro plans offer unlimited transcription and professional features." }
-                }
-            },
-            {
-                name: "DeepSeek Coder",
-                link: "https://deepseek.com/",
-                pricing: "freemium",
-                beginnerFriendly: false,
-                categoryIcon: "terminal-square",
-                promptHelper: true,
-                de: {
-                    category: "Code & Entwicklung",
-                    description: "Ein leistungsstarkes, auf Code spezialisiertes Sprachmodell, das für seine hohe Performance bekannt ist.",
-                    useCases: ["code generierung", "programmieren", "debugging", "code-vervollständigung", "algorithmic tasks"],
-                    detailedDescription: "DeepSeek Coder ist eine Familie von auf Code spezialisierten KI-Modellen. Sie wurden darauf trainiert, eine Vielzahl von Programmiersprachen zu verstehen und zu generieren. Ihre Stärke liegt in der Fähigkeit, komplexe Programmierprobleme zu lösen und effizienten Code zu schreiben, was sie zu einem Favoriten für wettbewerbsorientierte Programmierung und anspruchsvolle Entwicklungsaufgaben macht.",
-                    pricingDetails: { free: "Kostenlos für Forschung und den persönlichen Gebrauch.", api: "Kommerzielle Nutzung erfolgt über eine API mit nutzungsbasierter Abrechnung, die oft günstiger ist als bei Konkurrenzmodellen." }
-                },
-                en: {
-                    category: "Code & Development",
-                    description: "A powerful language model specialized in code, known for its high performance.",
-                    useCases: ["code generation", "programming", "debugging", "code completion", "algorithmic tasks"],
-                    detailedDescription: "DeepSeek Coder is a family of AI models specialized in code. They have been trained to understand and generate a variety of programming languages. Their strength lies in their ability to solve complex programming problems and write efficient code, making them a favorite for competitive programming and demanding development tasks.",
-                    pricingDetails: { free: "Free for research and personal use.", api: "Commercial use is available via a usage-based API, which is often more affordable than competing models." }
-                }
-            },
-            {
-                name: "Codeium",
-                link: "https://codeium.com/",
-                pricing: "openSource",
-                beginnerFriendly: true,
-                categoryIcon: "code",
-                promptHelper: false,
-                de: {
-                    category: "Code & Entwicklung",
-                    description: "Eine sehr schnelle und kostenlose Alternative zu GitHub Copilot für Einzelentwickler.",
-                    useCases: ["programmieren", "code schreiben", "autovervollständigung", "code-chat", "debugging"],
-                    detailedDescription: "Codeium ist ein KI-Coding-Assistent, der sich als direkte Alternative zu GitHub Copilot positioniert. Er bietet extrem schnelle Code-Vervollständigungen und einen integrierten Chat, um Fragen zum Code zu stellen. Das Besondere: Für Einzelentwickler ist Codeium komplett kostenlos, ohne Einschränkungen bei der Funktionalität. Es unterstützt über 70 Programmiersprachen und lässt sich in alle gängigen IDEs integrieren.",
-                    pricingDetails: { free: "Für Einzelpersonen ist die Nutzung komplett kostenlos.", teams: "Für Teams gibt es einen kostenpflichtigen Plan (ab ca. 12 USD/Benutzer/Monat) mit zusätzlichen Verwaltungs- und Sicherheitsfunktionen." }
-                },
-                en: {
-                    category: "Code & Development",
-                    description: "A very fast and free alternative to GitHub Copilot for individual developers.",
-                    useCases: ["programming", "writing code", "autocomplete", "code chat", "debugging"],
-                    detailedDescription: "Codeium is an AI coding assistant that positions itself as a direct alternative to GitHub Copilot. It offers extremely fast code completions and an integrated chat to ask questions about the code. The special feature: For individual developers, Codeium is completely free with no functional limitations. It supports over 70 programming languages and integrates with all major IDEs.",
-                    pricingDetails: { free: "Usage is completely free for individuals.", teams: "For teams, there is a paid plan (from approx. $12/user/month) with additional management and security features." }
-                }
-            },
-            {
-                name: "Tabnine",
-                link: "https://www.tabnine.com/",
-                pricing: "freemium",
-                beginnerFriendly: false,
-                categoryIcon: "shield-check",
-                promptHelper: false,
-                de: {
-                    category: "Code & Entwicklung",
-                    description: "KI-Coding-Assistent mit starkem Fokus auf Datenschutz und der Möglichkeit, auf eigenem Code zu trainieren.",
-                    useCases: ["programmieren", "code-sicherheit", "team-kollaboration", "autovervollständigung", "privater code"],
-                    detailedDescription: "Tabnine ist ein KI-Assistent für Programmierer, der sich durch seinen Fokus auf Datenschutz und Sicherheit von anderen abhebt. Er kann so konfiguriert werden, dass er niemals Code teilt oder auf eigenen, privaten Code-Repositories trainiert wird. Dies macht ihn besonders für Unternehmen attraktiv. Tabnine bietet kontextsensitive Code-Vervollständigungen und lernt den individuellen Stil des Entwicklers.",
-                    pricingDetails: { free: "Ein kostenloser Plan mit grundlegenden Code-Vervollständigungen ist verfügbar.", pro: "Ein Pro-Plan (ab ca. 12 USD/Monat) bietet erweiterte Funktionen und kann auf den eigenen Code-Repositories trainieren." }
-                },
-                en: {
-                    category: "Code & Development",
-                    description: "AI coding assistant with a strong focus on privacy and the ability to train on your own code.",
-                    useCases: ["programming", "code security", "team collaboration", "autocomplete", "private code"],
-                    detailedDescription: "Tabnine is an AI assistant for programmers that stands out for its focus on privacy and security. It can be configured to never share code or train on its own private code repositories. This makes it particularly attractive for businesses. Tabnine provides context-sensitive code completions and learns the developer's individual style.",
-                    pricingDetails: { free: "A free plan with basic code completions is available.", pro: "A Pro plan (from approx. $12/month) offers advanced features and can train on your own code repositories." }
-                }
-            },
-            {
-                name: "Otter.ai",
-                link: "https://otter.ai/",
-                pricing: "freemium",
-                beginnerFriendly: true,
-                categoryIcon: "mic",
-                promptHelper: false,
-                de: {
-                    category: "Produktivität & Office",
-                    description: "Führend bei Meeting-Transkriptionen und automatischen Zusammenfassungen in Echtzeit.",
-                    useCases: ["meeting transkribieren", "interviews aufzeichnen", "zusammenfassungen", "action items", "notizen"],
-                    detailedDescription: "Otter.ai ist ein KI-Assistent, der speziell für Meetings entwickelt wurde. Er kann an Online-Meetings (Zoom, Google Meet, etc.) teilnehmen, das Gespräch in Echtzeit transkribieren und identifiziert dabei sogar die verschiedenen Sprecher. Nach dem Meeting erstellt Otter automatisch eine Zusammenfassung, identifiziert die wichtigsten Punkte und listet Action Items auf. Ein 'Must-have' für alle, die viele Meetings haben.",
-                    pricingDetails: { free: "Eine kostenlose Version mit einem monatlichen Kontingent an Transkriptionsminuten ist verfügbar.", pro: "Pro-Pläne (ab ca. 10 USD/Monat) bieten deutlich mehr Minuten und erweiterte Funktionen.", business: "Business-Pläne für Teams mit zentraler Verwaltung." }
-                },
-                en: {
-                    category: "Productivity & Office",
-                    description: "Leader in real-time meeting transcriptions and automatic summaries.",
-                    useCases: ["transcribe meetings", "record interviews", "summaries", "action items", "notes"],
-                    detailedDescription: "Otter.ai is an AI assistant designed specifically for meetings. It can join online meetings (Zoom, Google Meet, etc.), transcribe the conversation in real time, and even identify different speakers. After the meeting, Otter automatically creates a summary, identifies key points, and lists action items. A 'must-have' for anyone who has a lot of meetings.",
-                    pricingDetails: { free: "A free version with a monthly quota of transcription minutes is available.", pro: "Pro plans (from approx. $10/month) offer significantly more minutes and advanced features.", business: "Business plans for teams with central administration." }
-                }
-            },
-            {
-                name: "ClickUp AI",
-                link: "https://clickup.com/ai",
-                pricing: "addon",
-                beginnerFriendly: true,
-                categoryIcon: "check-square",
-                promptHelper: false,
-                de: {
-                    category: "Produktivität & Office",
-                    description: "KI-Features direkt in die Projektmanagement-Plattform ClickUp integriert, um Aufgaben zu automatisieren.",
-                    useCases: ["projektmanagement", "aufgaben zusammenfassen", "action items", "status updates", "brainstorming"],
-                    detailedDescription: "ClickUp AI integriert künstliche Intelligenz direkt in das umfassende Projektmanagement-Tool ClickUp. Es kann Aufgaben basierend auf einem Ziel erstellen, Kommentare zusammenfassen, Status-Updates schreiben oder den Inhalt von Dokumenten und Aufgaben verbessern. Ziel ist es, repetitive administrative Arbeit zu reduzieren, damit sich Teams auf die eigentlichen Aufgaben konzentrieren können.",
-                    pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen ist in allen Plänen (auch dem kostenlosen) zum Ausprobieren enthalten.", addon: "Für die volle Nutzung ist es ein kostenpflichtiges Add-on (ca. 5 USD/Benutzer/Monat) zu jedem ClickUp-Plan." }
-                },
-                en: {
-                    category: "Productivity & Office",
-                    description: "AI features integrated directly into the ClickUp project management platform to automate tasks.",
-                    useCases: ["project management", "summarize tasks", "action items", "status updates", "brainstorming"],
-                    detailedDescription: "ClickUp AI integrates artificial intelligence directly into the comprehensive project management tool ClickUp. It can create tasks based on a goal, summarize comments, write status updates, or improve the content of documents and tasks. The goal is to reduce repetitive administrative work so teams can focus on the actual tasks.",
-                    pricingDetails: { free: "A limited number of AI actions are included in all plans (including the free one) for trial.", addon: "For full use, it is a paid add-on (approx. $5/user/month) to any ClickUp plan." }
-                }
-            },
-            {
-                name: "DALL-E 3 (via ChatGPT)",
-                link: "https://openai.com/dall-e-3",
-                pricing: "subscription",
-                beginnerFriendly: true,
-                categoryIcon: "image-plus",
-                promptHelper: true,
-                de: {
-                    category: "Bild & Design",
-                    description: "Direkt in ChatGPT integriert, einfach zu bedienen. Setzt Textanweisungen präzise in Bilder um.",
-                    useCases: ["social media bilder", "blog-illustrationen", "präsentationen", "onlineshop", "instagram", "logos"],
-                    detailedDescription: "DALL-E 3 ist der Bildgenerator von OpenAI und ist direkt in ChatGPT Plus integriert. Seine grösste Stärke liegt im Verständnis von komplexen und detaillierten Anweisungen. Man kann im Gespräch mit ChatGPT eine Idee verfeinern und DALL-E 3 setzt diese dann visuell um. Es ist besonders gut darin, Text korrekt in Bildern darzustellen. Die einfache Bedienung über den Chat macht es extrem anfängerfreundlich.",
-                    pricingDetails: { free: "Nicht direkt kostenlos verfügbar. Die Nutzung ist im ChatGPT Plus Abonnement enthalten.", plus: "Die Bildgenerierung ist Teil des ChatGPT Plus Abos (ca. 20 USD/Monat).", api: "Für Entwickler ist der Zugang auch über die OpenAI API mit nutzungsbasierter Abrechnung möglich." }
-                },
-                en: {
-                    category: "Image & Design",
-                    description: "Integrated directly into ChatGPT, easy to use. Accurately translates text instructions into images.",
-                    useCases: ["social media images", "blog illustrations", "presentations", "online store", "instagram", "logos"],
-                    detailedDescription: "DALL-E 3 is OpenAI's image generator and is integrated directly into ChatGPT Plus. Its greatest strength lies in understanding complex and detailed instructions. You can refine an idea in conversation with ChatGPT, and DALL-E 3 will then realize it visually. It is particularly good at correctly rendering text in images. The easy operation via chat makes it extremely beginner-friendly.",
-                    pricingDetails: { free: "Not available for free directly. Use is included in the ChatGPT Plus subscription.", plus: "Image generation is part of the ChatGPT Plus subscription (approx. $20/month).", api: "For developers, access is also possible via the OpenAI API with usage-based billing." }
-                }
-            },
-            {
-                name: "Stable Diffusion",
-                link: "https://stability.ai/",
-                pricing: "openSource",
-                beginnerFriendly: false,
-                categoryIcon: "cpu",
-                promptHelper: true,
-                de: {
-                    category: "Bild & Design",
-                    description: "Open-Source-Modell mit maximaler Kontrolle. Kann lokal ausgeführt werden für hohe Anpassbarkeit.",
-                    useCases: ["charakterdesign", "mode", "architektur", "experimentelle kunst", "lokale bildgenerierung"],
-                    detailedDescription: "Stable Diffusion ist ein leistungsstarkes Open-Source-Modell zur Bilderzeugung. Im Gegensatz zu vielen anderen Diensten kann es auf dem eigenen Computer (mit einer ausreichend starken Grafikkarte) installiert und ausgeführt werden. Dies bietet maximale Kontrolle über den Prozess, ermöglicht das Trainieren mit eigenen Daten und ist kostenlos in der Nutzung. Es ist die bevorzugte Wahl für Entwickler, Forscher und Künstler, die volle Kontrolle wünschen.",
-                    pricingDetails: { free: "Das Modell selbst ist kostenlos. Man benötigt lediglich die passende Hardware (Grafikkarte).", cloud: "Es gibt auch Cloud-Dienste wie DreamStudio von Stability AI, die eine nutzungsbasierte Abrechnung (Credits) für die Verwendung von Stable Diffusion anbieten, ohne dass man eigene Hardware benötigt." }
-                },
-                en: {
-                    category: "Image & Design",
-                    description: "Open-source model with maximum control. Can be run locally for high customizability.",
-                    useCases: ["character design", "fashion", "architecture", "experimental art", "local image generation"],
-                    detailedDescription: "Stable Diffusion is a powerful open-source model for image generation. Unlike many other services, it can be installed and run on your own computer (with a sufficiently powerful graphics card). This offers maximum control over the process, allows training with your own data, and is free to use. It is the preferred choice for developers, researchers, and artists who want full control.",
-                    pricingDetails: { free: "The model itself is free. You just need the appropriate hardware (graphics card).", cloud: "There are also cloud services like DreamStudio from Stability AI that offer usage-based billing (credits) for using Stable Diffusion without needing your own hardware." }
-                }
-            },
-             {
-                name: "Jasper",
-                link: "https://www.jasper.ai/",
-                pricing: "subscription",
-                beginnerFriendly: true,
-                categoryIcon: "gem",
-                promptHelper: true,
-                de: {
-                    category: "Text & Marketing",
-                    description: "Speziell auf Marketing und Werbetexte spezialisierte KI. Bietet viele Vorlagen für Ads, Social Media etc.",
-                    useCases: ["werbetexte", "facebook ads", "google ads", "produktbeschreibungen", "landing pages", "blogartikel"],
-                    detailedDescription: "Jasper ist eine auf Marketing spezialisierte KI-Schreibplattform. Sie ist darauf trainiert, überzeugende und markenkonforme Texte zu erstellen. Mit Dutzenden von Vorlagen für Social-Media-Posts, Werbeanzeigen, Blogartikel und E-Mails hilft Jasper Marketern, schneller hochwertigen Content zu produzieren. Die 'Brand Voice'-Funktion ermöglicht es, den Schreibstil an eine bestimmte Marke anzupassen.",
-                    pricingDetails: { free: "Es gibt in der Regel eine kostenlose Testphase, aber keinen permanenten kostenlosen Plan.", creator: "Creator-Pläne (ab ca. 39 USD/Monat) sind für Einzelpersonen und kleine Teams gedacht.", pro: "Pro- und Business-Pläne bieten mehr Funktionen für die Zusammenarbeit im Team und erweiterte Analyse-Tools." }
-                },
-                en: {
-                    category: "Text & Marketing",
-                    description: "AI specialized in marketing and ad copy. Offers many templates for ads, social media, etc.",
-                    useCases: ["ad copy", "facebook ads", "google ads", "product descriptions", "landing pages", "blog articles"],
-                    detailedDescription: "Jasper is an AI writing platform specialized in marketing. It is trained to create persuasive and brand-compliant texts. With dozens of templates for social media posts, ads, blog articles, and emails, Jasper helps marketers produce high-quality content faster. The 'Brand Voice' feature allows the writing style to be adapted to a specific brand.",
-                    pricingDetails: { free: "There is usually a free trial period, but no permanent free plan.", creator: "Creator plans (from approx. $39/month) are for individuals and small teams.", pro: "Pro and Business plans offer more features for team collaboration and advanced analysis tools." }
-                }
-            },
-            {
-                name: "Suno AI",
-                link: "https://www.suno.ai/",
-                pricing: "freemium",
-                beginnerFriendly: true,
-                categoryIcon: "music-2",
-                promptHelper: true,
-                de: {
-                    category: "Audio & Video",
-                    description: "Erzeugt komplette Songs (Musik und Gesang) basierend auf einer einfachen Texteingabe.",
-                    useCases: ["hintergrundmusik", "jingles", "social media videos", "podcasts", "songwriting"],
-                    detailedDescription: "Suno AI ist ein revolutionäres KI-Tool, das aus einer einfachen Textbeschreibung komplette Lieder mit Gesang, Instrumenten und Texten generieren kann. Nutzer können einen Stil (z.B. 'Pop', 'Rock') und einen Text vorgeben, und die KI komponiert und produziert einen einzigartigen Song. Es ist unglaublich einfach zu bedienen und ideal für Content Creator, Musiker oder einfach zum Spass.",
-                    pricingDetails: { free: "Kostenlose Version bietet täglich eine begrenzte Anzahl an Credits, um Songs zu erstellen.", pro: "Pro-Pläne (ab ca. 8 USD/Monat) bieten mehr Credits, schnellere Generierung und erlauben die kommerzielle Nutzung der erstellten Songs.", premier: "Premier-Pläne für Power-User mit einem sehr hohen Bedarf an Song-Generierungen." }
-                },
-                en: {
-                    category: "Audio & Video",
-                    description: "Generates complete songs (music and vocals) based on a simple text input.",
-                    useCases: ["background music", "jingles", "social media videos", "podcasts", "songwriting"],
-                    detailedDescription: "Suno AI is a revolutionary AI tool that can generate complete songs with vocals, instruments, and lyrics from a simple text description. Users can specify a style (e.g., 'Pop', 'Rock') and lyrics, and the AI composes and produces a unique song. It is incredibly easy to use and ideal for content creators, musicians, or just for fun.",
-                    pricingDetails: { free: "Free version offers a limited number of credits daily to create songs.", pro: "Pro plans (from approx. $8/month) offer more credits, faster generation, and allow commercial use of the created songs.", premier: "Premier plans for power users with a very high demand for song generation." }
-                }
-            },
-            {
-                name: "RunwayML",
-                link: "https://runwayml.com/",
-                pricing: "freemium",
-                beginnerFriendly: false,
-                categoryIcon: "video",
-                promptHelper: true,
-                de: {
-                    category: "Audio & Video",
-                    description: "Eine All-in-One-Plattform für Videoerstellung und -bearbeitung mit KI-Tools (Text-zu-Video, Inpainting etc.).",
-                    useCases: ["marketingvideos", "kurzfilme", "visuelle effekte", "video-bearbeitung", "text-zu-video"],
-                    detailedDescription: "RunwayML ist eine leistungsstarke Online-Suite für Videobearbeitung, die mit KI-Funktionen angereichert ist. Die Plattform bietet Werkzeuge wie Text-zu-Video (Gen-2), das Entfernen von Objekten aus Videos, unendliche Bild-Erweiterung und vieles mehr. Es ist ein kreativer Spielplatz für Videokünstler und Filmemacher, die die Grenzen des Möglichen ausloten wollen.",
-                    pricingDetails: { free: "Eine kostenlose Version ist mit einem Startguthaben an Credits und eingeschränkten Exportoptionen (z.B. Wasserzeichen) verfügbar.", standard: "Standard-Plan (ab ca. 12 USD/Monat) bietet mehr Credits, höhere Exportqualität und mehr Speicherplatz.", pro: "Pro & Unlimited Pläne bieten noch mehr Credits und erweiterte Funktionen für professionelle Anwender." }
-                },
-                en: {
-                    category: "Audio & Video",
-                    description: "An all-in-one platform for video creation and editing with AI tools (text-to-video, inpainting, etc.).",
-                    useCases: ["marketing videos", "short films", "visual effects", "video editing", "text-to-video"],
-                    detailedDescription: "RunwayML is a powerful online suite for video editing enriched with AI features. The platform offers tools like text-to-video (Gen-2), removing objects from videos, infinite image expansion, and much more. It is a creative playground for video artists and filmmakers looking to push the boundaries of what is possible.",
-                    pricingDetails: { free: "A free version is available with a starting credit balance and limited export options (e.g., watermark).", standard: "Standard plan (from approx. $12/month) offers more credits, higher export quality, and more storage.", pro: "Pro & Unlimited plans offer even more credits and advanced features for professional users." }
-                }
-            },
-            {
-                name: "GitHub Copilot",
-                link: "https://github.com/features/copilot",
-                pricing: "subscription",
-                beginnerFriendly: false,
-                categoryIcon: "github",
-                promptHelper: true,
-                de: {
-                    category: "Code & Entwicklung",
-                    description: "Ein KI-gestützter Programmierpartner, der Code direkt im Editor vorschlägt und vervollständigt.",
-                    useCases: ["programmieren", "code schreiben", "debugging", "lernen", "boilerplate reduzieren"],
-                    detailedDescription: "GitHub Copilot ist ein KI-Programmierassistent, der direkt in gängigen Code-Editoren wie VS Code integriert ist. Er analysiert den Kontext des geschriebenen Codes und schlägt ganze Codezeilen oder sogar komplette Funktionen vor. Dies beschleunigt die Entwicklung erheblich, hilft beim Erlernen neuer Sprachen und reduziert das Schreiben von sich wiederholendem Code.",
-                    pricingDetails: { free: "Kostenlos für verifizierte Studierende und Betreuer von populären Open-Source-Projekten.", individual: "Für Einzelpersonen kostet es ca. 10 USD/Monat.", business: "Ein Business-Plan mit zusätzlichen Verwaltungsfunktionen ist für ca. 19 USD/Benutzer/Monat erhältlich." }
-                },
-                en: {
-                    category: "Code & Development",
-                    description: "An AI-powered coding partner that suggests and completes code directly in the editor.",
-                    useCases: ["programming", "writing code", "debugging", "learning", "reducing boilerplate"],
-                    detailedDescription: "GitHub Copilot is an AI programming assistant integrated directly into popular code editors like VS Code. It analyzes the context of the written code and suggests entire lines of code or even complete functions. This significantly speeds up development, helps in learning new languages, and reduces writing repetitive code.",
-                    pricingDetails: { free: "Free for verified students and maintainers of popular open-source projects.", individual: "For individuals, it costs approx. $10/month.", business: "A business plan with additional administrative features is available for approx. $19/user/month." }
-                }
-            },
-            {
-                name: "Notion AI",
-                link: "https://www.notion.so/product/ai",
-                pricing: "addon",
-                beginnerFriendly: true,
-                categoryIcon: "notebook-text",
-                promptHelper: false,
-                de: {
-                    category: "Produktivität & Office",
-                    description: "Integriert in die Notion-Arbeitsumgebung. Hilft beim Schreiben, Zusammenfassen und Organisieren von Notizen.",
-                    useCases: ["notizen organisieren", "meeting-zusammenfassungen", "brainstorming", "texte verbessern", "word"],
-                    detailedDescription: "Notion AI ist direkt in die beliebte Produktivitäts-App Notion integriert. Es agiert als Schreibassistent, der Texte zusammenfassen, umschreiben, verlängern oder den Tonfall ändern kann. Zudem kann es basierend auf vorhandenen Notizen To-Do-Listen oder Tabellen erstellen. Es ist perfekt, um den Workflow innerhalb von Notion zu beschleunigen und zu verbessern.",
-                    pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen ist in jedem Notion-Plan (auch dem kostenlosen) enthalten.", addon: "Für unbegrenzte Nutzung kann Notion AI als Add-on für ca. 8 USD/Benutzer/Monat zu jedem Plan hinzugefügt werden." }
-                },
-                en: {
-                    category: "Productivity & Office",
-                    description: "Integrated into the Notion workspace. Helps write, summarize, and organize notes.",
-                    useCases: ["organize notes", "meeting summaries", "brainstorming", "improve texts", "word"],
-                    detailedDescription: "Notion AI is integrated directly into the popular productivity app Notion. It acts as a writing assistant that can summarize, rewrite, extend, or change the tone of texts. It can also create to-do lists or tables based on existing notes. It is perfect for speeding up and improving the workflow within Notion.",
-                    pricingDetails: { free: "A limited number of AI actions are included in every Notion plan (including the free one).", addon: "For unlimited use, Notion AI can be added as an add-on for approx. $8/user/month to any plan." }
-                }
-            }
-        ];
-
-        // --- DOM ELEMENTS & STATE ---
-        const mainContent = document.getElementById('main-content');
-        const detailView = document.getElementById('detail-view');
-        const categorySelect = document.getElementById('category-select');
-        const resultsContainer = document.getElementById('results-container');
-        const noResultsMessage = document.getElementById('no-results');
-        const backToListBtn = document.getElementById('back-to-list');
-        const paginationContainer = document.getElementById('pagination-container');
-        const langDeBtn = document.getElementById('lang-de');
-        const langEnBtn = document.getElementById('lang-en');
-        const newsletterForm = document.getElementById('newsletter-form');
-        const newsletterContent = document.getElementById('newsletter-content');
-        const newsletterSuccess = document.getElementById('newsletter-success');
-        const imprintModal = document.getElementById('imprint-modal');
-        const privacyModal = document.getElementById('privacy-modal');
-        const imprintBtn = document.getElementById('footer-imprint-btn');
-        const privacyBtn = document.getElementById('footer-privacy-btn');
-        const geminiSearchBtn = document.getElementById('gemini-search-btn');
-        const aiPromptInput = document.getElementById('ai-prompt-input');
-        const aiLoader = document.getElementById('ai-loader');
-        const aiError = document.getElementById('ai-error');
-        const aiExplanationContainer = document.getElementById('ai-explanation-container');
-        const aiExplanationText = document.getElementById('ai-explanation-text');
-        const chatSendBtn = document.getElementById('chat-send-btn');
-        const chatInput = document.getElementById('chat-input');
-        const promptGeneratorContainer = document.getElementById('prompt-generator-container');
-        const generatePromptsBtn = document.getElementById('generate-prompts-btn');
-        const suggestedQuestionsContainer = document.getElementById('suggested-questions-container');
-
-
-        let currentPage = 1;
-        const itemsPerPage = 9;
-        let currentFilteredModels = [];
-        let currentLang = localStorage.getItem('aiFinderLang') || 'de';
-        let currentDetailViewModel = null;
-
-        // --- FUNCTIONS ---
-
-        function openModal(modal) {
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0');
-                modal.querySelector('.modal-content').classList.add('scale-100', 'opacity-100');
-            }, 10);
-        }
-
-        function closeModal(modal) {
-            modal.querySelector('.modal-content').classList.add('scale-95', 'opacity-0');
-            modal.querySelector('.modal-content').classList.remove('scale-100', 'opacity-100');
-            modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
-
-        function updateContent(lang) {
-            currentLang = lang;
-            localStorage.setItem('aiFinderLang', lang);
-
-            // Update static text
-            document.title = translations[lang].pageTitle;
-            document.documentElement.lang = lang;
-            document.getElementById('main-title').textContent = translations[lang].mainTitle;
-            document.getElementById('main-subtitle').textContent = translations[lang].mainSubtitle;
-            document.getElementById('category-label').textContent = translations[lang].categoryLabel;
-            document.getElementById('ai-rec-title').textContent = translations[lang].aiRecTitle;
-            document.getElementById('ai-rec-subtitle').textContent = translations[lang].aiRecSubtitle;
-            document.getElementById('ai-prompt-input').placeholder = translations[lang].aiPromptPlaceholder;
-            document.getElementById('gemini-btn-text').textContent = translations[lang].geminiBtnText;
-            document.getElementById('ai-loader-text').textContent = translations[lang].aiLoaderText;
-            document.getElementById('no-results-title').textContent = translations[lang].noResultsTitle;
-            document.getElementById('no-results-subtitle').textContent = translations[lang].noResultsSubtitle;
-            document.getElementById('back-button-text').textContent = translations[lang].backButtonText;
-            document.getElementById('pricing-details-title').textContent = translations[lang].pricingDetailsTitle;
-            document.getElementById('visit-website-button').textContent = translations[lang].visitWebsiteButton;
-            document.getElementById('newsletter-title').textContent = translations[lang].newsletterTitle;
-            document.getElementById('newsletter-subtitle').textContent = translations[lang].newsletterSubtitle;
-            document.getElementById('email-input').placeholder = translations[lang].newsletterPlaceholder;
-            document.getElementById('newsletter-button').textContent = translations[lang].newsletterButton;
-            document.getElementById('newsletter-success-title').textContent = translations[lang].newsletterSuccessTitle;
-            document.getElementById('newsletter-success-subtitle').textContent = translations[lang].newsletterSuccessSubtitle;
-            document.getElementById('footer-rights').textContent = translations[lang].footerRights;
-            document.getElementById('footer-imprint-btn').textContent = translations[lang].footerImprint;
-            document.getElementById('footer-privacy-btn').textContent = translations[lang].footerPrivacy;
-            document.getElementById('imprint-title').textContent = translations[lang].imprintTitle;
-            document.getElementById('imprint-content').innerHTML = translations[lang].imprintContent;
-            document.getElementById('privacy-title').textContent = translations[lang].privacyTitle;
-            document.getElementById('privacy-content').innerHTML = translations[lang].privacyContent;
-            document.querySelector('#ai-explanation-title span').textContent = translations[lang].aiExplanationTitle;
-            document.getElementById('chat-title').querySelector('span').textContent = translations[lang].chatTitle;
-            document.getElementById('chat-input').placeholder = translations[lang].chatPlaceholder;
-            document.getElementById('chat-loader-text').textContent = translations[lang].chatLoaderText;
-            document.getElementById('prompt-generator-title').querySelector('span').textContent = translations[lang].promptGeneratorTitle;
-            document.getElementById('prompt-generator-subtitle').textContent = translations[lang].promptGeneratorSubtitle;
-            document.getElementById('prompt-idea-input').placeholder = translations[lang].promptGeneratorPlaceholder;
-            document.getElementById('generate-prompts-btn-text').textContent = translations[lang].generatePromptsBtnText;
-            document.getElementById('prompt-loader-text').textContent = translations[lang].promptLoaderText;
-            document.getElementById('suggested-questions-title').textContent = translations[lang].suggestedQuestionsTitle;
-            document.getElementById('suggested-questions-loader-text').textContent = translations[lang].suggestedQuestionsLoaderText;
-
-
-            // Update category dropdown
-            const cats = translations[lang].categories;
-            const deCats = translations.de.categories;
-            categorySelect.innerHTML = `
-                <option value="all">${cats.all}</option>
-                <option value="${deCats.design}">${cats.design}</option>
-                <option value="${deCats.marketing}">${cats.marketing}</option>
-                <option value="${deCats.audio}">${cats.audio}</option>
-                <option value="${deCats.productivity}">${cats.productivity}</option>
-                <option value="${deCats.code}">${cats.code}</option>
-            `;
-            
-            // Update active language button
-            langDeBtn.classList.toggle('active', lang === 'de');
-            langEnBtn.classList.toggle('active', lang === 'en');
-
-            filterAndRender();
-        }
-
-        function showDetailView(model) {
-            currentDetailViewModel = model;
-            document.getElementById('chat-history').innerHTML = '';
-            document.getElementById('chat-input').value = '';
-            document.getElementById('prompt-results-container').innerHTML = '';
-            document.getElementById('prompt-idea-input').value = '';
-            document.getElementById('suggested-questions').innerHTML = '';
-
-
-            document.getElementById('detail-name').textContent = model.name;
-            
-            const modelLang = model[currentLang];
-
-            const detailIconContainer = document.getElementById('detail-icon-container');
-            detailIconContainer.innerHTML = `<i data-lucide="${model.categoryIcon}" class="w-8 h-8 text-blue-600"></i>`;
-
-            const categorySpan = document.getElementById('detail-category');
-            categorySpan.innerHTML = `<i data-lucide="tag" class="w-4 h-4"></i><span>${modelLang.category}</span>`;
-
-            const pricingSpan = document.getElementById('detail-pricing-summary');
-            pricingSpan.innerHTML = `<i data-lucide="dollar-sign" class="w-4 h-4"></i><span>${translations[currentLang].pricing[model.pricing]}</span>`;
-
-            document.getElementById('detail-description').textContent = modelLang.detailedDescription;
-            document.getElementById('detail-link').href = model.link;
-            
-            const pricingContainer = document.getElementById('detail-pricing-details');
-            pricingContainer.innerHTML = '';
-            for (const [plan, text] of Object.entries(modelLang.pricingDetails)) {
-                const p = document.createElement('p');
-                p.innerHTML = `<strong class="capitalize text-gray-800 block mb-1">${plan}</strong> ${text}`;
-                pricingContainer.appendChild(p);
-            }
-
-            if (model.promptHelper) {
-                promptGeneratorContainer.classList.remove('hidden');
-            } else {
-                promptGeneratorContainer.classList.add('hidden');
-            }
-
-            mainContent.classList.add('hidden');
-            detailView.classList.remove('hidden');
-            window.scrollTo(0, 0);
-            lucide.createIcons();
-            handleGenerateSuggestedQuestions(model);
-        }
-
-        function showMainView() {
-            mainContent.classList.remove('hidden');
-            detailView.classList.add('hidden');
-        }
-
-        function renderPagination() {
-            paginationContainer.innerHTML = '';
-            const totalPages = Math.ceil(currentFilteredModels.length / itemsPerPage);
-
-            if (totalPages <= 1) {
-                paginationContainer.classList.add('hidden');
-                return;
             };
-            paginationContainer.classList.remove('hidden');
 
-            for (let i = 1; i <= totalPages; i++) {
-                const button = document.createElement('button');
-                button.textContent = i;
-                button.className = `pagination-btn px-4 py-2 border rounded-lg transition hover:bg-gray-100`;
-                if (i === currentPage) {
-                    button.classList.add('active');
-                }
-                button.addEventListener('click', () => {
-                    currentPage = i;
-                    renderResults();
-                    renderPagination(); 
-                });
-                paginationContainer.appendChild(button);
-            }
-        }
+            const allAiModels = [
+                { name: "ChatGPT (GPT-4o)", link: "https://openai.com/chatgpt/", featured: true, pricing: "freemium", beginnerFriendly: true, categoryIcon: "message-circle", promptHelper: true, de: { category: "Text & Marketing", description: "Das vielseitigste Sprachmodell. Ideal für Content, Marketing, E-Mails und komplexe Aufgaben wie Datenanalyse.", useCases: ["marketingtexte", "ads schalten", "blogartikel", "seo", "e-mails", "excel formeln", "word", "powerpoint", "datenanalyse"], detailedDescription: "ChatGPT ist ein fortschrittliches Konversations-KI-Modell von OpenAI. Es kann menschenähnliche Texte verstehen und generieren, was es extrem vielseitig macht. Nutzen Sie es zum Verfassen von E-Mails, zum Erstellen von Code, zum Brainstorming von Ideen oder zur Analyse komplexer Datensätze in Tabellenform.", pricingDetails: { free: "Eine kostenlose Version mit GPT-3.5 und eingeschränktem GPT-4o Zugang ist verfügbar, ideal für alltägliche Aufgaben.", plus: "ChatGPT Plus (ca. 20 USD/Monat) bietet priorisierten Zugang zum leistungsstärkeren GPT-4o, schnellere Antwortzeiten und exklusive Features wie DALL-E 3.", team: "Team- und Enterprise-Pläne bieten erweiterte Sicherheits- und Kollaborationsfunktionen für Unternehmen." } }, en: { category: "Text & Marketing", description: "The most versatile language model. Ideal for content, marketing, emails, and complex tasks like data analysis.", useCases: ["marketing copy", "run ads", "blog articles", "seo", "emails", "excel formulas", "word", "powerpoint", "data analysis"], detailedDescription: "ChatGPT is an advanced conversational AI model from OpenAI. It can understand and generate human-like text, making it extremely versatile. Use it to write emails, create code, brainstorm ideas, or analyze complex datasets in tabular form.", pricingDetails: { free: "A free version with GPT-3.5 and limited GPT-4o access is available, ideal for everyday tasks.", plus: "ChatGPT Plus (approx. $20/month) offers priority access to the more powerful GPT-4o, faster response times, and exclusive features like DALL-E 3.", team: "Team and Enterprise plans offer enhanced security and collaboration features for businesses." } } },
+                { name: "Midjourney", link: "https://www.midjourney.com/", featured: true, pricing: "subscription", beginnerFriendly: false, categoryIcon: "image", promptHelper: true, de: { category: "Bild & Design", description: "Erzeugt extrem hochwertige und künstlerische Bilder. Führend in Fotorealismus und kreativen Stilen.", useCases: ["produktbilder", "kunst", "illustrationen", "logos", "onlineshop", "instagram bilder"], detailedDescription: "Midjourney ist ein KI-Bildgenerator, der über die Chat-App Discord bedient wird. Er ist bekannt für seine Fähigkeit, äusserst detaillierte, künstlerische und oft surreale Bilder zu erzeugen. Die Qualität ist in vielen Bereichen marktführend, erfordert aber etwas Einarbeitung in die Befehlseingabe.", pricingDetails: { free: "Keine kostenlose Version verfügbar (manchmal zeitlich begrenzte Testphasen).", basic: "Basic Plan (ab ca. 10 USD/Monat) für eine begrenzte Anzahl an Bildgenerationen.", standard: "Standard & Pro Pläne (ab ca. 30 USD/Monat) bieten mehr Kapazität und schnellere Generierungszeiten." } }, en: { category: "Image & Design", description: "Generates extremely high-quality and artistic images. Leader in photorealism and creative styles.", useCases: ["product images", "art", "illustrations", "logos", "online store", "instagram pictures"], detailedDescription: "Midjourney is an AI image generator operated via the Discord chat app. It is known for its ability to create extremely detailed, artistic, and often surreal images. The quality is a market leader in many areas but requires some practice with command inputs.", pricingDetails: { free: "No free version available (sometimes limited-time trials).", basic: "Basic Plan (from approx. $10/month) for a limited number of image generations.", standard: "Standard & Pro Plans (from approx. $30/month) offer more capacity and faster generation times." } } },
+                { name: "Google Gemini", link: "https://gemini.google.com/", pricing: "freemium", beginnerFriendly: true, categoryIcon: "search", promptHelper: false, de: { category: "Text & Marketing", description: "Multimodales Modell von Google. Stark in der Recherche und Zusammenfassung von Informationen aus dem Web.", useCases: ["recherche", "texte zusammenfassen", "content-ideen", "ads schalten", "datenanalyse"], detailedDescription: "Gemini ist Googles multimodales KI-Modell, das Text, Bilder und Code nahtlos verarbeiten kann. Es ist tief in das Google-Ökosystem integriert und zeichnet sich durch seine Fähigkeit aus, Informationen in Echtzeit aus dem Internet abzurufen und zusammenzufassen. Ideal für Recherche, das Erstellen von Inhaltsplänen und die Analyse von Daten.", pricingDetails: { free: "Die Standardversion von Gemini ist kostenlos nutzbar.", advanced: "Gemini Advanced (Teil des Google One AI Premium Abos für ca. 20 USD/Monat) bietet Zugang zum leistungsstärksten Modell und mehr Funktionen." } }, en: { category: "Text & Marketing", description: "Multimodal model from Google. Strong in research and summarizing information from the web.", useCases: ["research", "summarize texts", "content ideas", "run ads", "data analysis"], detailedDescription: "Gemini is Google's multimodal AI model that can seamlessly process text, images, and code. It is deeply integrated into the Google ecosystem and is characterized by its ability to retrieve and summarize information from the internet in real time. Ideal for research, creating content plans, and analyzing data.", pricingDetails: { free: "The standard version of Gemini is free to use.", advanced: "Gemini Advanced (part of the Google One AI Premium subscription for approx. $20/month) provides access to the most powerful model and more features." } } },
+                { name: "Claude 3 (Anthropic)", link: "https://www.anthropic.com/claude", pricing: "freemium", beginnerFriendly: true, categoryIcon: "file-text", promptHelper: false, de: { category: "Text & Marketing", description: "Sehr stark in langen Texten, Analysen und als sicherer Chatbot. Besitzt ein grosses Kontextfenster.", useCases: ["lange dokumente analysieren", "chatbots", "wissenschaftliche texte", "kreatives schreiben", "kundensupport"], detailedDescription: "Claude 3 von Anthropic ist eine Familie von Sprachmodellen, die für ihre Fähigkeit bekannt sind, sehr lange Texte (bis zu 150.000 Wörter) zu verarbeiten. Dies macht sie ideal für die Analyse von Verträgen, wissenschaftlichen Arbeiten oder ganzen Büchern. Claude legt zudem einen grossen Wert auf Sicherheit und die Vermeidung von schädlichen Inhalten.", pricingDetails: { free: "Eine kostenlose Version (Claude 3 Sonnet) ist über die Webseite claude.ai mit täglichen Limits verfügbar.", pro: "Ein Pro-Abo (ca. 20 USD/Monat) bietet Zugang zum leistungsstärksten Modell (Claude 3 Opus) und höhere Nutzungslimits.", api: "Entwickler können über eine API auf die Modelle zugreifen." } }, en: { category: "Text & Marketing", description: "Very strong in long texts, analysis, and as a secure chatbot. Has a large context window.", useCases: ["analyze long documents", "chatbots", "scientific papers", "creative writing", "customer support"], detailedDescription: "Claude 3 from Anthropic is a family of language models known for their ability to process very long texts (up to 150,000 words). This makes them ideal for analyzing contracts, scientific papers, or entire books. Claude also places a strong emphasis on security and avoiding harmful content.", pricingDetails: { free: "A free version (Claude 3 Sonnet) is available via the claude.ai website with daily limits.", pro: "A Pro subscription (approx. $20/month) provides access to the most powerful model (Claude 3 Opus) and higher usage limits.", api: "Developers can access the models via an API." } } },
+                { name: "Perplexity AI", link: "https://www.perplexity.ai/", pricing: "freemium", beginnerFriendly: true, categoryIcon: "book-check", promptHelper: false, de: { category: "Text & Marketing", description: "Spezialisiert auf Recherche mit direkten Quellenangaben. Eine KI-gestützte Antwortmaschine.", useCases: ["recherche", "faktenprüfung", "quellen finden", "artikel zusammenfassen", "lernen"], detailedDescription: "Perplexity AI ist eine 'Antwortmaschine', die das Beste aus einer Suchmaschine und einem Chatbot kombiniert. Anstatt nur Links zu liefern, durchsucht Perplexity das Web und gibt eine direkte, zusammengefasste Antwort auf eine Frage, inklusive Links zu den Quellen. Das macht es zu einem extrem leistungsfähigen Werkzeug für Recherche und Faktenprüfung.", pricingDetails: { free: "Die kostenlose Version bietet schnelle Antworten mit dem eigenen Modell.", pro: "Ein Pro-Abo (ca. 20 USD/Monat) ermöglicht die Nutzung von fortschrittlicheren Modellen wie GPT-4o und Claude 3 für die Antworten." } }, en: { category: "Text & Marketing", description: "Specialized in research with direct source citations. An AI-powered answer engine.", useCases: ["research", "fact-checking", "find sources", "summarize articles", "learning"], detailedDescription: "Perplexity AI is an 'answer engine' that combines the best of a search engine and a chatbot. Instead of just providing links, Perplexity searches the web and gives a direct, summarized answer to a question, including links to the sources. This makes it an extremely powerful tool for research and fact-checking.", pricingDetails: { free: "The free version offers fast answers with its own model.", pro: "A Pro subscription (approx. $20/month) allows the use of more advanced models like GPT-4o and Claude 3 for answers." } } },
+                { name: "Writesonic", link: "https://writesonic.com/", pricing: "freemium", beginnerFriendly: true, categoryIcon: "pen-tool", promptHelper: true, de: { category: "Text & Marketing", description: "Marketingfokussierte KI mit Vorlagen für Ads, Blogs und Social Media.", useCases: ["seo texte", "google ads", "blogartikel", "landing pages", "produktbeschreibungen"], detailedDescription: "Writesonic ist eine All-in-One-Plattform für Content-Erstellung, die speziell auf die Bedürfnisse von Marketern und SEO-Experten zugeschnitten ist. Sie bietet eine breite Palette an Vorlagen, von Blog-Artikeln über Google Ads bis hin zu Landing Pages. Funktionen wie der AI Article Writer können in wenigen Minuten komplette, SEO-optimierte Artikel erstellen.", pricingDetails: { free: "Eine kostenlose Testversion mit einem monthlichem Wortlimit ist verfügbar.", pro: "Pro-Pläne (ab ca. 13 USD/Monat) bieten mehr Wörter, höhere Qualität und zusätzliche Funktionen wie den 'Brand Voice'-Modus." } }, en: { category: "Text & Marketing", description: "Marketing-focused AI with templates for ads, blogs, and social media.", useCases: ["seo texts", "google ads", "blog articles", "landing pages", "product descriptions"], detailedDescription: "Writesonic is an all-in-one content creation platform tailored to the needs of marketers and SEO experts. It offers a wide range of templates, from blog articles and Google Ads to landing pages. Features like the AI Article Writer can create complete, SEO-optimized articles in minutes.", pricingDetails: { free: "A free trial with a monthly word limit is available.", pro: "Pro plans (from approx. $13/month) offer more words, higher quality, and additional features like 'Brand Voice' mode." } } },
+                { name: "Grok", link: "https://grok.x.ai/", pricing: "subscription", beginnerFriendly: true, categoryIcon: "message-square", promptHelper: false, de: { category: "Text & Marketing", description: "Konversations-KI mit Echtzeit-Zugriff auf Informationen von der Plattform X (ehemals Twitter).", useCases: ["echtzeit-recherche", "social media trends", "meinungsbildung", "chat", "humorvolle antworten"], detailedDescription: "Grok ist eine von xAI entwickelte Konversations-KI, die direkt in die Plattform X integriert ist. Sein Hauptvorteil ist der Echtzeit-Zugriff auf den öffentlichen Diskurs auf X, was ihm ein aktuelles und oft unverblümtes Verständnis für Themen verleiht. Grok ist darauf ausgelegt, Fragen mit Witz und einer rebellischen Ader zu beantworten.", pricingDetails: { free: "Keine kostenlose Version verfügbar.", premium: "Grok ist Teil des X Premium+ Abonnements (ca. 16 USD/Monat) und für diese Nutzer direkt auf der Plattform verfügbar." } }, en: { category: "Text & Marketing", description: "Conversational AI with real-time access to information from the X platform (formerly Twitter).", useCases: ["real-time research", "social media trends", "opinion forming", "chat", "humorous answers"], detailedDescription: "Grok is a conversational AI developed by xAI, integrated directly into the X platform. Its main advantage is real-time access to public discourse on X, giving it an up-to-date and often candid understanding of topics. Grok is designed to answer questions with wit and a rebellious streak.", pricingDetails: { free: "No free version available.", premium: "Grok is part of the X Premium+ subscription (approx. $16/month) and is directly available to these users on the platform." } } },
+                { name: "Leonardo AI", link: "https://leonardo.ai/", pricing: "freemium", beginnerFriendly: false, categoryIcon: "gamepad-2", promptHelper: true, de: { category: "Bild & Design", description: "Beliebt für Game Assets, Mockups und konsistente Charakterdesigns.", useCases: ["game assets", "charakterdesign", "mockups", "stock-bilder", "texturen"], detailedDescription: "Leonardo AI ist eine Plattform für generative KI, die sich auf die Erstellung von hochwertigen visuellen Assets spezialisiert hat. Sie ist besonders bei Game-Entwicklern und Designern beliebt, da sie es ermöglicht, eigene Modelle zu trainieren, um konsistente Charaktere oder Stile zu erzeugen. Neben der Bilderzeugung bietet sie auch Tools zur Bildbearbeitung und -erweiterung.", pricingDetails: { free: "Eine kostenlose Version mit einer täglichen Anzahl an Credits ist verfügbar.", abo: "Verschiedene Abo-Stufen (ab ca. 10 USD/Monat) bieten mehr Credits, schnellere Generierung und erweiterte Funktionen." } }, en: { category: "Image & Design", description: "Popular for game assets, mockups, and consistent character designs.", useCases: ["game assets", "character design", "mockups", "stock images", "textures"], detailedDescription: "Leonardo AI is a generative AI platform specializing in the creation of high-quality visual assets. It is particularly popular with game developers and designers as it allows them to train their own models to create consistent characters or styles. In addition to image generation, it also offers tools for image editing and enhancement.", pricingDetails: { free: "A free version with a daily number of credits is available.", subscription: "Various subscription tiers (from approx. $10/month) offer more credits, faster generation, and advanced features." } } },
+                { name: "Kling AI", link: "https://kling.kuaishou.com/", pricing: "beta", beginnerFriendly: true, categoryIcon: "film", promptHelper: false, de: { category: "Audio & Video", description: "Ein aufstrebendes Text-zu-Video-Modell, das für seine hohe Realitätstreue und Videolänge bekannt ist.", useCases: ["realistische videos", "kurzfilme", "storytelling", "text-zu-video"], detailedDescription: "Kling ist ein neues, vielversprechendes KI-Videomodell, das Videos in hoher Qualität (1080p) und mit einer Länge von bis zu zwei Minuten generieren kann. Es zeichnet sich durch ein gutes Verständnis physikalischer Bewegungen und die Erzeugung realistischer Szenen aus. Derzeit ist der Zugang noch beschränkt, aber es gilt als starker Konkurrent für andere Text-zu-Video-Modelle.", pricingDetails: { beta: "Derzeit ist der Zugang über eine Warteliste in China verfügbar. Ein globales Release und Preismodell sind noch nicht bekannt." } }, en: { category: "Audio & Video", description: "An emerging text-to-video model known for its high realism and video length.", useCases: ["realistic videos", "short films", "storytelling", "text-to-video"], detailedDescription: "Kling is a new, promising AI video model that can generate high-quality (1080p) videos up to two minutes long. It is characterized by a good understanding of physical movements and the creation of realistic scenes. Access is currently limited, but it is considered a strong competitor to other text-to-video models.", pricingDetails: { beta: "Access is currently available via a waitlist in China. A global release and pricing model are not yet known." } } },
+                { name: "Pika Labs", link: "https://pika.art/", pricing: "freemium", beginnerFriendly: true, categoryIcon: "wand-2", promptHelper: true, de: { category: "Audio & Video", description: "Text-zu-Video-Generator mit einem starken künstlerischen Fokus für kreative und surreale Clips.", useCases: ["kreative videos", "animations-clips", "visuelle effekte", "musikvideos", "text-zu-video"], detailedDescription: "Pika Labs (oder Pika) ist ein KI-Videogenerator, der sich durch seinen künstlerischen und filmischen Stil auszeichnet. Nutzer können per Text oder Bild-Upload kurze Videoclips erstellen. Die Plattform bietet viele Kontrollmöglichkeiten über Kamerabewegung, Stil und Seitenverhältnis. Ideal für Künstler und Kreative, die visuell beeindruckende, kurze Clips erstellen möchten.", pricingDetails: { free: "Eine kostenlose Version mit Wasserzeichen und begrenzten Credits ist verfügbar.", standard: "Standard-Pläne (ab ca. 8 USD/Monat) entfernen das Wasserzeichen und bieten mehr Credits." } }, en: { category: "Audio & Video", description: "Text-to-video generator with a strong artistic focus for creative and surreal clips.", useCases: ["creative videos", "animation clips", "visual effects", "music videos", "text-to-video"], detailedDescription: "Pika Labs (or Pika) is an AI video generator distinguished by its artistic and cinematic style. Users can create short video clips via text or image upload. The platform offers many controls over camera movement, style, and aspect ratio. Ideal for artists and creatives who want to create visually stunning short clips.", pricingDetails: { free: "A free version with a watermark and limited credits is available.", standard: "Standard plans (from approx. $8/month) remove the watermark and offer more credits." } } },
+                { name: "Descript", link: "https://www.descript.com/", pricing: "freemium", beginnerFriendly: true, categoryIcon: "scissors", promptHelper: false, de: { category: "Audio & Video", description: "KI für Audio-/Video-Bearbeitung, inkl. Transkription und Voice-Cloning.", useCases: ["podcasts bearbeiten", "videos transkribieren", "voice-over", "stimme klonen", "füllwörter entfernen"], detailedDescription: "Descript revolutioniert die Audio- und Videobearbeitung, indem es sie so einfach wie die Bearbeitung eines Textdokuments macht. Die Software transkribiert automatisch das gesprochene Wort. Man kann dann einfach Text löschen, um die entsprechenden Audio-/Video-Passagen zu schneiden. Weitere KI-Features sind das Entfernen von Füllwörtern ('ähms'), das Klonen der eigenen Stimme und die Verbesserung der Audioqualität.", pricingDetails: { free: "Kostenlose Version mit begrenzter Transkriptionsdauer und Wasserzeichen im Videoexport.", creator: "Creator-Pläne (ab ca. 12 USD/Monat) bieten mehr Stunden und entfernen das Wasserzeichen.", pro: "Pro-Pläne bieten unbegrenzte Transkription und professionelle Funktionen." } }, en: { category: "Audio & Video", description: "AI for audio/video editing, including transcription and voice cloning.", useCases: ["edit podcasts", "transcribe videos", "voice-over", "clone voice", "remove filler words"], detailedDescription: "Descript revolutionizes audio and video editing by making it as easy as editing a text document. The software automatically transcribes the spoken word. You can then simply delete text to cut the corresponding audio/video passages. Other AI features include removing filler words ('ums'), cloning your own voice, and improving audio quality.", pricingDetails: { free: "Free version with limited transcription duration and watermark on video exports.", creator: "Creator plans (from approx. $12/month) offer more hours and remove the watermark.", pro: "Pro plans offer unlimited transcription and professional features." } } },
+                { name: "DeepSeek Coder", link: "https://deepseek.com/", pricing: "freemium", beginnerFriendly: false, categoryIcon: "terminal-square", promptHelper: true, de: { category: "Code & Entwicklung", description: "Ein leistungsstarkes, auf Code spezialisiertes Sprachmodell, das für seine hohe Performance bekannt ist.", useCases: ["code generierung", "programmieren", "debugging", "code-vervollständigung", "algorithmic tasks"], detailedDescription: "DeepSeek Coder ist eine Familie von auf Code spezialisierten KI-Modellen. Sie wurden darauf trainiert, eine Vielzahl von Programmiersprachen zu verstehen und zu generieren. Ihre Stärke liegt in der Fähigkeit, komplexe Programmierprobleme zu lösen und effizienten Code zu schreiben, was sie zu einem Favoriten für wettbewerbsorientierte Programmierung und anspruchsvolle Entwicklungsaufgaben macht.", pricingDetails: { free: "Kostenlos für Forschung und den persönlichen Gebrauch.", api: "Kommerzielle Nutzung erfolgt über eine API mit nutzungsbasierter Abrechnung, die oft günstiger ist als bei Konkurrenzmodellen." } }, en: { category: "Code & Development", description: "A powerful language model specialized in code, known for its high performance.", useCases: ["code generation", "programming", "debugging", "code completion", "algorithmic tasks"], detailedDescription: "DeepSeek Coder is a family of AI models specialized in code. They have been trained to understand and generate a variety of programming languages. Their strength lies in their ability to solve complex programming problems and write efficient code, making them a favorite for competitive programming and demanding development tasks.", pricingDetails: { free: "Free for research and personal use.", api: "Commercial use is available via a usage-based API, which is often more affordable than competing models." } } },
+                { name: "Codeium", link: "https://codeium.com/", pricing: "openSource", beginnerFriendly: true, categoryIcon: "code", promptHelper: false, de: { category: "Code & Entwicklung", description: "Eine sehr schnelle und kostenlose Alternative zu GitHub Copilot für Einzelentwickler.", useCases: ["programmieren", "code schreiben", "autovervollständigung", "code-chat", "debugging"], detailedDescription: "Codeium ist ein KI-Coding-Assistent, der sich als direkte Alternative zu GitHub Copilot positioniert. Er bietet extrem schnelle Code-Vervollständigungen und einen integrierten Chat, um Fragen zum Code zu stellen. Das Besondere: Für Einzelentwickler ist Codeium komplett kostenlos, ohne Einschränkungen bei der Funktionalität. Es unterstützt über 70 Programmiersprachen und lässt sich in alle gängigen IDEs integrieren.", pricingDetails: { free: "Für Einzelpersonen ist die Nutzung komplett kostenlos.", teams: "Für Teams gibt es einen kostenpflichtigen Plan (ab ca. 12 USD/Benutzer/Monat) mit zusätzlichen Verwaltungs- und Sicherheitsfunktionen." } }, en: { category: "Code & Development", description: "A very fast and free alternative to GitHub Copilot for individual developers.", useCases: ["programming", "writing code", "autocomplete", "code chat", "debugging"], detailedDescription: "Codeium is an AI coding assistant that positions itself as a direct alternative to GitHub Copilot. It offers extremely fast code completions and an integrated chat to ask questions about the code. The special feature: For individual developers, Codeium is completely free with no functional limitations. It supports over 70 programming languages and integrates with all major IDEs.", pricingDetails: { free: "Usage is completely free for individuals.", teams: "For teams, there is a paid plan (from approx. $12/user/month) with additional management and security features." } } },
+                { name: "Tabnine", link: "https://www.tabnine.com/", pricing: "freemium", beginnerFriendly: false, categoryIcon: "shield-check", promptHelper: false, de: { category: "Code & Entwicklung", description: "KI-Coding-Assistent mit starkem Fokus auf Datenschutz und der Möglichkeit, auf eigenem Code zu trainieren.", useCases: ["programmieren", "code-sicherheit", "team-kollaboration", "autovervollständigung", "privater code"], detailedDescription: "Tabnine ist ein KI-Assistent für Programmierer, der sich durch seinen Fokus auf Datenschutz und Sicherheit von anderen abhebt. Er kann so konfiguriert werden, dass er niemals Code teilt oder auf eigenen, privaten Code-Repositories trainiert wird. Dies macht ihn besonders für Unternehmen attraktiv. Tabnine bietet kontextsensitive Code-Vervollständigungen und lernt den individuellen Stil des Entwicklers.", pricingDetails: { free: "Ein kostenloser Plan mit grundlegenden Code-Vervollständigungen ist verfügbar.", pro: "Ein Pro-Plan (ab ca. 12 USD/Monat) bietet erweiterte Funktionen und kann auf den eigenen Code-Repositories trainieren." } }, en: { category: "Code & Development", description: "AI coding assistant with a strong focus on privacy and the ability to train on your own code.", useCases: ["programming", "code security", "team collaboration", "autocomplete", "private code"], detailedDescription: "Tabnine is an AI assistant for programmers that stands out for its focus on privacy and security. It can be configured to never share code or train on its own private code repositories. This makes it particularly attractive for businesses. Tabnine provides context-sensitive code completions and learns the developer's individual style.", pricingDetails: { free: "A free plan with basic code completions is available.", pro: "A Pro plan (from approx. $12/month) offers advanced features and can train on your own code repositories." } } },
+                { name: "Otter.ai", link: "https://otter.ai/", pricing: "freemium", beginnerFriendly: true, categoryIcon: "mic", promptHelper: false, de: { category: "Produktivität & Office", description: "Führend bei Meeting-Transkriptionen und automatischen Zusammenfassungen in Echtzeit.", useCases: ["meeting transkribieren", "interviews aufzeichnen", "zusammenfassungen", "action items", "notizen"], detailedDescription: "Otter.ai ist ein KI-Assistent, der speziell für Meetings entwickelt wurde. Er kann an Online-Meetings (Zoom, Google Meet, etc.) teilnehmen, das Gespräch in Echtzeit transkribieren und identifiziert dabei sogar die verschiedenen Sprecher. Nach dem Meeting erstellt Otter automatisch eine Zusammenfassung, identifiziert die wichtigsten Punkte und listet Action Items auf. Ein 'Must-have' für alle, die viele Meetings haben.", pricingDetails: { free: "Eine kostenlose Version mit einem monatlichen Kontingent an Transkriptionsminuten ist verfügbar.", pro: "Pro-Pläne (ab ca. 10 USD/Monat) bieten deutlich mehr Minuten und erweiterte Funktionen.", business: "Business-Pläne für Teams mit zentraler Verwaltung." } }, en: { category: "Productivity & Office", description: "Leader in real-time meeting transcriptions and automatic summaries.", useCases: ["transcribe meetings", "record interviews", "summaries", "action items", "notes"], detailedDescription: "Otter.ai is an AI assistant designed specifically for meetings. It can join online meetings (Zoom, Google Meet, etc.), transcribe the conversation in real time, and even identify different speakers. After the meeting, Otter automatically creates a summary, identifies key points, and lists action items. A 'must-have' for anyone who has a lot of meetings.", pricingDetails: { free: "A free version with a monthly quota of transcription minutes is available.", pro: "Pro plans (from approx. $10/month) offer significantly more minutes and advanced features.", business: "Business plans for teams with central administration." } } },
+                { name: "ClickUp AI", link: "https://clickup.com/ai", pricing: "addon", beginnerFriendly: true, categoryIcon: "check-square", promptHelper: false, de: { category: "Produktivität & Office", description: "KI-Features direkt in die Projektmanagement-Plattform ClickUp integriert, um Aufgaben zu automatisieren.", useCases: ["projektmanagement", "aufgaben zusammenfassen", "action items", "status updates", "brainstorming"], detailedDescription: "ClickUp AI integriert künstliche Intelligenz direkt in das umfassende Projektmanagement-Tool ClickUp. Es kann Aufgaben basierend auf einem Ziel erstellen, Kommentare zusammenfassen, Status-Updates schreiben oder den Inhalt von Dokumenten und Aufgaben verbessern. Ziel ist es, repetitive administrative Arbeit zu reduzieren, damit sich Teams auf die eigentlichen Aufgaben konzentrieren können.", pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen ist in allen Plänen (auch dem kostenlosen) zum Ausprobieren enthalten.", addon: "Für die volle Nutzung ist es ein kostenpflichtiges Add-on (ca. 5 USD/Benutzer/Monat) zu jedem ClickUp-Plan." } }, en: { category: "Productivity & Office", description: "AI features integrated directly into the ClickUp project management platform to automate tasks.", useCases: ["project management", "summarize tasks", "action items", "status updates", "brainstorming"], detailedDescription: "ClickUp AI integrates artificial intelligence directly into the comprehensive project management tool ClickUp. It can create tasks based on a goal, summarize comments, write status updates, or improve the content of documents and tasks. The goal is to reduce repetitive administrative work so teams can focus on the actual tasks.", pricingDetails: { free: "A limited number of AI actions are included in all plans (including the free one) for trial.", addon: "For full use, it is a paid add-on (approx. $5/user/month) to any ClickUp plan." } } },
+                { name: "DALL-E 3 (via ChatGPT)", link: "https://openai.com/dall-e-3", pricing: "subscription", beginnerFriendly: true, categoryIcon: "image-plus", promptHelper: true, de: { category: "Bild & Design", description: "Direkt in ChatGPT integriert, einfach zu bedienen. Setzt Textanweisungen präzise in Bilder um.", useCases: ["social media bilder", "blog-illustrationen", "präsentationen", "onlineshop", "instagram", "logos"], detailedDescription: "DALL-E 3 ist der Bildgenerator von OpenAI und ist direkt in ChatGPT Plus integriert. Seine grösste Stärke liegt im Verständnis von komplexen und detaillierten Anweisungen. Man kann im Gespräch mit ChatGPT eine Idee verfeinern und DALL-E 3 setzt diese dann visuell um. Es ist besonders gut darin, Text korrekt in Bildern darzustellen. Die einfache Bedienung über den Chat macht es extrem anfängerfreundlich.", pricingDetails: { free: "Nicht direkt kostenlos verfügbar. Die Nutzung ist im ChatGPT Plus Abonnement enthalten.", plus: "Die Bildgenerierung ist Teil des ChatGPT Plus Abos (ca. 20 USD/Monat).", api: "Für Entwickler ist der Zugang auch über die OpenAI API mit nutzungsbasierter Abrechnung möglich." } }, en: { category: "Image & Design", description: "Integrated directly into ChatGPT, easy to use. Accurately translates text instructions into images.", useCases: ["social media images", "blog illustrations", "presentations", "online store", "instagram", "logos"], detailedDescription: "DALL-E 3 is OpenAI's image generator and is integrated directly into ChatGPT Plus. Its greatest strength lies in understanding complex and detailed instructions. You can refine an idea in conversation with ChatGPT, and DALL-E 3 will then realize it visually. It is particularly good at correctly rendering text in images. The easy operation via chat makes it extremely beginner-friendly.", pricingDetails: { free: "Not available for free directly. Use is included in the ChatGPT Plus subscription.", plus: "Image generation is part of the ChatGPT Plus subscription (approx. $20/month).", api: "For developers, access is also possible via the OpenAI API with usage-based billing." } } },
+                { name: "Stable Diffusion", link: "https://stability.ai/", pricing: "openSource", beginnerFriendly: false, categoryIcon: "cpu", promptHelper: true, de: { category: "Bild & Design", description: "Open-Source-Modell mit maximaler Kontrolle. Kann lokal ausgeführt werden für hohe Anpassbarkeit.", useCases: ["charakterdesign", "mode", "architektur", "experimentelle kunst", "lokale bildgenerierung"], detailedDescription: "Stable Diffusion ist ein leistungsstarkes Open-Source-Modell zur Bilderzeugung. Im Gegensatz zu vielen anderen Diensten kann es auf dem eigenen Computer (mit einer ausreichend starken Grafikkarte) installiert und ausgeführt werden. Dies bietet maximale Kontrolle über den Prozess, ermöglicht das Trainieren mit eigenen Daten und ist kostenlos in der Nutzung. Es ist die bevorzugte Wahl für Entwickler, Forscher und Künstler, die volle Kontrolle wünschen.", pricingDetails: { free: "Das Modell selbst ist kostenlos. Man benötigt lediglich die passende Hardware (Grafikkarte).", cloud: "Es gibt auch Cloud-Dienste wie DreamStudio von Stability AI, die eine nutzungsbasierte Abrechnung (Credits) für die Verwendung von Stable Diffusion anbieten, ohne dass man eigene Hardware benötigt." } }, en: { category: "Image & Design", description: "Open-source model with maximum control. Can be run locally for high customizability.", useCases: ["character design", "fashion", "architecture", "experimental art", "local image generation"], detailedDescription: "Stable Diffusion is a powerful open-source model for image generation. Unlike many other services, it can be installed and run on your own computer (with a sufficiently powerful graphics card). This offers maximum control over the process, allows training with your own data, and is free to use. It is the preferred choice for developers, researchers, and artists who want full control.", pricingDetails: { free: "The model itself is free. You just need the appropriate hardware (graphics card).", cloud: "There are also cloud services like DreamStudio from Stability AI that offer usage-based billing (credits) for using Stable Diffusion without needing your own hardware." } } },
+                { name: "Jasper", link: "https://www.jasper.ai/", pricing: "subscription", beginnerFriendly: true, categoryIcon: "gem", promptHelper: true, de: { category: "Text & Marketing", description: "Speziell auf Marketing und Werbetexte spezialisierte KI. Bietet viele Vorlagen für Ads, Social Media etc.", useCases: ["werbetexte", "facebook ads", "google ads", "produktbeschreibungen", "landing pages", "blogartikel"], detailedDescription: "Jasper ist eine auf Marketing spezialisierte KI-Schreibplattform. Sie ist darauf trainiert, überzeugende und markenkonforme Texte zu erstellen. Mit Dutzenden von Vorlagen für Social-Media-Posts, Werbeanzeigen, Blogartikel und E-Mails hilft Jasper Marketern, schneller hochwertigen Content zu produzieren. Die 'Brand Voice'-Funktion ermöglicht es, den Schreibstil an eine bestimmte Marke anzupassen.", pricingDetails: { free: "Es gibt in der Regel eine kostenlose Testphase, aber keinen permanenten kostenlosen Plan.", creator: "Creator-Pläne (ab ca. 39 USD/Monat) sind für Einzelpersonen und kleine Teams gedacht.", pro: "Pro- und Business-Pläne bieten mehr Funktionen für die Zusammenarbeit im Team und erweiterte Analyse-Tools." } }, en: { category: "Text & Marketing", description: "AI specialized in marketing and ad copy. Offers many templates for ads, social media, etc.", useCases: ["ad copy", "facebook ads", "google ads", "product descriptions", "landing pages", "blog articles"], detailedDescription: "Jasper is an AI writing platform specialized in marketing. It is trained to create persuasive and brand-compliant texts. With dozens of templates for social media posts, ads, blog articles, and emails, Jasper helps marketers produce high-quality content faster. The 'Brand Voice' feature allows the writing style to be adapted to a specific brand.", pricingDetails: { free: "There is usually a free trial period, but no permanent free plan.", creator: "Creator plans (from approx. $39/month) are for individuals and small teams.", pro: "Pro and Business plans offer more features for team collaboration and advanced analysis tools." } } },
+                { name: "Suno AI", link: "https://www.suno.ai/", pricing: "freemium", beginnerFriendly: true, categoryIcon: "music-2", promptHelper: true, de: { category: "Audio & Video", description: "Erzeugt komplette Songs (Musik und Gesang) basierend auf einer einfachen Texteingabe.", useCases: ["hintergrundmusik", "jingles", "social media videos", "podcasts", "songwriting"], detailedDescription: "Suno AI ist ein revolutionäres KI-Tool, das aus einer einfachen Textbeschreibung komplette Lieder mit Gesang, Instrumenten und Texten generieren kann. Nutzer können einen Stil (z.B. 'Pop', 'Rock') und einen Text vorgeben, und die KI komponiert und produziert einen einzigartigen Song. Es ist unglaublich einfach zu bedienen und ideal für Content Creator, Musiker oder einfach zum Spass.", pricingDetails: { free: "Kostenlose Version bietet täglich eine begrenzte Anzahl an Credits, um Songs zu erstellen.", pro: "Pro-Pläne (ab ca. 8 USD/Monat) bieten mehr Credits, schnellere Generierung und erlauben die kommerzielle Nutzung der erstellten Songs.", premier: "Premier-Pläne für Power-User mit einem sehr hohen Bedarf an Song-Generierungen." } }, en: { category: "Audio & Video", description: "Generates complete songs (music and vocals) based on a simple text input.", useCases: ["background music", "jingles", "social media videos", "podcasts", "songwriting"], detailedDescription: "Suno AI is a revolutionary AI tool that can generate complete songs with vocals, instruments, and lyrics from a simple text description. Users can specify a style (e.g., 'Pop', 'Rock') and lyrics, and the AI composes and produces a unique song. It is incredibly easy to use and ideal for content creators, musicians, or just for fun.", pricingDetails: { free: "Free version offers a limited number of credits daily to create songs.", pro: "Pro plans (from approx. $8/month) offer more credits, faster generation, and allow commercial use of the created songs.", premier: "Premier plans for power users with a very high demand for song generation." } } },
+                { name: "RunwayML", link: "https://runwayml.com/", pricing: "freemium", beginnerFriendly: false, categoryIcon: "video", promptHelper: true, de: { category: "Audio & Video", description: "Eine All-in-One-Plattform für Videoerstellung und -bearbeitung mit KI-Tools (Text-zu-Video, Inpainting etc.).", useCases: ["marketingvideos", "kurzfilme", "visuelle effekte", "video-bearbeitung", "text-zu-video"], detailedDescription: "RunwayML ist eine leistungsstarke Online-Suite für Videobearbeitung, die mit KI-Funktionen angereichert ist. Die Plattform bietet Werkzeuge wie Text-zu-Video (Gen-2), das Entfernen von Objekten aus Videos, unendliche Bild-Erweiterung und vieles mehr. Es ist ein kreativer Spielplatz für Videokünstler und Filmemacher, die die Grenzen des Möglichen ausloten wollen.", pricingDetails: { free: "Eine kostenlose Version ist mit einem Startguthaben an Credits und eingeschränkten Exportoptionen (z.B. Wasserzeichen) verfügbar.", standard: "Standard-Plan (ab ca. 12 USD/Monat) bietet mehr Credits, höhere Exportqualität und mehr Speicherplatz.", pro: "Pro & Unlimited Pläne bieten noch mehr Credits und erweiterte Funktionen für professionelle Anwender." } }, en: { category: "Audio & Video", description: "An all-in-one platform for video creation and editing with AI tools (text-to-video, inpainting, etc.).", useCases: ["marketing videos", "short films", "visual effects", "video editing", "text-to-video"], detailedDescription: "RunwayML is a powerful online suite for video editing enriched with AI features. The platform offers tools like text-to-video (Gen-2), removing objects from videos, infinite image expansion, and much more. It is a creative playground for video artists and filmmakers looking to push the boundaries of what is possible.", pricingDetails: { free: "A free version is available with a starting credit balance and limited export options (e.g., watermark).", standard: "Standard plan (from approx. $12/month) offers more credits, higher export quality, and more storage.", pro: "Pro & Unlimited plans offer even more credits and advanced features for professional users." } } },
+                { name: "GitHub Copilot", link: "https://github.com/features/copilot", pricing: "subscription", beginnerFriendly: false, categoryIcon: "github", promptHelper: true, de: { category: "Code & Entwicklung", description: "Ein KI-gestützter Programmierpartner, der Code direkt im Editor vorschlägt und vervollständigt.", useCases: ["programmieren", "code schreiben", "debugging", "lernen", "boilerplate reduzieren"], detailedDescription: "GitHub Copilot ist ein KI-Programmierassistent, der direkt in gängigen Code-Editoren wie VS Code integriert ist. Er analysiert den Kontext des geschriebenen Codes und schlägt ganze Codezeilen oder sogar komplette Funktionen vor. Dies beschleunigt die Entwicklung erheblich, hilft beim Erlernen neuer Sprachen und reduziert das Schreiben von sich wiederholendem Code.", pricingDetails: { free: "Kostenlos für verifizierte Studierende und Betreuer von populären Open-Source-Projekten.", individual: "Für Einzelpersonen kostet es ca. 10 USD/Monat.", business: "Ein Business-Plan mit zusätzlichen Verwaltungsfunktionen ist für ca. 19 USD/Benutzer/Monat erhältlich." } }, en: { category: "Code & Development", description: "An AI-powered coding partner that suggests and completes code directly in the editor.", useCases: ["programming", "writing code", "debugging", "learning", "reducing boilerplate"], detailedDescription: "GitHub Copilot is an AI programming assistant integrated directly into popular code editors like VS Code. It analyzes the context of the written code and suggests entire lines of code or even complete functions. This significantly speeds up development, helps in learning new languages, and reduces writing repetitive code.", pricingDetails: { free: "Free for verified students and maintainers of popular open-source projects.", individual: "For individuals, it costs approx. $10/month.", business: "A business plan with additional administrative features is available for approx. $19/user/month." } } },
+                { name: "Notion AI", link: "https://www.notion.so/product/ai", pricing: "addon", beginnerFriendly: true, categoryIcon: "notebook-text", promptHelper: false, de: { category: "Produktivität & Office", description: "Integriert in die Notion-Arbeitsumgebung. Hilft beim Schreiben, Zusammenfassen und Organisieren von Notizen.", useCases: ["notizen organisieren", "meeting-zusammenfassungen", "brainstorming", "texte verbessern", "word"], detailedDescription: "Notion AI ist direkt in die beliebte Produktivitäts-App Notion integriert. Es agiert als Schreibassistent, der Texte zusammenfassen, umschreiben, verlängern oder den Tonfall ändern kann. Zudem kann es basierend auf vorhandenen Notizen To-Do-Listen oder Tabellen erstellen. Es ist perfekt, um den Workflow innerhalb von Notion zu beschleunigen und zu verbessern.", pricingDetails: { free: "Eine begrenzte Anzahl von KI-Aktionen ist in jedem Notion-Plan (auch dem kostenlosen) enthalten.", addon: "Für unbegrenzte Nutzung kann Notion AI als Add-on für ca. 8 USD/Benutzer/Monat zu jedem Plan hinzugefügt werden." } }, en: { category: "Productivity & Office", description: "Integrated into the Notion workspace. Helps write, summarize, and organize notes.", useCases: ["organize notes", "meeting summaries", "brainstorming", "improve texts", "word"], detailedDescription: "Notion AI is integrated directly into the popular productivity app Notion. It acts as a writing assistant that can summarize, rewrite, extend, or change the tone of texts. It can also create to-do lists or tables based on existing notes. It is perfect for speeding up and improving the workflow within Notion.", pricingDetails: { free: "A limited number of AI actions are included in every Notion plan (including the free one).", addon: "For unlimited use, Notion AI can be added as an add-on for approx. $8/user/month to any plan." } } }
+            ];
 
-        function renderCard(model, container) {
-            const card = document.createElement('div');
-            const modelLang = model[currentLang];
-            card.className = `card bg-white/70 p-6 rounded-2xl shadow-lg border flex flex-col relative overflow-hidden ${model.featured ? 'featured-card border-2' : 'border-gray-200/50'}`;
-            card.dataset.modelName = model.name;
+            // --- DOM ELEMENTS & STATE ---
+            let mainContent, detailView, resultsContainer, noResultsMessage, backToListBtn, paginationContainer, langDeBtn, langEnBtn, newsletterForm, newsletterContent, newsletterSuccess, imprintModal, privacyModal, imprintBtn, privacyBtn, geminiSearchBtn, aiPromptInput, aiLoader, aiError, aiExplanationContainer, aiExplanationText, chatSendBtn, chatInput, promptGeneratorContainer, generatePromptsBtn, suggestedQuestionsContainer, exampleCategoriesContainer;
+            let currentPage = 1;
+            const itemsPerPage = 9;
+            let currentFilteredModels = [];
+            let currentLang = localStorage.getItem('aiFinderLang') || 'de';
+            let currentDetailViewModel = null;
             
-            const beginnerBadgeHTML = model.beginnerFriendly ? `<span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5"><i data-lucide="star" class="w-3 h-3"></i>${translations[currentLang].beginnerFriendly}</span>` : '';
+            // --- FUNCTION DEFINITIONS ---
+            
+            function openModal(modal) {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modal.querySelector('.modal-content').classList.remove('scale-95', 'opacity-0');
+                    modal.querySelector('.modal-content').classList.add('scale-100', 'opacity-100');
+                }, 10);
+            }
 
-            card.innerHTML = `
-                <div class="flex-grow">
-                     <div class="flex justify-between items-start mb-3">
-                        <div class="bg-blue-100 p-2.5 rounded-lg mr-4"><i data-lucide="${model.categoryIcon}" class="w-6 h-6 text-blue-600"></i></div>
-                        <div class="flex-1">
-                            <h3 class="text-lg font-bold text-gray-900">${model.name}</h3>
-                            <p class="text-sm text-gray-500">${modelLang.category}</p>
+            function closeModal(modal) {
+                modal.querySelector('.modal-content').classList.add('scale-95', 'opacity-0');
+                modal.querySelector('.modal-content').classList.remove('scale-100', 'opacity-100');
+                modal.classList.add('opacity-0');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+            
+            function renderExampleCategories() {
+                exampleCategoriesContainer.innerHTML = '';
+                const cats = translations[currentLang].categories;
+                const deCats = translations.de.categories;
+                const catIcons = { all: 'layout-grid', design: 'image', marketing: 'pen-tool', audio: 'music-2', productivity: 'briefcase', code: 'code' };
+
+                Object.keys(cats).forEach(key => {
+                    const button = document.createElement('button');
+                    button.innerHTML = `<i data-lucide="${catIcons[key]}" class="w-4 h-4 mr-2"></i> ${cats[key]}`;
+                    button.className = "bg-white/70 backdrop-blur-sm text-slate-700 text-sm px-4 py-2 rounded-lg hover:bg-white transition border border-white/50 shadow-sm flex items-center";
+                    button.onclick = () => {
+                        filterAndRenderByCategory(deCats[key]);
+                        document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
+                    };
+                    exampleCategoriesContainer.appendChild(button);
+                });
+                lucide.createIcons();
+            }
+
+            function renderCard(model, container) {
+                const card = document.createElement('div');
+                const modelLang = model[currentLang];
+                card.className = `card bg-white/70 p-6 rounded-2xl shadow-lg border flex flex-col relative overflow-hidden ${model.featured ? 'featured-card border-2' : 'border-gray-200/50'}`;
+                card.dataset.modelName = model.name;
+                
+                const beginnerBadgeHTML = model.beginnerFriendly ? `<span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5"><i data-lucide="star" class="w-3 h-3"></i>${translations[currentLang].beginnerFriendly}</span>` : '';
+
+                card.innerHTML = `
+                    <div class="flex-grow">
+                         <div class="flex justify-between items-start mb-3">
+                            <div class="bg-blue-100 p-2.5 rounded-lg mr-4"><i data-lucide="${model.categoryIcon}" class="w-6 h-6 text-blue-600"></i></div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-gray-900">${model.name}</h3>
+                                <p class="text-sm text-gray-500">${modelLang.category}</p>
+                            </div>
+                            ${beginnerBadgeHTML}
                         </div>
-                        ${beginnerBadgeHTML}
+                        <p class="text-gray-600 my-4">${modelLang.description}</p>
                     </div>
-                    <p class="text-gray-600 my-4">${modelLang.description}</p>
-                </div>
-                 <div class="flex items-center justify-end gap-4 text-sm text-gray-500 mt-auto pt-4 border-t border-gray-200/80">
-                    <span class="flex items-center gap-1.5 bg-slate-100 text-slate-800 p-1.5 rounded-md text-xs"><i data-lucide="dollar-sign" class="w-3 h-3"></i>${translations[currentLang].pricing[model.pricing]}</span>
-                </div>
-            `;
-            
-            card.addEventListener('click', () => {
-                const selectedModel = allAiModels.find(m => m.name === model.name);
-                if (selectedModel) {
-                    showDetailView(selectedModel);
-                }
-            });
-
-            container.appendChild(card);
-        }
-
-        function renderResults() {
-            resultsContainer.innerHTML = ''; 
-
-            const sortedModels = [...currentFilteredModels].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
-            
-            const startIndex = (currentPage - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const paginatedModels = sortedModels.slice(startIndex, endIndex);
-
-            if (paginatedModels.length === 0 && currentPage === 1) {
-                noResultsMessage.classList.remove('hidden');
-                resultsContainer.classList.add('hidden');
-                paginationContainer.classList.add('hidden');
-            } else {
-                noResultsMessage.classList.add('hidden');
-                resultsContainer.classList.remove('hidden');
-                // paginationContainer is handled by renderPagination
-            }
-
-            paginatedModels.forEach(model => {
-                renderCard(model, resultsContainer);
-            });
-            lucide.createIcons();
-        }
-
-        function filterAndRender() {
-            const selectedCategory = categorySelect.value;
-            aiExplanationContainer.classList.add('hidden');
-            
-            currentFilteredModels = allAiModels.filter(model => {
-                return selectedCategory === 'all' || model.de.category === selectedCategory;
-            });
-            
-            currentPage = 1; 
-            renderResults();
-            renderPagination();
-        }
-
-        async function handleGeminiSearch() {
-            const userQuery = aiPromptInput.value;
-            if (!userQuery.trim()) return;
-
-            aiLoader.classList.remove('hidden');
-            aiError.classList.add('hidden');
-            aiExplanationContainer.classList.add('hidden');
-            geminiSearchBtn.disabled = true;
-            
-            const langForPrompt = currentLang === 'de' ? 'German' : 'English';
-            const beginnerFriendlyInstruction = currentLang === 'de' 
-                ? "Schreibe die Erklärung in einfacher Sprache, die auch ein absoluter Anfänger versteht." 
-                : "Write the explanation in simple language that an absolute beginner can understand.";
-
-            const systemPrompt = `You are an expert AI tool consultant. Your task is to analyze a user's request and recommend the most suitable tools from a provided JSON list. You must respond with a single, valid JSON object. This object must have two keys: 1. "recommendations": An array containing the exact names of the top 3 recommended tools. 2. "explanation": A concise, helpful paragraph in ${langForPrompt} that explains why these tools are a good fit for the user's request, highlighting the specific strengths of each recommended tool for the given task. ${beginnerFriendlyInstruction} Do not add any extra text, explanation, or markdown formatting around the JSON object. Your entire output must be only the JSON object.`;
-            
-            const toolsForPrompt = allAiModels.map(tool => ({
-                name: tool.name,
-                description: tool[currentLang].description,
-                useCases: tool[currentLang].useCases
-            }));
-
-            const prompt = `User Request: "${userQuery}". Tool List: ${JSON.stringify(toolsForPrompt)}`;
-            
-            try {
-                // WICHTIG: Ersetzen Sie den Platzhalter durch Ihren eigenen Google AI API-Schlüssel.
-                // Sie erhalten ihn kostenlos im Google AI Studio.
-                const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs"; 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-                if (apiKey === "DEIN_API_SCHLÜSSEL_HIER_EINFÜGEN") {
-                    throw new Error("API key is missing.");
-                }
-
-                const payload = {
-                  contents: [{ parts: [{ text: prompt }] }],
-                  systemInstruction: { parts: [{ text: systemPrompt }] },
-                  generationConfig: { responseMimeType: "application/json" }
-                };
+                     <div class="flex items-center justify-end gap-4 text-sm text-gray-500 mt-auto pt-4 border-t border-gray-200/80">
+                        <span class="flex items-center gap-1.5 bg-slate-100 text-slate-800 p-1.5 rounded-md text-xs"><i data-lucide="dollar-sign" class="w-3 h-3"></i>${translations[currentLang].pricing[model.pricing]}</span>
+                    </div>
+                `;
                 
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                card.addEventListener('click', () => {
+                    const selectedModel = allAiModels.find(m => m.name === model.name);
+                    if (selectedModel) {
+                        showDetailView(selectedModel);
+                    }
                 });
 
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.status} ${response.statusText}`);
+                container.appendChild(card);
+            }
+            
+            function renderPagination() {
+                paginationContainer.innerHTML = '';
+                const totalPages = Math.ceil(currentFilteredModels.length / itemsPerPage);
+
+                if (totalPages <= 1) {
+                    paginationContainer.classList.add('hidden');
+                    return;
+                };
+                paginationContainer.classList.remove('hidden');
+
+                for (let i = 1; i <= totalPages; i++) {
+                    const button = document.createElement('button');
+                    button.textContent = i;
+                    button.className = `pagination-btn px-4 py-2 border rounded-lg transition hover:bg-gray-100`;
+                    if (i === currentPage) {
+                        button.classList.add('active');
+                    }
+                    button.addEventListener('click', () => {
+                        currentPage = i;
+                        renderResults();
+                    });
+                    paginationContainer.appendChild(button);
+                }
+            }
+            
+            function renderResults() {
+                resultsContainer.innerHTML = ''; 
+
+                const sortedModels = [...currentFilteredModels].sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+                
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const paginatedModels = sortedModels.slice(startIndex, endIndex);
+
+                if (paginatedModels.length === 0 && currentPage === 1) {
+                    noResultsMessage.classList.remove('hidden');
+                    resultsContainer.classList.add('hidden');
+                    paginationContainer.classList.add('hidden');
+                } else {
+                    noResultsMessage.classList.add('hidden');
+                    resultsContainer.classList.remove('hidden');
                 }
 
-                const result = await response.json();
-                
-                const responseText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
-                if (!responseText) {
-                    throw new Error("Invalid response structure from API.");
-                }
-                
-                let recommendationObject;
-                try {
-                    const cleanedText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
-                    recommendationObject = JSON.parse(cleanedText);
-                } catch (e) {
-                    console.error("Failed to parse JSON from Gemini response:", responseText);
-                    throw new Error("Could not understand the recommendation format.");
-                }
-
-                if (!recommendationObject || !Array.isArray(recommendationObject.recommendations) || typeof recommendationObject.explanation !== 'string') {
-                     throw new Error("Recommendation format is incorrect.");
-                }
-                
-                aiExplanationText.textContent = recommendationObject.explanation;
-                aiExplanationContainer.classList.remove('hidden');
-
-                currentFilteredModels = recommendationObject.recommendations
-                    .map(name => allAiModels.find(tool => tool.name === name))
-                    .filter(Boolean);
-                
-                currentPage = 1;
-                renderResults();
+                paginatedModels.forEach(model => {
+                    renderCard(model, resultsContainer);
+                });
                 renderPagination();
-                
-            } catch (error) {
-                console.error("Error during Gemini recommendation:", error);
-                aiError.textContent = translations[currentLang].geminiError;
-                aiError.classList.remove('hidden');
-                
-                // Fallback: Reset to the default category view
-                filterAndRender();
-
-            } finally {
-                aiLoader.classList.add('hidden');
-                geminiSearchBtn.disabled = false;
+                lucide.createIcons();
             }
-        }
-
-        async function handleAskAboutTool() {
-            const userQuestion = chatInput.value.trim();
-            if (!userQuestion || !currentDetailViewModel) return;
-
-            const chatHistory = document.getElementById('chat-history');
-            const chatLoader = document.getElementById('chat-loader');
-            const chatSendBtn = document.getElementById('chat-send-btn');
-
-            const userMessageDiv = document.createElement('div');
-            userMessageDiv.className = 'text-right';
-            userMessageDiv.innerHTML = `<div class="inline-block bg-blue-500 text-white p-3 rounded-lg rounded-br-none">${userQuestion}</div>`;
-            chatHistory.appendChild(userMessageDiv);
-
-            chatInput.value = '';
-            chatLoader.classList.remove('hidden');
-            chatSendBtn.disabled = true;
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-
-            const langForPrompt = currentLang === 'de' ? 'German' : 'English';
-            const toolData = currentDetailViewModel[currentLang];
-
-            const systemPrompt = `You are a helpful and friendly expert for the AI tool named "${currentDetailViewModel.name}".
-            Your knowledge is strictly limited to the information provided about this specific tool.
-            Answer the user's question based ONLY on the following tool data:
-            - Description: ${toolData.detailedDescription}
-            - Pricing: ${JSON.stringify(toolData.pricingDetails)}
-            - Use Cases: ${toolData.useCases.join(', ')}
-
-            Rules:
-            - Answer in ${langForPrompt}.
-            - Keep your answer concise, helpful, and very easy for a beginner to understand.
-            - If the answer is not in the provided information, you MUST say that you don't have that specific information. For example, in German: "Diese Information habe ich leider nicht." or in English: "Unfortunately, I don't have that information."
-            - Do not make up information.
-            - Do not mention that you are an AI or that your knowledge is limited. Just answer the question directly.
-            - Your response must be plain text, without any formatting.`;
-
-            const prompt = userQuestion;
-
-            try {
-                const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] }
-                };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+            
+            function filterAndRenderByCategory(category) {
+                aiExplanationContainer.classList.add('hidden');
+                
+                currentFilteredModels = allAiModels.filter(model => {
+                     return category === 'Alle anzeigen' || model.de.category === category;
                 });
+                
+                currentPage = 1; 
+                renderResults();
+            }
 
-                if (!response.ok) throw new Error("API request failed");
+            function showMainView() {
+                mainContent.classList.remove('hidden');
+                detailView.classList.add('hidden');
+            }
+            
+            function showDetailView(model) {
+                currentDetailViewModel = model;
+                document.getElementById('chat-history').innerHTML = '';
+                document.getElementById('chat-input').value = '';
+                document.getElementById('prompt-results-container').innerHTML = '';
+                document.getElementById('prompt-idea-input').value = '';
+                document.getElementById('suggested-questions').innerHTML = '';
 
-                const result = await response.json();
-                const aiAnswer = result.candidates[0].content.parts[0].text;
+                document.getElementById('detail-name').textContent = model.name;
+                
+                const modelLang = model[currentLang];
 
-                const aiMessageDiv = document.createElement('div');
-                aiMessageDiv.className = 'text-left';
-                aiMessageDiv.innerHTML = `<div class="inline-block bg-gray-200 text-gray-800 p-3 rounded-lg rounded-bl-none">${aiAnswer}</div>`;
-                chatHistory.appendChild(aiMessageDiv);
+                document.getElementById('detail-icon-container').innerHTML = `<i data-lucide="${model.categoryIcon}" class="w-8 h-8 text-blue-600"></i>`;
+                document.getElementById('detail-category').innerHTML = `<i data-lucide="tag" class="w-4 h-4"></i><span>${modelLang.category}</span>`;
+                document.getElementById('detail-pricing-summary').innerHTML = `<i data-lucide="dollar-sign" class="w-4 h-4"></i><span>${translations[currentLang].pricing[model.pricing]}</span>`;
+                document.getElementById('detail-description').textContent = modelLang.detailedDescription;
+                document.getElementById('detail-link').href = model.link;
+                
+                const pricingContainer = document.getElementById('detail-pricing-details');
+                pricingContainer.innerHTML = '';
+                for (const [plan, text] of Object.entries(modelLang.pricingDetails)) {
+                    const p = document.createElement('p');
+                    p.innerHTML = `<strong class="capitalize text-gray-800 block mb-1">${plan}</strong> ${text}`;
+                    pricingContainer.appendChild(p);
+                }
 
-            } catch (error) {
-                console.error("Error in detail chat:", error);
-                const errorMessageDiv = document.createElement('div');
-                errorMessageDiv.className = 'text-left';
-                errorMessageDiv.innerHTML = `<div class="inline-block bg-red-100 text-red-700 p-3 rounded-lg rounded-bl-none">${translations[currentLang].chatError}</div>`;
-                chatHistory.appendChild(errorMessageDiv);
-            } finally {
-                chatLoader.classList.add('hidden');
-                chatSendBtn.disabled = false;
+                if (model.promptHelper) {
+                    promptGeneratorContainer.classList.remove('hidden');
+                } else {
+                    promptGeneratorContainer.classList.add('hidden');
+                }
+
+                mainContent.classList.add('hidden');
+                detailView.classList.remove('hidden');
+                window.scrollTo(0, 0);
+                lucide.createIcons();
+                handleGenerateSuggestedQuestions(model);
+            }
+
+            async function handleGeminiSearch() {
+                const userQuery = aiPromptInput.value;
+                if (!userQuery.trim()) return;
+
+                aiLoader.classList.remove('hidden');
+                aiError.classList.add('hidden');
+                aiExplanationContainer.classList.add('hidden');
+                geminiSearchBtn.disabled = true;
+                
+                const langForPrompt = currentLang === 'de' ? 'German' : 'English';
+                const beginnerFriendlyInstruction = currentLang === 'de' 
+                    ? "Schreibe die Erklärung in einfacher Sprache, die auch ein absoluter Anfänger versteht." 
+                    : "Write the explanation in simple language that an absolute beginner can understand.";
+
+                const systemPrompt = `You are an expert AI tool consultant. Your task is to analyze a user's request and recommend the most suitable tools from a provided JSON list. You must respond with a single, valid JSON object. This object must have two keys: 1. "recommendations": An array containing the exact names of the top 3 recommended tools. 2. "explanation": A concise, helpful paragraph in ${langForPrompt} that explains why these tools are a good fit for the user's request, highlighting the specific strengths of each recommended tool for the given task. ${beginnerFriendlyInstruction} Do not add any extra text, explanation, or markdown formatting around the JSON object. Your entire output must be only the JSON object.`;
+                
+                const toolsForPrompt = allAiModels.map(tool => ({
+                    name: tool.name,
+                    description: tool[currentLang].description,
+                    useCases: tool[currentLang].useCases
+                }));
+
+                const prompt = `User Request: "${userQuery}". Tool List: ${JSON.stringify(toolsForPrompt)}`;
+                
+                try {
+                    const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs"; 
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                    if (apiKey === "DEIN_API_SCHLÜSSEL_HIER_EINFÜGEN") {
+                        throw new Error("API key is missing.");
+                    }
+
+                    const payload = {
+                      contents: [{ parts: [{ text: prompt }] }],
+                      systemInstruction: { parts: [{ text: systemPrompt }] },
+                      generationConfig: { responseMimeType: "application/json" }
+                    };
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.status} ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    const responseText = result?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!responseText) {
+                        throw new Error("Invalid response structure from API.");
+                    }
+                    
+                    let recommendationObject;
+                    try {
+                        const cleanedText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
+                        recommendationObject = JSON.parse(cleanedText);
+                    } catch (e) {
+                        console.error("Failed to parse JSON from Gemini response:", responseText);
+                        throw new Error("Could not understand the recommendation format.");
+                    }
+
+                    if (!recommendationObject || !Array.isArray(recommendationObject.recommendations) || typeof recommendationObject.explanation !== 'string') {
+                         throw new Error("Recommendation format is incorrect.");
+                    }
+                    
+                    aiExplanationText.textContent = recommendationObject.explanation;
+                    aiExplanationContainer.classList.remove('hidden');
+
+                    currentFilteredModels = recommendationObject.recommendations
+                        .map(name => allAiModels.find(tool => tool.name === name))
+                        .filter(Boolean);
+                    
+                    currentPage = 1;
+                    renderResults();
+                    
+                } catch (error) {
+                    console.error("Error during Gemini recommendation:", error);
+                    aiError.textContent = translations[currentLang].geminiError;
+                    aiError.classList.remove('hidden');
+                    
+                    filterAndRenderByCategory('Alle anzeigen');
+
+                } finally {
+                    aiLoader.classList.add('hidden');
+                    geminiSearchBtn.disabled = false;
+                }
+            }
+
+            async function handleAskAboutTool() {
+                const userQuestion = chatInput.value.trim();
+                if (!userQuestion || !currentDetailViewModel) return;
+
+                const chatHistory = document.getElementById('chat-history');
+                const chatLoader = document.getElementById('chat-loader');
+                const chatSendBtn = document.getElementById('chat-send-btn');
+
+                const userMessageDiv = document.createElement('div');
+                userMessageDiv.className = 'text-right';
+                userMessageDiv.innerHTML = `<div class="inline-block bg-blue-500 text-white p-3 rounded-lg rounded-br-none">${userQuestion}</div>`;
+                chatHistory.appendChild(userMessageDiv);
+
+                chatInput.value = '';
+                chatLoader.classList.remove('hidden');
+                chatSendBtn.disabled = true;
                 chatHistory.scrollTop = chatHistory.scrollHeight;
-            }
-        }
-        
-        async function handleGeneratePrompts() {
-            const idea = document.getElementById('prompt-idea-input').value.trim();
-            if (!idea || !currentDetailViewModel) return;
 
-            const promptLoader = document.getElementById('prompt-loader');
-            const generateBtn = document.getElementById('generate-prompts-btn');
-            const resultsContainer = document.getElementById('prompt-results-container');
-
-            promptLoader.classList.remove('hidden');
-            generateBtn.disabled = true;
-            resultsContainer.innerHTML = '';
-
-            const langForPrompt = currentLang === 'de' ? 'German' : 'English';
-            const toolName = currentDetailViewModel.name;
-
-            const systemPrompt = `You are a world-class prompt engineer specializing in the AI tool "${toolName}". Based on the user's simple idea, generate 3 distinct, creative, and advanced prompts that are perfectly formatted for "${toolName}".
-            - For image tools like Midjourney or Stable Diffusion, include relevant parameters (e.g., --ar, --style, camera angles, lighting).
-            - For text tools like ChatGPT or Jasper, create detailed instructions with context and desired output format.
-            - For music tools like Suno, describe the genre, mood, instruments, and lyrical theme.
-            - For video tools like Pika, describe the scene, action, camera movement, and style.
-            - Your response must be in ${langForPrompt} and formatted as a valid JSON object with a single key "prompts", which is an array of 3 strings. Do not add any other text or formatting.`;
-            
-            const prompt = idea;
-
-            try {
-                const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-                const payload = {
-                    contents: [{ parts: [{ text: prompt }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] },
-                    generationConfig: { responseMimeType: "application/json" }
-                };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) throw new Error("API request failed");
-
-                const result = await response.json();
-                const responseText = result.candidates[0].content.parts[0].text;
-                const responseObject = JSON.parse(responseText.replace(/```json/g, '').replace(/```/g, '').trim());
+                const langForPrompt = currentLang === 'de' ? 'German' : 'English';
+                const toolData = currentDetailViewModel[currentLang];
                 
-                const prompts = responseObject.prompts;
+                const systemPrompt = `You are a helpful and friendly expert for the AI tool named "${currentDetailViewModel.name}".
+                Your knowledge is based on general public information about this tool AND the specific information provided below.
+                Use your general knowledge to answer "how-to" questions or questions about common practices with the tool.
+                Use the provided information to answer questions about its specific features, pricing, and use cases.
+                
+                Provided Information:
+                - Description: ${toolData.detailedDescription}
+                - Pricing: ${JSON.stringify(toolData.pricingDetails)}
+                - Use Cases: ${toolData.useCases.join(', ')}
 
-                if (Array.isArray(prompts)) {
-                    prompts.forEach(p => {
-                        const promptDiv = document.createElement('div');
-                        promptDiv.className = 'bg-slate-100 p-4 rounded-lg border relative';
-                        promptDiv.innerHTML = `<p class="text-gray-700 whitespace-pre-wrap">${p}</p>`;
-                        
-                        const copyBtn = document.createElement('button');
-                        copyBtn.innerHTML = `<i data-lucide="copy" class="w-4 h-4"></i>`;
-                        copyBtn.className = 'absolute top-2 right-2 p-1.5 bg-white rounded-md text-gray-500 hover:text-blue-600 hover:bg-slate-200 transition';
-                        copyBtn.title = translations[currentLang].copyPrompt;
-                        copyBtn.onclick = () => {
-                            const textarea = document.createElement('textarea');
-                            textarea.value = p;
-                            document.body.appendChild(textarea);
-                            textarea.select();
-                            document.execCommand('copy');
-                            document.body.removeChild(textarea);
+                Rules:
+                - Answer in ${langForPrompt}.
+                - Keep your answer concise, helpful, and very easy for a beginner to understand.
+                - If you truly don't know the answer or it's not in the provided info, you can say that you don't have that specific information. For example, in German: "Dazu habe ich leider keine genauen Informationen." or in English: "Unfortunately, I don't have specific information on that."
+                - Do not make up information.
+                - Do not mention that you are an AI or that your knowledge is limited unless you cannot answer at all. Just answer the question directly.
+                - Your response must be plain text, without any formatting.`;
+
+                const prompt = userQuestion;
+
+                try {
+                    const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                    const payload = {
+                        contents: [{ parts: [{ text: prompt }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) throw new Error("API request failed");
+
+                    const result = await response.json();
+                    const aiAnswer = result.candidates[0].content.parts[0].text;
+
+                    const aiMessageDiv = document.createElement('div');
+                    aiMessageDiv.className = 'text-left';
+                    aiMessageDiv.innerHTML = `<div class="inline-block bg-gray-200 text-gray-800 p-3 rounded-lg rounded-bl-none">${aiAnswer}</div>`;
+                    chatHistory.appendChild(aiMessageDiv);
+
+                } catch (error) {
+                    console.error("Error in detail chat:", error);
+                    const errorMessageDiv = document.createElement('div');
+                    errorMessageDiv.className = 'text-left';
+                    errorMessageDiv.innerHTML = `<div class="inline-block bg-red-100 text-red-700 p-3 rounded-lg rounded-bl-none">${translations[currentLang].chatError}</div>`;
+                    chatHistory.appendChild(errorMessageDiv);
+                } finally {
+                    chatLoader.classList.add('hidden');
+                    chatSendBtn.disabled = false;
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+                }
+            }
+            
+            async function handleGeneratePrompts() {
+                const idea = document.getElementById('prompt-idea-input').value.trim();
+                if (!idea || !currentDetailViewModel) return;
+
+                const promptLoader = document.getElementById('prompt-loader');
+                const generateBtn = document.getElementById('generate-prompts-btn');
+                const resultsContainer = document.getElementById('prompt-results-container');
+
+                promptLoader.classList.remove('hidden');
+                generateBtn.disabled = true;
+                resultsContainer.innerHTML = '';
+
+                const langForPrompt = currentLang === 'de' ? 'German' : 'English';
+                const toolName = currentDetailViewModel.name;
+
+                const systemPrompt = `You are a world-class prompt engineer specializing in the AI tool "${toolName}". Based on the user's simple idea, generate 3 distinct, creative, and advanced prompts that are perfectly formatted for "${toolName}".
+                - For image tools like Midjourney or Stable Diffusion, include relevant parameters (e.g., --ar, --style, camera angles, lighting).
+                - For text tools like ChatGPT or Jasper, create detailed instructions with context and desired output format.
+                - For music tools like Suno, describe the genre, mood, instruments, and lyrical theme.
+                - For video tools like Pika, describe the scene, action, camera movement, and style.
+                - Your response must be in ${langForPrompt} and formatted as a valid JSON object with a single key "prompts", which is an array of 3 strings. Do not add any other text or formatting.`;
+                
+                const prompt = idea;
+
+                try {
+                    const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                    const payload = {
+                        contents: [{ parts: [{ text: prompt }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                        generationConfig: { responseMimeType: "application/json" }
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) throw new Error("API request failed");
+
+                    const result = await response.json();
+                    const responseText = result.candidates[0].content.parts[0].text;
+                    const responseObject = JSON.parse(responseText.replace(/```json/g, '').replace(/```/g, '').trim());
+                    
+                    const prompts = responseObject.prompts;
+
+                    if (Array.isArray(prompts)) {
+                        prompts.forEach(p => {
+                            const promptDiv = document.createElement('div');
+                            promptDiv.className = 'bg-slate-100 p-4 rounded-lg border relative';
+                            promptDiv.innerHTML = `<p class="text-gray-700 whitespace-pre-wrap">${p}</p>`;
                             
-                            copyBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-green-600"></i>`;
-                            copyBtn.title = translations[currentLang].copied;
-                            setTimeout(() => {
-                                copyBtn.innerHTML = `<i data-lucide="copy" class="w-4 h-4"></i>`;
-                                copyBtn.title = translations[currentLang].copyPrompt;
-                                lucide.createIcons();
-                            }, 2000);
-                            lucide.createIcons();
-                        };
+                            const copyBtn = document.createElement('button');
+                            copyBtn.innerHTML = `<i data-lucide="copy" class="w-4 h-4"></i>`;
+                            copyBtn.className = 'absolute top-2 right-2 p-1.5 bg-white rounded-md text-gray-500 hover:text-blue-600 hover:bg-slate-200 transition';
+                            copyBtn.title = translations[currentLang].copyPrompt;
+                            copyBtn.onclick = () => {
+                                navigator.clipboard.writeText(p).then(() => {
+                                    copyBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-green-600"></i>`;
+                                    copyBtn.title = translations[currentLang].copied;
+                                    setTimeout(() => {
+                                        copyBtn.innerHTML = `<i data-lucide="copy" class="w-4 h-4"></i>`;
+                                        copyBtn.title = translations[currentLang].copyPrompt;
+                                        lucide.createIcons();
+                                    }, 2000);
+                                    lucide.createIcons();
+                                });
+                            };
 
-                        promptDiv.appendChild(copyBtn);
-                        resultsContainer.appendChild(promptDiv);
-                    });
-                    lucide.createIcons();
+                            promptDiv.appendChild(copyBtn);
+                            resultsContainer.appendChild(promptDiv);
+                        });
+                        lucide.createIcons();
+                    }
+
+                } catch (error) {
+                    console.error("Error generating prompts:", error);
+                    resultsContainer.innerHTML = `<div class="bg-red-100 text-red-700 p-3 rounded-lg">${translations[currentLang].chatError}</div>`;
+                } finally {
+                    promptLoader.classList.add('hidden');
+                    generateBtn.disabled = false;
                 }
-
-            } catch (error) {
-                console.error("Error generating prompts:", error);
-                resultsContainer.innerHTML = `<div class="bg-red-100 text-red-700 p-3 rounded-lg">${translations[currentLang].chatError}</div>`;
-            } finally {
-                promptLoader.classList.add('hidden');
-                generateBtn.disabled = false;
             }
-        }
 
-        async function handleGenerateSuggestedQuestions(model) {
-            const loader = document.getElementById('suggested-questions-loader');
-            const container = document.getElementById('suggested-questions');
-            loader.classList.remove('hidden');
-            container.innerHTML = '';
+            async function handleGenerateSuggestedQuestions(model) {
+                const loader = document.getElementById('suggested-questions-loader');
+                const container = document.getElementById('suggested-questions');
+                loader.classList.remove('hidden');
+                container.innerHTML = '';
 
-            const langForPrompt = currentLang === 'de' ? 'German' : 'English';
-            const toolData = model[currentLang];
+                const langForPrompt = currentLang === 'de' ? 'German' : 'English';
+                const toolData = model[currentLang];
 
-            const systemPrompt = `You are a helpful assistant. Based on the provided information for the AI tool "${model.name}", generate exactly 3 interesting and relevant questions a beginner might ask about it.
-            Tool Information:
-            - Description: ${toolData.detailedDescription}
-            - Use Cases: ${toolData.useCases.join(', ')}
-            
-            Your response must be in ${langForPrompt} and formatted as a valid JSON object with a single key "questions", which is an array of 3 strings. Do not add any other text or formatting.`;
-
-            try {
-                const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs";
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-
-                const payload = {
-                    contents: [{ parts: [{ text: "Generate questions." }] }],
-                    systemInstruction: { parts: [{ text: systemPrompt }] },
-                    generationConfig: { responseMimeType: "application/json" }
-                };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) throw new Error("API request failed");
-
-                const result = await response.json();
-                const responseText = result.candidates[0].content.parts[0].text;
-                const responseObject = JSON.parse(responseText.replace(/```json/g, '').replace(/```/g, '').trim());
+                const systemPrompt = `You are a helpful assistant. Based on the provided information for the AI tool "${model.name}", generate exactly 3 interesting and relevant questions a beginner might ask about it.
+                Tool Information:
+                - Description: ${toolData.detailedDescription}
+                - Use Cases: ${toolData.useCases.join(', ')}
                 
-                if (Array.isArray(responseObject.questions)) {
-                    responseObject.questions.forEach(q => {
-                        const button = document.createElement('button');
-                        button.textContent = q;
-                        button.className = "bg-slate-200 text-slate-700 text-sm px-3 py-1.5 rounded-lg hover:bg-slate-300 transition";
-                        button.onclick = () => {
-                            chatInput.value = q;
-                            chatInput.focus();
-                        };
-                        container.appendChild(button);
+                Your response must be in ${langForPrompt} and formatted as a valid JSON object with a single key "questions", which is an array of 3 strings. Do not add any other text or formatting.`;
+
+                try {
+                    const apiKey = "AIzaSyDLPEAbrDpyIbhunGaeKRNzf_id0RKNHzs";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+                    const payload = {
+                        contents: [{ parts: [{ text: "Generate questions." }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] },
+                        generationConfig: { responseMimeType: "application/json" }
+                    };
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
                     });
+
+                    if (!response.ok) throw new Error("API request failed");
+
+                    const result = await response.json();
+                    const responseText = result.candidates[0].content.parts[0].text;
+                    const responseObject = JSON.parse(responseText.replace(/```json/g, '').replace(/```/g, '').trim());
+                    
+                    if (Array.isArray(responseObject.questions)) {
+                        responseObject.questions.forEach(q => {
+                            const button = document.createElement('button');
+                            button.textContent = q;
+                            button.className = "bg-slate-200 text-slate-700 text-sm px-3 py-1.5 rounded-lg hover:bg-slate-300 transition";
+                            button.onclick = () => {
+                                chatInput.value = q;
+                                handleAskAboutTool();
+                            };
+                            container.appendChild(button);
+                        });
+                    }
+
+                } catch (error) {
+                    console.error("Error generating suggested questions:", error);
+                    container.innerHTML = ''; // Clear on error
+                } finally {
+                    loader.classList.add('hidden');
                 }
-
-            } catch (error) {
-                console.error("Error generating suggested questions:", error);
-                container.innerHTML = ''; // Clear on error
-            } finally {
-                loader.classList.add('hidden');
             }
-        }
+            
+            function updateContent(lang) {
+                currentLang = lang;
+                localStorage.setItem('aiFinderLang', lang);
 
+                document.title = translations[lang].pageTitle;
+                document.documentElement.lang = lang;
+                document.getElementById('main-title').textContent = translations[lang].mainTitle;
+                document.getElementById('main-subtitle').textContent = translations[lang].mainSubtitle;
+                document.getElementById('ai-rec-title').textContent = translations[lang].aiRecTitle;
+                document.getElementById('ai-rec-subtitle').textContent = translations[lang].aiRecSubtitle;
+                document.getElementById('ai-prompt-input').placeholder = translations[lang].aiPromptPlaceholder;
+                document.getElementById('gemini-btn-text').textContent = translations[lang].geminiBtnText;
+                document.getElementById('ai-loader-text').textContent = translations[lang].aiLoaderText;
+                document.getElementById('no-results-title').textContent = translations[lang].noResultsTitle;
+                document.getElementById('no-results-subtitle').textContent = translations[lang].noResultsSubtitle;
+                document.getElementById('back-button-text').textContent = translations[lang].backButtonText;
+                document.getElementById('pricing-details-title').textContent = translations[lang].pricingDetailsTitle;
+                document.getElementById('visit-website-button').textContent = translations[lang].visitWebsiteButton;
+                document.getElementById('newsletter-title').textContent = translations[lang].newsletterTitle;
+                document.getElementById('newsletter-subtitle').textContent = translations[lang].newsletterSubtitle;
+                document.getElementById('email-input').placeholder = translations[lang].newsletterPlaceholder;
+                document.getElementById('newsletter-button').textContent = translations[lang].newsletterButton;
+                document.getElementById('newsletter-success-title').textContent = translations[lang].newsletterSuccessTitle;
+                document.getElementById('newsletter-success-subtitle').textContent = translations[lang].newsletterSuccessSubtitle;
+                document.getElementById('footer-rights').textContent = translations[lang].footerRights;
+                document.getElementById('footer-imprint-btn').textContent = translations[lang].footerImprint;
+                document.getElementById('footer-privacy-btn').textContent = translations[lang].footerPrivacy;
+                document.getElementById('imprint-title').textContent = translations[lang].imprintTitle;
+                document.getElementById('imprint-content').innerHTML = translations[lang].imprintContent;
+                document.getElementById('privacy-title').textContent = translations[lang].privacyTitle;
+                document.getElementById('privacy-content').innerHTML = translations[lang].privacyContent;
+                document.querySelector('#ai-explanation-title span').textContent = translations[lang].aiExplanationTitle;
+                document.getElementById('chat-title').querySelector('span').textContent = translations[lang].chatTitle;
+                document.getElementById('chat-input').placeholder = translations[lang].chatPlaceholder;
+                document.getElementById('chat-loader-text').textContent = translations[lang].chatLoaderText;
+                document.getElementById('prompt-generator-title').querySelector('span').textContent = translations[lang].promptGeneratorTitle;
+                document.getElementById('prompt-generator-subtitle').textContent = translations[lang].promptGeneratorSubtitle;
+                document.getElementById('prompt-idea-input').placeholder = translations[lang].promptGeneratorPlaceholder;
+                document.getElementById('generate-prompts-btn-text').textContent = translations[lang].generatePromptsBtnText;
+                document.getElementById('prompt-loader-text').textContent = translations[lang].promptLoaderText;
+                document.getElementById('suggested-questions-title').textContent = translations[lang].suggestedQuestionsTitle;
+                document.getElementById('suggested-questions-loader-text').textContent = translations[lang].suggestedQuestionsLoaderText;
+                document.getElementById('example-title').textContent = translations[lang].exampleTitle;
+                
+                langDeBtn.classList.toggle('active', lang === 'de');
+                langEnBtn.classList.toggle('active', lang === 'en');
+                
+                renderExampleCategories();
+                filterAndRenderByCategory('Alle anzeigen');
+            }
 
-        // --- EVENT LISTENERS ---
-        categorySelect.addEventListener('change', filterAndRender);
-        backToListBtn.addEventListener('click', showMainView);
-        langDeBtn.addEventListener('click', () => updateContent('de'));
-        langEnBtn.addEventListener('click', () => updateContent('en'));
-        newsletterForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            newsletterContent.classList.add('hidden');
-            newsletterSuccess.classList.remove('hidden');
-        });
-        geminiSearchBtn.addEventListener('click', handleGeminiSearch);
+            // SCRIPT INITIALIZATION
+            mainContent = document.getElementById('main-content');
+            detailView = document.getElementById('detail-view');
+            resultsContainer = document.getElementById('results-container');
+            noResultsMessage = document.getElementById('no-results');
+            backToListBtn = document.getElementById('back-to-list');
+            paginationContainer = document.getElementById('pagination-container');
+            langDeBtn = document.getElementById('lang-de');
+            langEnBtn = document.getElementById('lang-en');
+            newsletterForm = document.getElementById('newsletter-form');
+            newsletterContent = document.getElementById('newsletter-content');
+            newsletterSuccess = document.getElementById('newsletter-success');
+            imprintModal = document.getElementById('imprint-modal');
+            privacyModal = document.getElementById('privacy-modal');
+            imprintBtn = document.getElementById('footer-imprint-btn');
+            privacyBtn = document.getElementById('footer-privacy-btn');
+            geminiSearchBtn = document.getElementById('gemini-search-btn');
+            aiPromptInput = document.getElementById('ai-prompt-input');
+            aiLoader = document.getElementById('ai-loader');
+            aiError = document.getElementById('ai-error');
+            aiExplanationContainer = document.getElementById('ai-explanation-container');
+            aiExplanationText = document.getElementById('ai-explanation-text');
+            chatSendBtn = document.getElementById('chat-send-btn');
+            chatInput = document.getElementById('chat-input');
+            promptGeneratorContainer = document.getElementById('prompt-generator-container');
+            generatePromptsBtn = document.getElementById('generate-prompts-btn');
+            suggestedQuestionsContainer = document.getElementById('suggested-questions-container');
+            exampleCategoriesContainer = document.getElementById('example-categories');
 
-        imprintBtn.addEventListener('click', () => openModal(imprintModal));
-        privacyBtn.addEventListener('click', () => openModal(privacyModal));
-        
-        [imprintModal, privacyModal].forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    closeModal(modal);
+            backToListBtn.addEventListener('click', showMainView);
+            langDeBtn.addEventListener('click', () => updateContent('de'));
+            langEnBtn.addEventListener('click', () => updateContent('en'));
+            newsletterForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                newsletterContent.classList.add('hidden');
+                newsletterSuccess.classList.remove('hidden');
+            });
+            geminiSearchBtn.addEventListener('click', handleGeminiSearch);
+            imprintBtn.addEventListener('click', () => openModal(imprintModal));
+            privacyBtn.addEventListener('click', () => openModal(privacyModal));
+            
+            [imprintModal, privacyModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal(modal);
+                });
+                modal.querySelector('.close-modal-btn').addEventListener('click', () => closeModal(modal));
+            });
+
+            chatSendBtn.addEventListener('click', handleAskAboutTool);
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAskAboutTool();
                 }
             });
-            modal.querySelector('.close-modal-btn').addEventListener('click', () => closeModal(modal));
+            generatePromptsBtn.addEventListener('click', handleGeneratePrompts);
+            
+            // Initial Render
+            document.getElementById('copyright-year').textContent = new Date().getFullYear();
+            lucide.createIcons();
+            updateContent(currentLang);
         });
-
-        chatSendBtn.addEventListener('click', handleAskAboutTool);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleAskAboutTool();
-            }
-        });
-
-        generatePromptsBtn.addEventListener('click', handleGeneratePrompts);
-
-
-        // --- INITIAL RENDER ---
-        document.getElementById('copyright-year').textContent = new Date().getFullYear();
-        lucide.createIcons();
-        updateContent(currentLang);
-
     </script>
 </body>
 </html>

@@ -37,80 +37,86 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #1a1a1a;
+            --bg-tertiary: #2a2a2a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #c0c0c0;
+            --text-muted: #888;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #FFD700;
+            --border-color: rgba(192, 192, 192, 0.2);
+        }
+
         html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', sans-serif;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            background-color: #f8fafc;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
         }
         .bg-main-gradient {
-            background: linear-gradient(120deg, #f0f9ff 0%, #e0f2fe 100%);
+            background: linear-gradient(120deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
         }
         .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
             cursor: pointer;
-            background-color: rgba(255, 255, 255, 0.7);
+            background-color: rgba(40, 40, 40, 0.7);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--border-color);
         }
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.07), 0 4px 6px -2px rgba(212, 175, 55, 0.07);
+            background-color: rgba(55, 55, 55, 0.8);
         }
         .featured-card {
             position: relative;
-            border: 2px solid transparent;
-            background-clip: padding-box;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
         }
-        .featured-card::before {
-            content: '';
-            position: absolute;
-            top: 0; right: 0; bottom: 0; left: 0;
-            z-index: -1;
-            margin: -2px;
-            border-radius: inherit;
-            background: linear-gradient(45deg, #f87171, #fb923c, #8b5cf6);
+        .pagination-btn { color: var(--text-secondary); border-color: #555; }
+        .pagination-btn:hover { background-color: #333; }
+        .pagination-btn.active, .lang-btn.active {
+            background-color: var(--accent-gold);
+            color: var(--bg-primary);
+            border-color: var(--accent-gold);
+        }
+        .lang-btn { color: var(--text-secondary); }
+        .fade-in { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        #page-container { flex: 1; }
+        .animated-gradient-text {
+            background: linear-gradient(45deg, var(--accent-gold-light), var(--text-secondary), var(--accent-gold));
             background-size: 200% 200%;
-            animation: gradient-animation 5s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-animation 6s ease infinite;
         }
         @keyframes gradient-animation {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        .pagination-btn.active, .lang-btn.active {
-            background-color: #3b82f6;
-            color: white;
-            border-color: #3b82f6;
-        }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        #page-container {
-            flex: 1;
-        }
-        .animated-gradient-text {
-            background: linear-gradient(45deg, #3b82f6, #8b5cf6, #ec4899);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: gradient-animation 6s ease infinite;
-        }
         .modal-overlay {
             transition: opacity 0.3s ease;
+            background-color: rgba(0, 0, 0, 0.8);
         }
         .modal-content {
             transition: transform 0.3s ease, opacity 0.3s ease;
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            border: 1px solid #555;
         }
         .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #6366f1;
+            border: 4px solid #333;
+            border-top: 4px solid var(--accent-gold-light);
             border-radius: 50%;
             width: 32px;
             height: 32px;
@@ -120,68 +126,91 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        .bg-primary-element { background-color: rgba(26, 26, 26, 0.5) !important; border-color: var(--border-color) !important; }
+        .bg-secondary-element { background-color: var(--bg-secondary) !important; border: 1px solid #555 !important; }
+        .text-primary { color: var(--text-primary); }
+        .text-secondary { color: var(--text-secondary); }
+        .text-muted { color: var(--text-muted); }
+        input, textarea { background-color: var(--bg-tertiary) !important; border-color: #555 !important; color: var(--text-primary) !important; }
+        input::placeholder, textarea::placeholder { color: var(--text-muted) !important; }
+        .bg-slate-50 { background-color: var(--bg-tertiary) !important; border-color: #555 !important; }
+        .bg-slate-100 { background-color: #333 !important; }
+        .text-slate-800 { color: var(--text-primary) !important; }
+        .how-it-works-card { border: 1px solid #555; transition: all 0.3s ease; }
+        .how-it-works-card:hover { border-color: var(--accent-gold); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+        
+        /* New Chat Bubble Styles */
+        .user-bubble {
+            background-color: var(--accent-gold);
+            color: var(--bg-primary);
+        }
+        .ai-bubble {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        #chat-history { background-color: var(--bg-primary) !important; }
     </style>
 </head>
-<body class="bg-main-gradient text-gray-800">
+<body class="bg-main-gradient">
 
     <div id="page-container">
         <div id="main-content">
             <div class="container mx-auto px-4 py-8 md:py-12">
                 <!-- Header -->
                 <header class="text-center mb-10 relative">
-                     <div class="absolute top-0 right-0 bg-white/60 backdrop-blur-sm p-1 rounded-lg shadow-md border">
+                     <div class="absolute top-0 right-0 p-1 rounded-lg shadow-md bg-primary-element">
                         <button id="lang-de" aria-label="Sprache auf Deutsch umstellen" class="lang-btn px-3 py-1 text-sm font-semibold rounded-md transition">DE</button>
                         <button id="lang-en" aria-label="Switch language to English" class="lang-btn px-3 py-1 text-sm font-semibold rounded-md transition">EN</button>
                     </div>
-                     <div class="inline-block bg-white p-4 rounded-2xl shadow-sm mb-4" aria-hidden="true">
+                     <div class="inline-block p-4 rounded-2xl shadow-sm mb-4 bg-primary-element" aria-hidden="true">
                         <i data-lucide="brain-circuit" class="w-12 h-12 animated-gradient-text"></i>
                     </div>
-                    <h1 id="main-title" class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-2 animated-gradient-text">
+                    <h1 id="main-title" class="text-4xl md:text-5xl font-extrabold mb-2 animated-gradient-text text-primary">
                         Der KI-Berater
                     </h1>
-                    <p id="main-subtitle" class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p id="main-subtitle" class="text-lg max-w-2xl mx-auto text-secondary">
                         Welche künstliche Intelligenz ist die beste für deine Aufgabe? Finde hier das perfekte Tool.
                     </p>
                 </header>
 
                 <!-- How it Works Section -->
                 <section class="mb-16">
-                    <h2 id="how-it-works-title" class="text-3xl font-bold text-center text-gray-800 mb-8">So funktioniert's</h2>
+                    <h2 id="how-it-works-title" class="text-3xl font-bold text-center mb-8 text-primary">So funktioniert's</h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                        <div id="step1-card" class="text-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50 hover:shadow-xl transition-shadow cursor-pointer">
-                            <div class="inline-block bg-white p-3 rounded-xl shadow-md mb-4">
-                                <i data-lucide="edit-3" class="w-8 h-8 text-purple-600"></i>
+                        <div id="step1-card" class="text-center p-6 rounded-2xl shadow-lg how-it-works-card cursor-pointer bg-secondary-element">
+                            <div class="inline-block p-3 rounded-xl shadow-md mb-4 bg-primary-element">
+                                <i data-lucide="edit-3" class="w-8 h-8" style="color: #FFD700;"></i>
                             </div>
-                            <h3 id="step1-title" class="text-xl font-semibold mb-2">1. Beschreibe deine Aufgabe</h3>
-                            <p id="step1-text" class="text-gray-600">Gib einfach in das Suchfeld ein, was du erledigen möchtest.</p>
+                            <h3 id="step1-title" class="text-xl font-semibold mb-2 text-primary">1. Beschreibe deine Aufgabe</h3>
+                            <p id="step1-text" class="text-secondary">Gib einfach in das Suchfeld ein, was du erledigen möchtest.</p>
                         </div>
-                        <div class="text-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50">
-                             <div class="inline-block bg-white p-3 rounded-xl shadow-md mb-4">
-                                <i data-lucide="sparkles" class="w-8 h-8 text-amber-500"></i>
+                        <div class="text-center p-6 rounded-2xl shadow-lg how-it-works-card bg-secondary-element">
+                             <div class="inline-block p-3 rounded-xl shadow-md mb-4 bg-primary-element">
+                                <i data-lucide="sparkles" class="w-8 h-8" style="color: #FFD700;"></i>
                             </div>
-                            <h3 id="step2-title" class="text-xl font-semibold mb-2">2. Erhalte eine Empfehlung</h3>
-                            <p id="step2-text" class="text-gray-600">Unsere KI analysiert deine Anfrage und schlägt dir die besten Tools vor.</p>
+                            <h3 id="step2-title" class="text-xl font-semibold mb-2 text-primary">2. Erhalte eine Empfehlung</h3>
+                            <p id="step2-text" class="text-secondary">Unsere KI analysiert deine Anfrage und schlägt dir die besten Tools vor.</p>
                         </div>
-                        <div class="text-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg border border-white/50">
-                             <div class="inline-block bg-white p-3 rounded-xl shadow-md mb-4">
-                                <i data-lucide="compass" class="w-8 h-8 text-sky-500"></i>
+                        <div class="text-center p-6 rounded-2xl shadow-lg how-it-works-card bg-secondary-element">
+                             <div class="inline-block p-3 rounded-xl shadow-md mb-4 bg-primary-element">
+                                <i data-lucide="compass" class="w-8 h-8" style="color: #FFD700;"></i>
                             </div>
-                            <h3 id="step3-title" class="text-xl font-semibold mb-2">3. Entdecke die Tools</h3>
-                            <p id="step3-text" class="text-gray-600">Vergleiche die Vorschläge und finde die perfekte Lösung für dein Projekt.</p>
+                            <h3 id="step3-title" class="text-xl font-semibold mb-2 text-primary">3. Entdecke die Tools</h3>
+                            <p id="step3-text" class="text-secondary">Vergleiche die Vorschläge und finde die perfekte Lösung für dein Projekt.</p>
                         </div>
                     </div>
                 </section>
 
                 <!-- Combined Search Section -->
-                <div id="search-section" class="bg-white/60 backdrop-blur-sm p-6 rounded-2xl shadow-lg mb-12 max-w-3xl mx-auto border border-white/50">
+                <div id="search-section" class="p-6 rounded-2xl shadow-lg mb-12 max-w-3xl mx-auto bg-primary-element">
                     <div class="text-center mb-4">
-                        <h2 id="ai-rec-title" class="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">Was möchtest du tun?</h2>
-                        <p id="ai-rec-subtitle" class="text-gray-600 mt-1">Beschreibe deine Aufgabe für eine persönliche Empfehlung.</p>
+                        <h2 id="ai-rec-title" class="text-2xl font-bold flex items-center justify-center gap-2 text-primary">Was möchtest du tun?</h2>
+                        <p id="ai-rec-subtitle" class="mt-1 text-secondary">Beschreibe deine Aufgabe für eine persönliche Empfehlung.</p>
                     </div>
                     <div class="flex flex-col gap-4">
                         <label for="ai-prompt-input" class="sr-only">Aufgabenbeschreibung</label>
-                        <textarea id="ai-prompt-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" rows="3" placeholder="z.B. Ich möchte ein Video für mein Startup erstellen, habe aber kein eigenes Filmmaterial..."></textarea>
-                        <button id="gemini-search-btn" class="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition shadow-lg hover:shadow-indigo-300/50 flex items-center justify-center gap-2">
+                        <textarea id="ai-prompt-input" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition" rows="3" placeholder="z.B. Ich möchte ein Video für mein Startup erstellen..."></textarea>
+                        <button id="gemini-search-btn" class="bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-semibold py-3 px-6 rounded-lg hover:opacity-90 transition shadow-lg hover:shadow-amber-500/20 flex items-center justify-center gap-2">
                             <i data-lucide="sparkles" class="w-5 h-5"></i>
                             <span id="gemini-btn-text">Empfehlung anfordern</span>
                         </button>
@@ -190,7 +219,7 @@
                 
                 <!-- Example Categories Section -->
                 <div class="text-center mb-12">
-                    <h3 id="example-title" class="text-lg font-semibold text-gray-700 mb-4">Oder entdecke beliebte Kategorien</h3>
+                    <h3 id="example-title" class="text-lg font-semibold mb-4 text-primary">Oder entdecke beliebte Kategorien</h3>
                     <div id="example-categories" class="flex flex-wrap justify-center gap-3">
                         <!-- Example buttons will be injected here -->
                     </div>
@@ -200,18 +229,18 @@
                 <div id="ai-feedback-wrapper" class="text-center mb-8">
                     <div id="ai-loader" class="hidden flex flex-col items-center justify-center">
                         <div class="loader mb-2"></div>
-                        <p id="ai-loader-text" class="text-gray-600">Analysiere Tools und finde die beste Übereinstimmung...</p>
+                        <p id="ai-loader-text" class="text-secondary">Analysiere Tools und finde die beste Übereinstimmung...</p>
                     </div>
-                    <div id="ai-error" class="hidden p-4 bg-red-100 text-red-700 rounded-lg max-w-3xl mx-auto"></div>
+                    <div id="ai-error" class="hidden p-4 rounded-lg max-w-3xl mx-auto bg-red-900/50 text-yellow-300 border border-yellow-500/50"></div>
                 </div>
 
                 <!-- AI Recommendation Explanation -->
-                <div id="ai-explanation-container" class="hidden max-w-3xl mx-auto mb-8 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-lg border border-white/50 fade-in">
-                    <h3 id="ai-explanation-title" class="text-xl font-bold text-gray-800 flex items-center gap-2 mb-2">
-                        <i data-lucide="info" class="w-5 h-5 text-blue-600"></i>
+                <div id="ai-explanation-container" class="hidden max-w-3xl mx-auto mb-8 p-6 rounded-2xl shadow-lg fade-in bg-secondary-element">
+                    <h3 id="ai-explanation-title" class="text-xl font-bold flex items-center gap-2 mb-2 text-primary">
+                        <i data-lucide="info" class="w-5 h-5 text-yellow-500"></i>
                         <span>Persönliche Empfehlung</span>
                     </h3>
-                    <p id="ai-explanation-text" class="text-gray-600"></p>
+                    <p id="ai-explanation-text" class="text-secondary"></p>
                 </div>
                 
                 <!-- Main Results Section -->
@@ -226,9 +255,9 @@
                 
                 <!-- No Results Message -->
                 <div id="no-results" class="hidden text-center py-12">
-                    <i data-lucide="folder-search" class="w-16 h-16 mx-auto text-gray-400 mb-4"></i>
-                    <h3 id="no-results-title" class="text-2xl font-semibold text-gray-700">Keine passenden KI-Tools gefunden</h3>
-                    <p id="no-results-subtitle" class="text-gray-500 mt-2">Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.</p>
+                    <i data-lucide="folder-search" class="w-16 h-16 mx-auto mb-4 text-muted"></i>
+                    <h3 id="no-results-title" class="text-2xl font-semibold text-primary">Keine passenden KI-Tools gefunden</h3>
+                    <p id="no-results-subtitle" class="mt-2 text-secondary">Versuche, deine Suche anzupassen oder eine andere Kategorie auszuwählen.</p>
                 </div>
             </div>
         </div>
@@ -236,51 +265,51 @@
         <!-- Detail View (Initially Hidden) -->
         <div id="detail-view" class="hidden fade-in">
             <div class="container mx-auto px-4 py-8 md:py-12">
-                <button id="back-to-list" class="mb-8 flex items-center gap-2 bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition shadow-sm border">
+                <button id="back-to-list" class="mb-8 flex items-center gap-2 px-4 py-2 rounded-lg transition shadow-sm bg-tertiary border border-gray-700 hover:bg-gray-600">
                     <i data-lucide="arrow-left" class="w-5 h-5"></i>
                     <span id="back-button-text">Zurück zur Übersicht</span>
                 </button>
-                <div class="bg-white p-8 rounded-2xl shadow-xl">
+                <div class="p-8 rounded-2xl shadow-xl bg-secondary-element">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div class="lg:col-span-2">
                              <div class="flex items-center gap-4 mb-4">
-                                <div id="detail-icon-container" class="bg-blue-100 p-3 rounded-xl"></div>
-                                <h2 id="detail-name" class="text-3xl md:text-4xl font-bold text-gray-900"></h2>
+                                <div id="detail-icon-container" class="p-3 rounded-xl bg-tertiary"></div>
+                                <h2 id="detail-name" class="text-3xl md:text-4xl font-bold text-primary"></h2>
                              </div>
-                            <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600 mb-6">
-                                <span id="detail-category" class="flex items-center gap-2 bg-slate-100 text-slate-800 p-2 rounded-lg text-xs font-semibold"></span>
-                                <span id="detail-pricing-summary" class="flex items-center gap-2 bg-slate-100 text-slate-800 p-2 rounded-lg text-xs font-semibold"></span>
+                            <div class="flex flex-wrap items-center gap-4 text-sm mb-6">
+                                <span id="detail-category" class="flex items-center gap-2 p-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800"></span>
+                                <span id="detail-pricing-summary" class="flex items-center gap-2 p-2 rounded-lg text-xs font-semibold bg-slate-100 text-slate-800"></span>
                             </div>
-                            <p id="detail-description" class="text-lg text-gray-700 leading-relaxed"></p>
+                            <p id="detail-description" class="text-lg leading-relaxed text-secondary"></p>
                         </div>
-                        <div class="lg:col-span-1 bg-slate-50 p-6 rounded-xl border">
-                             <h3 id="pricing-details-title" class="text-xl font-bold text-gray-800 mb-4">Preisdetails</h3>
-                             <div id="detail-pricing-details" class="space-y-4 text-gray-600">
+                        <div class="lg:col-span-1 p-6 rounded-xl bg-slate-50">
+                             <h3 id="pricing-details-title" class="text-xl font-bold mb-4 text-primary">Preisdetails</h3>
+                             <div id="detail-pricing-details" class="space-y-4 text-secondary">
                                 <!-- Pricing details will be injected here -->
                              </div>
                         </div>
                     </div>
-                     <a id="detail-link" href="#" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 w-full sm:w-auto bg-blue-600 text-white text-center font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow-lg hover:shadow-blue-300/50">
+                     <a id="detail-link" href="#" target="_blank" rel="noopener noreferrer" class="mt-8 inline-flex items-center gap-2 w-full sm:w-auto text-center font-semibold py-3 px-6 rounded-lg transition shadow-lg text-black bg-gradient-to-r from-amber-400 to-yellow-500 hover:opacity-90 hover:shadow-amber-500/20">
                         <span id="visit-website-button">Webseite besuchen</span>
                         <i data-lucide="external-link" class="w-5 h-5"></i>
                     </a>
 
                     <!-- PROMPT GENERATOR SECTION -->
-                    <div id="prompt-generator-container" class="hidden mt-12 border-t pt-8">
-                        <h3 id="prompt-generator-title" class="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-2">
+                    <div id="prompt-generator-container" class="hidden mt-12 border-t pt-8 border-gray-700">
+                        <h3 id="prompt-generator-title" class="text-2xl font-bold text-primary mb-2 flex items-center gap-2">
                            <i data-lucide="lightbulb" class="w-6 h-6 text-yellow-500"></i>
                            <span>Kreative Starthilfe</span>
                         </h3>
-                        <p id="prompt-generator-subtitle" class="text-gray-600 mb-4">Gib eine einfache Idee ein und erhalte professionelle Prompts für dieses Tool.</p>
+                        <p id="prompt-generator-subtitle" class="text-secondary mb-4">Gib eine einfache Idee ein und erhalte professionelle Prompts für dieses Tool.</p>
                         <div class="flex flex-col gap-2">
                             <label for="prompt-idea-input" class="sr-only">Deine Idee für einen Prompt</label>
-                            <input type="text" id="prompt-idea-input" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="z.B. Ein Logo für ein Café">
-                            <button id="generate-prompts-btn" class="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2">
+                            <input type="text" id="prompt-idea-input" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-amber-400" placeholder="z.B. Ein Logo für ein Café">
+                            <button id="generate-prompts-btn" class="bg-gradient-to-r from-amber-400 to-yellow-500 text-black font-semibold py-2 px-4 rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2">
                                 <i data-lucide="sparkles" class="w-5 h-5"></i>
                                 <span id="generate-prompts-btn-text">Prompt-Ideen generieren</span>
                             </button>
                         </div>
-                        <div id="prompt-loader" class="hidden mt-4 flex items-center justify-center gap-2 text-gray-600">
+                        <div id="prompt-loader" class="hidden mt-4 flex items-center justify-center gap-2 text-secondary">
                             <div class="loader !w-5 !h-5 !border-2"></div>
                             <span id="prompt-loader-text">Generiere kreative Ideen...</span>
                         </div>
@@ -290,33 +319,33 @@
                     </div>
 
                     <!-- CHAT SECTION -->
-                    <div id="detail-chat-container" class="mt-12 border-t pt-8">
-                        <h3 id="chat-title" class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <div id="detail-chat-container" class="mt-12 border-t pt-8 border-gray-700">
+                        <h3 id="chat-title" class="text-2xl font-bold text-primary mb-4 flex items-center gap-2">
                             <i data-lucide="bot" class="w-6 h-6"></i>
                             <span>Frag einen Experten zu diesem Tool</span>
                         </h3>
-                        <div id="chat-history" class="mb-4 space-y-4 max-h-64 overflow-y-auto bg-slate-50 p-4 rounded-lg border">
+                        <div id="chat-history" class="mb-4 space-y-4 max-h-64 overflow-y-auto p-4 rounded-lg border">
                             <!-- Chat messages will be appended here -->
                         </div>
                         <!-- SUGGESTED QUESTIONS -->
                         <div id="suggested-questions-container" class="mb-2">
-                            <h4 id="suggested-questions-title" class="text-sm font-semibold text-gray-600 mb-2">Vorschläge</h4>
+                            <h4 id="suggested-questions-title" class="text-sm font-semibold mb-2 text-secondary">Vorschläge</h4>
                             <div id="suggested-questions" class="flex flex-wrap gap-2">
                                 <!-- Suggested questions buttons will be injected here -->
                             </div>
-                             <div id="suggested-questions-loader" class="hidden mt-2 flex items-center justify-center gap-2 text-gray-500 text-sm">
+                             <div id="suggested-questions-loader" class="hidden mt-2 flex items-center justify-center gap-2 text-sm text-muted">
                                 <div class="loader !w-4 !h-4 !border-2"></div>
                                 <span id="suggested-questions-loader-text">Lade Vorschläge...</span>
                             </div>
                         </div>
                         <div class="flex gap-2">
                             <label for="chat-input" class="sr-only">Deine Frage</label>
-                            <input type="text" id="chat-input" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="z.B. Kann ich damit auch Logos erstellen?">
-                            <button id="chat-send-btn" aria-label="Frage senden" class="bg-blue-600 text-white font-semibold p-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
+                            <input type="text" id="chat-input" class="flex-grow p-3 border rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-amber-400" placeholder="z.B. Kann ich damit auch Logos erstellen?">
+                            <button id="chat-send-btn" aria-label="Frage senden" class="text-black font-semibold p-3 rounded-lg transition flex items-center justify-center bg-gradient-to-r from-amber-400 to-yellow-500 hover:opacity-90">
                                 <i data-lucide="send" class="w-5 h-5"></i>
                             </button>
                         </div>
-                         <div id="chat-loader" class="hidden mt-4 flex items-center justify-center gap-2 text-gray-600">
+                         <div id="chat-loader" class="hidden mt-4 flex items-center justify-center gap-2 text-secondary">
                             <div class="loader !w-5 !h-5 !border-2"></div>
                             <span id="chat-loader-text">Antwort wird generiert...</span>
                         </div>
@@ -328,26 +357,26 @@
         <!-- Newsletter Section -->
         <div id="newsletter-section" class="py-16">
             <div class="container mx-auto px-4">
-                <div class="bg-white/60 backdrop-blur-sm p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-center border border-white/50">
+                <div class="p-8 rounded-2xl shadow-lg max-w-2xl mx-auto text-center bg-secondary-element">
                     <div id="newsletter-content">
-                        <div class="inline-block bg-white p-3 rounded-xl shadow-sm mb-4">
+                        <div class="inline-block p-3 rounded-xl shadow-sm mb-4 bg-primary-element">
                             <i data-lucide="mail-check" class="w-8 h-8 animated-gradient-text"></i>
                         </div>
-                        <h2 id="newsletter-title" class="text-2xl font-bold text-gray-900 mb-2">Bleib auf dem Laufenden</h2>
-                        <p id="newsletter-subtitle" class="text-gray-600 mb-6">Melde dich für unseren Newsletter an und erhalte die neuesten KI-Nachrichten direkt in dein Postfach.</p>
+                        <h2 id="newsletter-title" class="text-2xl font-bold mb-2">Bleib auf dem Laufenden</h2>
+                        <p id="newsletter-subtitle" class="mb-6 text-secondary">Melde dich für unseren Newsletter an und erhalte die neuesten KI-Nachrichten direkt in dein Postfach.</p>
                         <form id="newsletter-form" class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto">
                             <label for="email-input" class="sr-only">Deine E-Mail-Adresse</label>
-                            <input type="email" id="email-input" class="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition" placeholder="Deine E-Mail-Adresse">
-                            <button type="submit" id="newsletter-button" class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition shadow-lg hover:shadow-blue-300/50">Anmelden</button>
-                            <p id="email-error" class="text-red-500 text-sm mt-1 hidden text-left"></p>
+                            <input type="email" id="email-input" class="flex-grow p-3 border rounded-lg focus:ring-2 focus:ring-amber-400 focus:border-amber-400 transition" placeholder="Deine E-Mail-Adresse">
+                            <button type="submit" id="newsletter-button" class="text-black font-semibold py-3 px-6 rounded-lg transition shadow-lg bg-gradient-to-r from-amber-400 to-yellow-500 hover:opacity-90 hover:shadow-amber-500/20">Anmelden</button>
+                            <p id="email-error" class="text-yellow-500 text-sm mt-1 hidden text-left w-full"></p>
                         </form>
                     </div>
                     <div id="newsletter-success" class="hidden text-center">
-                        <div class="inline-block bg-green-100 p-3 rounded-xl shadow-sm mb-4">
-                             <i data-lucide="check-circle-2" class="w-8 h-8 text-green-600"></i>
+                        <div class="inline-block p-3 rounded-xl shadow-sm mb-4 bg-primary-element">
+                             <i data-lucide="check-circle-2" class="w-8 h-8 text-yellow-500"></i>
                         </div>
-                        <h2 id="newsletter-success-title" class="text-2xl font-bold text-gray-900">Vielen Dank!</h2>
-                        <p id="newsletter-success-subtitle" class="text-gray-600">Du hast dich erfolgreich für den Newsletter angemeldet.</p>
+                        <h2 id="newsletter-success-title" class="text-2xl font-bold text-primary">Vielen Dank!</h2>
+                        <p id="newsletter-success-subtitle" class="text-secondary">Du hast dich erfolgreich für den Newsletter angemeldet.</p>
                     </div>
                 </div>
             </div>
@@ -355,64 +384,64 @@
     </div>
 
     <!-- Footer -->
-    <footer id="page-footer" class="text-center py-8 border-t border-gray-200 bg-white/50">
+    <footer id="page-footer" class="text-center py-8 border-t border-gray-700 bg-primary">
         <div class="container mx-auto px-4">
-            <p class="text-sm text-gray-500">
+            <p class="text-sm text-muted">
                 &copy; <span id="copyright-year">2025</span> Der KI-Berater. <span id="footer-rights">Alle Rechte vorbehalten.</span>
             </p>
             <div class="mt-4 space-x-4 md:space-x-6">
-                <button id="footer-about-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">Über Uns</button>
-                <button id="footer-faq-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">FAQ</button>
-                <button id="footer-imprint-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">Impressum</button>
-                <button id="footer-privacy-btn" class="text-sm text-gray-500 hover:text-blue-600 transition">Datenschutz</button>
+                <button id="footer-about-btn" class="text-sm text-muted hover:text-accent-gold-light transition">Über Uns</button>
+                <button id="footer-faq-btn" class="text-sm text-muted hover:text-accent-gold-light transition">FAQ</button>
+                <button id="footer-imprint-btn" class="text-sm text-muted hover:text-accent-gold-light transition">Impressum</button>
+                <button id="footer-privacy-btn" class="text-sm text-muted hover:text-accent-gold-light transition">Datenschutz</button>
             </div>
         </div>
     </footer>
     
     <!-- MODALS -->
     <!-- About Modal -->
-    <div id="about-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
-        <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
-            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition" aria-label="Schliessen">
+    <div id="about-modal" class="modal-overlay fixed inset-0 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
+            <button class="close-modal-btn absolute top-4 right-4 text-muted hover:text-primary transition" aria-label="Schliessen">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
-            <h2 id="about-title" class="text-2xl font-bold mb-4"></h2>
-            <div id="about-content" class="text-gray-600 space-y-4"></div>
+            <h2 id="about-title" class="text-2xl font-bold mb-4 text-primary"></h2>
+            <div id="about-content" class="space-y-4 text-secondary"></div>
         </div>
     </div>
     
     <!-- FAQ Modal -->
-    <div id="faq-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
-        <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
-            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition" aria-label="Schliessen">
+    <div id="faq-modal" class="modal-overlay fixed inset-0 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
+            <button class="close-modal-btn absolute top-4 right-4 text-muted hover:text-primary transition" aria-label="Schliessen">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
-            <h2 id="faq-title" class="text-2xl font-bold mb-4"></h2>
-            <div id="faq-content" class="text-gray-600 space-y-4"></div>
+            <h2 id="faq-title" class="text-2xl font-bold mb-4 text-primary"></h2>
+            <div id="faq-content" class="space-y-4 text-secondary"></div>
         </div>
     </div>
 
     <!-- Imprint Modal -->
-    <div id="imprint-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
-        <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
-            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition" aria-label="Schliessen">
+    <div id="imprint-modal" class="modal-overlay fixed inset-0 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
+            <button class="close-modal-btn absolute top-4 right-4 text-muted hover:text-primary transition" aria-label="Schliessen">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
-            <h2 id="imprint-title" class="text-2xl font-bold mb-4">Impressum</h2>
-            <div id="imprint-content" class="text-gray-600 space-y-2">
+            <h2 id="imprint-title" class="text-2xl font-bold mb-4 text-primary">Impressum</h2>
+            <div id="imprint-content" class="space-y-2 text-secondary">
                 <!-- Content injected by JS -->
             </div>
         </div>
     </div>
 
     <!-- Privacy Modal -->
-    <div id="privacy-modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 hidden z-50">
-        <div class="modal-content bg-white rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
-            <button class="close-modal-btn absolute top-4 right-4 text-gray-400 hover:text-gray-800 transition" aria-label="Schliessen">
+    <div id="privacy-modal" class="modal-overlay fixed inset-0 flex items-center justify-center p-4 hidden z-50">
+        <div class="modal-content rounded-2xl shadow-xl p-8 max-w-2xl w-full relative transform scale-95 opacity-0">
+            <button class="close-modal-btn absolute top-4 right-4 text-muted hover:text-primary transition" aria-label="Schliessen">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
-            <h2 id="privacy-title" class="text-2xl font-bold mb-4">Datenschutz</h2>
-            <div id="privacy-content" class="text-gray-600 space-y-2">
+            <h2 id="privacy-title" class="text-2xl font-bold mb-4 text-primary">Datenschutz</h2>
+            <div id="privacy-content" class="space-y-2 text-secondary">
                  <!-- Content injected by JS -->
             </div>
         </div>
@@ -431,7 +460,7 @@
                     exampleTitle: "Oder entdecke beliebte Kategorien",
                     howItWorksTitle: "So funktioniert's", step1Title: "1. Beschreibe deine Aufgabe", step1Text: "Gib einfach in das Suchfeld ein, was du erledigen möchtest.", step2Title: "2. Erhalte eine Empfehlung", step2Text: "Unsere KI analysiert deine Anfrage und schlägt dir die besten Tools vor.", step3Title: "3. Entdecke die Tools", step3Text: "Vergleiche die Vorschläge und finde die perfekte Lösung für dein Projekt.",
                     aboutTitle: "Über Uns", aboutContent: `<p>Der KI-Berater ist dein unabhängiger Wegweiser durch den schnell wachsenden Dschungel der künstlichen Intelligenz. Unsere Mission ist es, dir zu helfen, das perfekte KI-Tool für jede erdenkliche Aufgabe zu finden – egal ob du Bilder generieren, Texte schreiben oder Code entwickeln möchtest.</p><p>Wir analysieren und vergleichen die besten Tools auf dem Markt, damit du fundierte Entscheidungen treffen und das volle Potenzial der KI für deine Projekte nutzen kannst.</p>`,
-                    faqTitle: "Häufig gestellte Fragen (FAQ)", faqContent: `<div><h4 class="font-semibold text-gray-800">Sind die Empfehlungen wirklich unabhängig?</h4><p>Ja. Unsere KI-gestützte Empfehlung basiert ausschliesslich auf dem Abgleich deiner Anfrage mit den Fähigkeiten der Tools in unserer Datenbank. Wir bevorzugen kein Tool.</p></div><div><h4 class="font-semibold text-gray-800 mt-4">Wie verdient diese Seite Geld?</h4><p>Einige Links zu den KI-Tools sind sogenannte Affiliate-Links. Wenn du über unseren Link ein Tool abonnierst, erhalten wir eine kleine Provision, ohne dass für dich zusätzliche Kosten entstehen. Das hilft uns, die Seite zu betreiben und aktuell zu halten.</p></div><div><h4 class="font-semibold text-gray-800 mt-4">Wie aktuell ist die Liste der Tools?</h4><p>Wir bemühen uns, die Liste regelmässig zu aktualisieren und neue, vielversprechende KI-Tools aufzunehmen, sobald sie sich bewährt haben.</p></div>`,
+                    faqTitle: "Häufig gestellte Fragen (FAQ)", faqContent: `<div><h4 class="font-semibold text-primary">Sind die Empfehlungen wirklich unabhängig?</h4><p>Ja. Unsere KI-gestützte Empfehlung basiert ausschliesslich auf dem Abgleich deiner Anfrage mit den Fähigkeiten der Tools in unserer Datenbank. Wir bevorzugen kein Tool.</p></div><div><h4 class="font-semibold text-primary mt-4">Wie verdient diese Seite Geld?</h4><p>Einige Links zu den KI-Tools sind sogenannte Affiliate-Links. Wenn du über unseren Link ein Tool abonnierst, erhalten wir eine kleine Provision, ohne dass für dich zusätzliche Kosten entstehen. Das hilft uns, die Seite zu betreiben und aktuell zu halten.</p></div><div><h4 class="font-semibold text-primary mt-4">Wie aktuell ist die Liste der Tools?</h4><p>Wir bemühen uns, die Liste regelmässig zu aktualisieren und neue, vielversprechende KI-Tools aufzunehmen, sobald sie sich bewährt haben.</p></div>`,
                     emailValidationError: "Bitte gib eine gültige E-Mail-Adresse ein.",
                     pricing: { freemium: "Freemium", subscription: "Abo", addon: "Add-on", beta: "Beta", openSource: "Kostenlos (Open Source)" },
                     categories: { all: "Alle anzeigen", design: "Bild & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Produktivität & Office", code: "Code & Entwicklung" }
@@ -445,7 +474,7 @@
                     exampleTitle: "Or discover popular categories",
                     howItWorksTitle: "How it Works", step1Title: "1. Describe Your Task", step1Text: "Just type what you want to accomplish into the search field.", step2Title: "2. Get a Recommendation", step2Text: "Our AI analyzes your request and suggests the best tools for you.", step3Title: "3. Explore the Tools", step3Text: "Compare the suggestions and find the perfect solution for your project.",
                     aboutTitle: "About Us", aboutContent: `<p>The AI Advisor is your independent guide through the rapidly growing jungle of artificial intelligence. Our mission is to help you find the perfect AI tool for any imaginable task – whether you want to generate images, write texts, or develop code.</p><p>We analyze and compare the best tools on the market so you can make informed decisions and leverage the full potential of AI for your projects.</p>`,
-                    faqTitle: "Frequently Asked Questions (FAQ)", faqContent: `<div><h4 class="font-semibold text-gray-800">Are the recommendations truly independent?</h4><p>Yes. Our AI-powered recommendation is based solely on matching your request with the capabilities of the tools in our database. We do not favor any tool.</p></div><div><h4 class="font-semibold text-gray-800 mt-4">How does this site make money?</h4><p>Some links to the AI tools are affiliate links. If you subscribe to a tool through our link, we receive a small commission at no extra cost to you. This helps us operate and keep the site up-to-date.</p></div><div><h4 class="font-semibold text-gray-800 mt-4">How current is the list of tools?</h4><p>We strive to update the list regularly and include new, promising AI tools as soon as they have proven themselves.</p></div>`,
+                    faqTitle: "Frequently Asked Questions (FAQ)", faqContent: `<div><h4 class="font-semibold text-primary">Are the recommendations truly independent?</h4><p>Yes. Our AI-powered recommendation is based solely on matching your request with the capabilities of the tools in our database. We do not favor any tool.</p></div><div><h4 class="font-semibold text-primary mt-4">How does this site make money?</h4><p>Some links to the AI tools are affiliate links. If you subscribe to a tool through our link, we receive a small commission at no extra cost to you. This helps us operate and keep the site up-to-date.</p></div><div><h4 class="font-semibold text-primary mt-4">How current is the list of tools?</h4><p>We strive to update the list regularly and include new, promising AI tools as soon as they have proven themselves.</p></div>`,
                     emailValidationError: "Please enter a valid email address.",
                     pricing: { freemium: "Freemium", subscription: "Subscription", addon: "Add-on", beta: "Beta", openSource: "Free (Open Source)" },
                     categories: { all: "Alle anzeigen", design: "Image & Design", marketing: "Text & Marketing", audio: "Audio & Video", productivity: "Productivity & Office", code: "Code & Development" }
@@ -513,24 +542,10 @@
                 const catIcons = { all: 'layout-grid', design: 'image', marketing: 'pen-tool', audio: 'music-2', productivity: 'briefcase', code: 'code' };
 
                 Object.keys(cats).forEach(key => {
-                    if (key === 'all') { // Add "Show All" button
-                        const button = document.createElement('button');
-                        button.innerHTML = `<i data-lucide="${catIcons[key]}" class="w-4 h-4 mr-2"></i> ${cats[key]}`;
-                        button.className = "bg-white/70 backdrop-blur-sm text-slate-700 text-sm px-4 py-2 rounded-lg hover:bg-white transition border border-white/50 shadow-sm flex items-center";
-                        button.onclick = () => {
-                            filterAndRenderByCategory(deCats[key]);
-                            document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
-                        };
-                        exampleCategoriesContainer.appendChild(button);
-                    }
-                });
-
-
-                Object.keys(cats).forEach(key => {
                     if (key === 'all') return;
                     const button = document.createElement('button');
                     button.innerHTML = `<i data-lucide="${catIcons[key]}" class="w-4 h-4 mr-2"></i> ${cats[key]}`;
-                    button.className = "bg-white/70 backdrop-blur-sm text-slate-700 text-sm px-4 py-2 rounded-lg hover:bg-white transition border border-white/50 shadow-sm flex items-center";
+                    button.className = "bg-primary-element backdrop-blur-sm text-secondary text-sm px-4 py-2 rounded-lg hover:bg-secondary-element transition border border-border-color shadow-sm flex items-center";
                     button.onclick = () => {
                         filterAndRenderByCategory(deCats[key]);
                         document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
@@ -543,7 +558,7 @@
             function renderCard(model, container) {
                 const card = document.createElement('div');
                 const modelLang = model[currentLang];
-                card.className = `card bg-white/70 p-6 rounded-2xl shadow-lg border flex flex-col relative overflow-hidden ${model.featured ? 'featured-card border-2' : 'border-gray-200/50'}`;
+                card.className = `card p-6 rounded-2xl shadow-lg flex flex-col relative overflow-hidden ${model.featured ? 'featured-card' : ''}`;
                 card.dataset.modelName = model.name;
                 
                 const beginnerBadgeHTML = model.beginnerFriendly ? `<span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-1 rounded-full flex items-center gap-1.5"><i data-lucide="star" class="w-3 h-3"></i>${translations[currentLang].beginnerFriendly}</span>` : '';
@@ -551,17 +566,17 @@
                 card.innerHTML = `
                     <div class="flex-grow">
                          <div class="flex justify-between items-start mb-3">
-                            <div class="bg-blue-100 p-2.5 rounded-lg mr-4"><i data-lucide="${model.categoryIcon}" class="w-6 h-6 text-blue-600"></i></div>
+                            <div class="p-2.5 rounded-lg mr-4 bg-tertiary"><i data-lucide="${model.categoryIcon}" class="w-6 h-6 text-accent-gold-light"></i></div>
                             <div class="flex-1">
-                                <h3 class="text-lg font-bold text-gray-900">${model.name}</h3>
-                                <p class="text-sm text-gray-500">${modelLang.category}</p>
+                                <h3 class="text-lg font-bold text-primary">${model.name}</h3>
+                                <p class="text-sm text-muted">${modelLang.category}</p>
                             </div>
                             ${beginnerBadgeHTML}
                         </div>
-                        <p class="text-gray-600 my-4">${modelLang.description}</p>
+                        <p class="text-secondary my-4">${modelLang.description}</p>
                     </div>
-                     <div class="flex items-center justify-end gap-4 text-sm text-gray-500 mt-auto pt-4 border-t border-gray-200/80">
-                        <span class="flex items-center gap-1.5 bg-slate-100 text-slate-800 p-1.5 rounded-md text-xs"><i data-lucide="dollar-sign" class="w-3 h-3"></i>${translations[currentLang].pricing[model.pricing]}</span>
+                     <div class="flex items-center justify-end gap-4 text-sm mt-auto pt-4 border-t" style="border-color: var(--border-color);">
+                        <span class="flex items-center gap-1.5 p-1.5 rounded-md text-xs font-semibold bg-tertiary text-secondary"><i data-lucide="dollar-sign" class="w-3 h-3"></i>${translations[currentLang].pricing[model.pricing]}</span>
                     </div>
                 `;
                 
@@ -588,7 +603,7 @@
                 for (let i = 1; i <= totalPages; i++) {
                     const button = document.createElement('button');
                     button.textContent = i;
-                    button.className = `pagination-btn px-4 py-2 border rounded-lg transition hover:bg-gray-100`;
+                    button.className = `pagination-btn px-4 py-2 border rounded-lg transition`;
                     if (i === currentPage) {
                         button.classList.add('active');
                     }
@@ -653,7 +668,7 @@
                 
                 const modelLang = model[currentLang];
 
-                document.getElementById('detail-icon-container').innerHTML = `<i data-lucide="${model.categoryIcon}" class="w-8 h-8 text-blue-600"></i>`;
+                document.getElementById('detail-icon-container').innerHTML = `<i data-lucide="${model.categoryIcon}" class="w-8 h-8 text-accent-gold-light"></i>`;
                 document.getElementById('detail-category').innerHTML = `<i data-lucide="tag" class="w-4 h-4"></i><span>${modelLang.category}</span>`;
                 document.getElementById('detail-pricing-summary').innerHTML = `<i data-lucide="dollar-sign" class="w-4 h-4"></i><span>${translations[currentLang].pricing[model.pricing]}</span>`;
                 document.getElementById('detail-description').textContent = modelLang.detailedDescription;
@@ -663,7 +678,7 @@
                 pricingContainer.innerHTML = '';
                 for (const [plan, text] of Object.entries(modelLang.pricingDetails)) {
                     const p = document.createElement('p');
-                    p.innerHTML = `<strong class="capitalize text-gray-800 block mb-1">${plan}</strong> ${text}`;
+                    p.innerHTML = `<strong class="capitalize text-primary block mb-1">${plan}</strong> ${text}`;
                     pricingContainer.appendChild(p);
                 }
 
@@ -781,7 +796,7 @@
 
                 const userMessageDiv = document.createElement('div');
                 userMessageDiv.className = 'text-right';
-                userMessageDiv.innerHTML = `<div class="inline-block bg-blue-500 text-white p-3 rounded-lg rounded-br-none">${userQuestion}</div>`;
+                userMessageDiv.innerHTML = `<div class="inline-block user-bubble p-3 rounded-lg rounded-br-none">${userQuestion}</div>`;
                 chatHistory.appendChild(userMessageDiv);
 
                 chatInput.value = '';
@@ -834,14 +849,14 @@
 
                     const aiMessageDiv = document.createElement('div');
                     aiMessageDiv.className = 'text-left';
-                    aiMessageDiv.innerHTML = `<div class="inline-block bg-gray-200 text-gray-800 p-3 rounded-lg rounded-bl-none">${aiAnswer}</div>`;
+                    aiMessageDiv.innerHTML = `<div class="inline-block ai-bubble p-3 rounded-lg rounded-bl-none">${aiAnswer}</div>`;
                     chatHistory.appendChild(aiMessageDiv);
 
                 } catch (error) {
                     console.error("Error in detail chat:", error);
                     const errorMessageDiv = document.createElement('div');
                     errorMessageDiv.className = 'text-left';
-                    errorMessageDiv.innerHTML = `<div class="inline-block bg-red-100 text-red-700 p-3 rounded-lg rounded-bl-none">${translations[currentLang].chatError}</div>`;
+                    errorMessageDiv.innerHTML = `<div class="inline-block bg-red-900/50 text-yellow-300 border border-yellow-500/50 p-3 rounded-lg rounded-bl-none">${translations[currentLang].chatError}</div>`;
                     chatHistory.appendChild(errorMessageDiv);
                 } finally {
                     chatLoader.classList.add('hidden');
@@ -901,16 +916,16 @@
                     if (Array.isArray(prompts)) {
                         prompts.forEach(p => {
                             const promptDiv = document.createElement('div');
-                            promptDiv.className = 'bg-slate-100 p-4 rounded-lg border relative';
-                            promptDiv.innerHTML = `<p class="text-gray-700 whitespace-pre-wrap">${p}</p>`;
+                            promptDiv.className = 'p-4 rounded-lg relative bg-tertiary border border-gray-700';
+                            promptDiv.innerHTML = `<p class="whitespace-pre-wrap text-secondary">${p}</p>`;
                             
                             const copyBtn = document.createElement('button');
                             copyBtn.innerHTML = `<i data-lucide="copy" class="w-4 h-4"></i>`;
-                            copyBtn.className = 'absolute top-2 right-2 p-1.5 bg-white rounded-md text-gray-500 hover:text-blue-600 hover:bg-slate-200 transition';
+                            copyBtn.className = 'absolute top-2 right-2 p-1.5 rounded-md transition bg-primary-element text-muted hover:text-primary';
                             copyBtn.title = translations[currentLang].copyPrompt;
                             copyBtn.onclick = () => {
                                 navigator.clipboard.writeText(p).then(() => {
-                                    copyBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-green-600"></i>`;
+                                    copyBtn.innerHTML = `<i data-lucide="check" class="w-4 h-4 text-green-500"></i>`;
                                     copyBtn.title = translations[currentLang].copied;
                                     setTimeout(() => {
                                         copyBtn.innerHTML = `<i data-lucide="copy" class="w-4 h-4"></i>`;
@@ -929,7 +944,7 @@
 
                 } catch (error) {
                     console.error("Error generating prompts:", error);
-                    resultsContainer.innerHTML = `<div class="bg-red-100 text-red-700 p-3 rounded-lg">${translations[currentLang].chatError}</div>`;
+                    resultsContainer.innerHTML = `<div class="bg-red-900/50 text-yellow-300 border border-yellow-500/50 p-3 rounded-lg">${translations[currentLang].chatError}</div>`;
                 } finally {
                     promptLoader.classList.add('hidden');
                     generateBtn.disabled = false;
@@ -978,7 +993,7 @@
                         responseObject.questions.forEach(q => {
                             const button = document.createElement('button');
                             button.textContent = q;
-                            button.className = "bg-slate-200 text-slate-700 text-sm px-3 py-1.5 rounded-lg hover:bg-slate-300 transition";
+                            button.className = "bg-tertiary text-secondary text-sm px-3 py-1.5 rounded-lg hover:bg-gray-600/70 transition";
                             button.onclick = () => {
                                 chatInput.value = q;
                                 handleAskAboutTool();
@@ -1001,6 +1016,13 @@
 
                 document.title = translations[lang].pageTitle;
                 document.documentElement.lang = lang;
+                document.getElementById('meta-description').setAttribute('content', translations[lang].mainSubtitle);
+                document.getElementById('meta-keywords').setAttribute('content', lang === 'de' ? "KI-Tools, künstliche Intelligenz, KI-Berater, KI empfehlen, beste KI, ChatGPT, Midjourney, AI Tools, Textanalyse, Bildgenerierung" : "AI tools, artificial intelligence, AI advisor, recommend AI, best AI, ChatGPT, Midjourney, AI Tools, text analysis, image generation");
+                document.getElementById('og-title').setAttribute('content', translations[lang].pageTitle);
+                document.getElementById('og-description').setAttribute('content', translations[lang].mainSubtitle);
+                document.getElementById('twitter-title').setAttribute('content', translations[lang].pageTitle);
+                document.getElementById('twitter-description').setAttribute('content', translations[lang].mainSubtitle);
+
                 document.getElementById('main-title').textContent = translations[lang].mainTitle;
                 document.getElementById('main-subtitle').textContent = translations[lang].mainSubtitle;
                 document.getElementById('ai-rec-title').textContent = translations[lang].aiRecTitle;
